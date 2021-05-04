@@ -8,14 +8,16 @@ Switch,
 Redirect
 }from 'react-router-dom'
 
-import Homepage from './components/mainpage'
+import Homepage from './components/main'
+import Login from './components/login'
 
 function App() {
   return (
   	<HashRouter>
 	<Switch>
 	  <Route path="/" component={Homepage} />
-	</Switch>
+	  <Route path="/login" component={Login} />
+	  </Switch>
 	</HashRouter>
   )
 }
