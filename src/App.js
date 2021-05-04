@@ -1,23 +1,23 @@
 //import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.scss'
 
 import {
-HashRouter,
-Route,
-Switch,
-Redirect
+	HashRouter,
+	Route,
+	Switch
 }from 'react-router-dom'
 
-import Homepage from './components/main'
-import Login from './components/login'
+import Homepage from './page/main'
+import Login from './page/login'
 
 function App() {
   return (
   	<HashRouter>
-	<Switch>
-	  <Route path="/" component={Homepage} />
-	  <Route path="/login" component={Login} />
-	  </Switch>
+		<Switch>
+			<Route path="/login" component={Login} />
+			<Route path="/" component={Homepage} />
+		</Switch>
 	</HashRouter>
   )
 }
