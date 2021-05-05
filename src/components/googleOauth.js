@@ -1,15 +1,24 @@
 import React from 'react'
 
 import GoogleLogin from 'react-google-login'
-//import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie'
 
 class GoogleOauth extends React.Component{
     render(){
         const responseGoogle = (response) => {
-            console.log(response.tokenId)
+            console.log(response)
             // send request to backend
             //set cookie
+            const cookies = new Cookies()
+            cookies.set('isGoogle','true',{path:'/'})
+            cookies.set('userName',response['gt']['rU'],{path:'/'})
+            cookies.set('userPhoto',response['gt']['zJ'],{path:'/'})
 
+            //let tokenId = response['tokenId']
+
+            cookies.set('sessionId',"fake",{path:'/'})
+
+            window.location.replace('/')
         };
         return(
             <>
@@ -19,7 +28,6 @@ class GoogleOauth extends React.Component{
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
                     cookiePolicy={"single_host_origin"}
-                    isSignedIn={true}
                 />
             </>
         )

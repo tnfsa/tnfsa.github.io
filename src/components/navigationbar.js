@@ -7,29 +7,41 @@ import {
     NavDropdown,
 } from 'react-bootstrap'
 
-import GoogleLogout from 'react-google-login'
+import Cookies from 'universal-cookie'
 
 class Navibar extends React.Component{
     constructor(props) {
         super(props);
         //const {cookies} = props;
+        const cookies = new Cookies()
+        const combination = cookies.getAll()
+        //window.alert(combination['isGoogle'])
+        let send = []
+        combination['isGoogle'] ? send.push(true):send.push(false)
+        combination['isSells'] ? send.push(true):send.push(false)
+        combination['sessionId'] ? send.push(true):send.push(false)
 
         this.state = {
-            isLoggedIn: !true,//!cookies.get('loggedin') || true
-            username: "Anonymous",
-            sells: true,
-            isGoogle: false
+            isGoogle: send[0],
+            isSells: send[1],
+            isLoggedIn: send[2],//!cookies.get('loggedin') || true
+            username: combination['userName'] || "Anonymous",
         }
     }
     render(){
-        const logout = (response) => {
-            //google logout
-            console.log(response)
-            //this.handleRemoveCookie()
-        }
-        const Signout = ()=>{
+        const signOut = ()=>{
             //normal account signout
-
+            //window.alert('logging out')
+            //remove cookie
+            const cookies = new Cookies()
+            cookies.remove('isGoogle')
+            cookies.remove('isSells')
+            cookies.remove('sessionId')
+            cookies.remove('userName')
+            cookies.remove('userName')
+            cookies.remove('userPhoto')
+            //reload page
+            window.location.replace('/')
         }
         const toHello = "嗨! "+this.state.username
         return(
@@ -45,20 +57,10 @@ class Navibar extends React.Component{
                             <NavDropdown.Item href={"#/config/menu"}>菜單設定</NavDropdown.Item>
                         </NavDropdown>}
                     </Nav>
-                    {!this.state.isLoggedIn ? <NavDropdown title={toHello} id="basic-nav-dropdown">
+                    {this.state.isLoggedIn ? <NavDropdown title={toHello} id="basic-nav-dropdown">
                             <NavDropdown.Item href={"#/history"}>歷史紀錄</NavDropdown.Item>
                             <NavDropdown.Item href={"#/settings"}>設定</NavDropdown.Item>
-                            <NavDropdown.Item>
-                                {this.state.isGoogle ? <GoogleLogout
-                                    clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
-                                    render={renderProps => (
-                                        <button onClick={renderProps.onClick} disabled={renderProps.disabled}>登出</button>
-                                    )}
-                                    buttonText="Log out"
-                                    onLogoutSuccess={logout}
-                                >
-                                </GoogleLogout>: <a href="/" onClick={Signout}>Sign out</a>}
-                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={signOut}>登出</NavDropdown.Item>
                         </NavDropdown>
                         :
                         <Nav.Link href="#/login">登入</Nav.Link>}
