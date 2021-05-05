@@ -1,12 +1,12 @@
 import React from 'react'
 
 import GoogleLogin from 'react-google-login'
-import Cookies from 'universal-cookie'
+//import Cookies from 'universal-cookie'
 
 class GoogleOauth extends React.Component{
     render(){
         const responseGoogle = (response) => {
-            console.log(response)
+            console.log(response.tokenId)
             // send request to backend
             //set cookie
 
