@@ -18,6 +18,9 @@ import Histories from './page/customer/history'
 import StoreSetting from './page/sells/store'
 import MenuSetting from './page/sells/menu'
 import Advanced from './page/sells/advanced'
+import Footer from "./components/footer";
+import CodeOfConduct from "./page/codeofconduct"
+import Policy from './page/policy'
 
 function App() {
   return (
@@ -32,8 +35,11 @@ function App() {
 			<Route path="/config/store" component={StoreSetting} />
 			<Route path="/config/menu" component={MenuSetting} />
 			<Route path="/config/advanced/:id" component={Advanced} />
+			<Route path="/policy" component={Policy}/>
+			<Route path="COC" component={CodeOfConduct} />
 			<Route path="/" component={Homepage} />
 		</Switch>
+		<Footer />
 	</HashRouter>
   )
 }

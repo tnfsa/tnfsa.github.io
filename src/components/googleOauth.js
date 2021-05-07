@@ -13,7 +13,7 @@ class GoogleOauth extends React.Component{
             cookies.set('isGoogle','true',{path:'/'})
             cookies.set('userName',response['gt']['rU'],{path:'/'})
             cookies.set('userPhoto',response['gt']['zJ'],{path:'/'})
-
+            cookies.set('alert','登入成功',{path:'/'})
             //let tokenId = response['tokenId']
 
             cookies.set('sessionId',"fake",{path:'/'})

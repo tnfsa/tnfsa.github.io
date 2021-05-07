@@ -39,6 +39,7 @@ class Navibar extends React.Component{
             cookies.remove('userName')
             cookies.remove('userName')
             cookies.remove('userPhoto')
+            cookies.set('alert','登出成功',{path: '/'})
             //reload page
             window.location.replace('/')
         }
