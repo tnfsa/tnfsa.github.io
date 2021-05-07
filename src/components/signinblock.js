@@ -18,14 +18,14 @@ class Signinblock extends React.Component{
             <React.Fragment>
                 <Container>
                     <form className={"signInBlock"}>
-                        <h3 style={{textAlign: 'center'}}>Sign In</h3>
+                        <h3 style={{textAlign: 'center'}}>登入</h3>
                         <div className="form-group">
-                            <label>Email address</label>
+                            <label>電子郵件</label>
                             <input id="userInputEmail" type="email" className="form-control" placeholder="Enter email" />
                         </div>
 
                         <div className="form-group">
-                            <label>Password</label>
+                            <label>密碼</label>
                             <input id="userInputPasswd" type="password" className="form-control" placeholder="Enter password" />
                         </div>
 
@@ -41,7 +41,7 @@ class Signinblock extends React.Component{
                             <Col><button type="submit" className="btn btn-primary btn-block" onClick={Send}>Submit</button></Col>
                         </Row>
                         <hr />
-                        <label>另一種登入方式？</label>
+                        <label>其他登入方式？</label>
                         <div className={"otherLoginMethod"} >
                             <GoogleOauth />
                         </div>
