@@ -1,6 +1,7 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-import {Hashrouter,Switch,Route} from 'react-router-dom'
+import {HashRouter,Switch,Route} from 'react-router-dom'
 
 import Homepage from './page/main'
 import Login from './page/login'
@@ -18,8 +19,9 @@ import Privacy from './page/policy'
 
 function App() {
   return (
-      <Hashrouter>
+      <HashRouter>
         <Switch>
+            {window.scrollTo({top: 0,behavior: 'smooth'})}
             <Route path="/login" component={Login} />
             <Route path="/restaurant" component={Restaurant} />
             <Route path="/settings" component={Settings} />
@@ -34,7 +36,8 @@ function App() {
             <Route path="/" component={Homepage} />
         </Switch>
         <Footer />
-      </Hashrouter>
+      </HashRouter>
+
   )
 }
 

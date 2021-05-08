@@ -4,6 +4,8 @@ import Navibar from "../components/navigationbar";
 
 class Privacy extends React.Component{
     componentDidMount() {
+        window.scrollTo({top: 0,behavior: 'smooth'})
+
         let title = [
             "一、隱私權保護政策的適用範圍",
             "二、個人資料的蒐集、處理及利用方式",

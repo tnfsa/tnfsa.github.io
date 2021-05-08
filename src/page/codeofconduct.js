@@ -4,6 +4,8 @@ import {Container} from "react-bootstrap";
 
 class CodeofConduct extends React.Component{
     componentDidMount() {
+        window.scrollTo({top: 0,behavior: 'smooth'})
+
         let title = [
             "一、一般規定",
             "二、使用條款的變更",

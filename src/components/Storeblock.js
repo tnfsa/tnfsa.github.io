@@ -10,7 +10,6 @@ class StoreBlock extends React.Component{
             let node = document.createElement('DIV')
             node.textContent = "Hello"
 
-
             document.getElementById('Chunk').appendChild(node)
         }
 

@@ -9,6 +9,10 @@ import {
 import Notification from "../components/Notification";
 
 class Homepage extends React.Component{
+	componentDidMount() {
+		window.scrollTo({top: 0,behavior: 'smooth'})
+	}
+
 	render(){
 		return(
 			<React.Fragment>
