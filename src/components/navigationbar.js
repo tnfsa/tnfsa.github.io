@@ -56,6 +56,10 @@ class Navibar extends React.Component{
                             <NavDropdown.Item href={"#/config/store"}>商家設定</NavDropdown.Item>
                             <NavDropdown.Item href={"#/config/menu"}>菜單設定</NavDropdown.Item>
                         </NavDropdown>}
+                        <NavDropdown title="外部連結" id="basic-nav-dropdown">
+                            <NavDropdown.Item href={"https://tnfsacec.github.io"} rel="noreferrer noopener">選舉委員會</NavDropdown.Item>
+                            <NavDropdown.Item href={"https://sites.google.com/view/tnfshsu/"} rel="noreferrer noopener">學聯會</NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                     {this.state.isLoggedIn ? <NavDropdown title={toHello} id="basic-nav-dropdown">
                             <NavDropdown.Item href={"#/history"}>歷史紀錄</NavDropdown.Item>
