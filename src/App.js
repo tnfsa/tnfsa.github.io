@@ -16,12 +16,13 @@ import Advanced from './page/sells/advanced'
 import Footer from "./components/footer";
 import CodeOfConduct from "./page/codeofconduct"
 import Privacy from './page/policy'
+import OfflineDetect from "./components/offlineDetect";
 
 function App() {
   return (
       <HashRouter>
+          <OfflineDetect />
         <Switch>
-            {window.scrollTo({top: 0,behavior: 'smooth'})}
             <Route path="/login" component={Login} />
             <Route path="/restaurant" component={Restaurant} />
             <Route path="/settings" component={Settings} />
