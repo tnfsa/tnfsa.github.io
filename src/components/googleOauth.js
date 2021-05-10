@@ -16,7 +16,7 @@ class GoogleOauth extends React.Component{
                 'email': response['tokenId'],
             }
 
-            const url = config['baseURL']
+            const url = config['baseURL'] + '/google'
             fetch(url,{
                 method: 'POST',
                 body: JSON.stringify(data),
