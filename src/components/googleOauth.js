@@ -2,6 +2,7 @@ import React from 'react'
 
 import GoogleLogin from 'react-google-login'
 import Cookies from 'universal-cookie'
+import config from '../config.json'
 
 class GoogleOauth extends React.Component{
     render(){
@@ -9,16 +10,38 @@ class GoogleOauth extends React.Component{
             console.log(response)
             // send request to backend
             //set cookie
-            const cookies = new Cookies()
-            cookies.set('isGoogle','true',{path:'/'})
-            cookies.set('userName',response['gt']['rU'],{path:'/'})
-            cookies.set('userPhoto',response['gt']['zJ'],{path:'/'})
-            cookies.set('alert','登入成功',{path:'/'})
-            //let tokenId = response['tokenId']
 
-            cookies.set('sessionId',"fake",{path:'/'})
+            // push server data
+            let data = {
+                'email': response['tokenId'],
+            }
 
-            window.location.replace('/')
+            const url = config['baseURL']
+            fetch(url,{
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'user-agent': 'tnfsa-lunch-front-react',
+                })
+            }).then(response =>{
+                if(response.status <300 && response >= 200) {
+                    //good
+                    const data = JSON.stringify(response)
+                    window.alert(data)
+                    // add cookies
+                    const cookies = new Cookies()
+                    cookies.set('session',data['access_token'],{path:'/'})
+                    cookies.set('isGoogle','true',{path:'/'})
+                    cookies.set('userName',response['gt']['rU'],{path:'/'})
+                    cookies.set('alert','登入成功',{path:'/'})
+                    window.location.replace('/')
+                }else{
+                    window.alert('伺服器錯誤，請稍後再試')
+                    window.location.replace('#/login')
+                }
+            })
         };
         return(
             <>

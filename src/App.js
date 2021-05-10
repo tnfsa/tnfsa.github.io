@@ -1,7 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-
 import {HashRouter,Switch,Route} from 'react-router-dom'
+
+import OfflineDetect from "./components/offlineDetect";
 
 import Homepage from './page/main'
 import Login from './page/login'
@@ -16,7 +17,7 @@ import Advanced from './page/sells/advanced'
 import Footer from "./components/footer";
 import CodeOfConduct from "./page/codeofconduct"
 import Privacy from './page/policy'
-import OfflineDetect from "./components/offlineDetect";
+import Signup from './page/signup'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/config/advanced/:id" component={Advanced} />
             <Route path="/privacy" component={Privacy}/>
             <Route path="/COC" component={CodeOfConduct} />
+            <Route path="/signup" component={Signup} />
             <Route path="/" component={Homepage} />
         </Switch>
         <Footer />

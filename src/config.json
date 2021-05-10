@@ -1,0 +1,4 @@
+{
+    "baseURL": "t22.tfcis.org:10022",
+    "onlinePolling": "https://tnfsacec.github.io/file/online.json"
+}

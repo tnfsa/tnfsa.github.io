@@ -19,7 +19,6 @@ class Navibar extends React.Component{
         combination['isGoogle'] ? send.push(true):send.push(false)
         combination['isSells'] ? send.push(true):send.push(false)
         combination['sessionId'] ? send.push(true):send.push(false)
-
         this.state = {
             isGoogle: send[0],
             isSells: send[1],
@@ -38,7 +37,6 @@ class Navibar extends React.Component{
             cookies.remove('isSells')
             cookies.remove('sessionId')
             cookies.remove('userName')
-            cookies.remove('userName')
             cookies.remove('userPhoto')
             cookies.set('alert','登出成功',{path: '/'})
             //reload page
@@ -52,8 +50,8 @@ class Navibar extends React.Component{
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="#/restaurant">&ensp;餐廳</Nav.Link>
-                            {this.state.sells && <NavDropdown title="店家管理" id="basic-nav-dropdown">
+                            <Nav.Link href="#/restaurant">餐廳</Nav.Link>
+                            {this.state.isSells && <NavDropdown title="店家管理" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#/config/store">商家設定</NavDropdown.Item>
                                 <NavDropdown.Item href="#/config/menu">菜單設定</NavDropdown.Item>
                             </NavDropdown>}
@@ -68,7 +66,10 @@ class Navibar extends React.Component{
                                 <NavDropdown.Item onClick={signOut}>登出</NavDropdown.Item>
                             </NavDropdown>
                             :
-                            <Nav.Link href="#/login">登入</Nav.Link>}
+                            <Nav>
+                                <Nav.Link href="#/signup">註冊</Nav.Link>
+                                <Nav.Link href="#/login">登入</Nav.Link>
+                            </Nav>}
                     </Navbar.Collapse>
                 </Navbar>
             </React.Fragment>
