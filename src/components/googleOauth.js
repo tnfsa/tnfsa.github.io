@@ -13,7 +13,7 @@ class GoogleOauth extends React.Component{
 
             // push server data
             let data = {
-                'email': response['tokenId'],
+                'token': response['tokenId'],
             }
 
             const url = config['baseURL'] + '/google'
