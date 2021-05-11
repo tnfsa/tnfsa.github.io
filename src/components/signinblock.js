@@ -39,7 +39,7 @@ class Signinblock extends React.Component{
                 window.alert('1.伺服器聯絡失敗')
             }).then(response => {
                 // file sent success
-                if(response.status <300 && response >= 200){
+                if(response.status <300 && response.status >= 200){
                     //good
                     const data = JSON.stringify(response)
                     window.alert(data)
@@ -66,7 +66,7 @@ class Signinblock extends React.Component{
                         window.alert('2.伺服器聯絡失敗')
                     }).then(response => {
                         // file sent success
-                        if(response.status <300 && response >= 200){
+                        if(response.status <300 && response.status >= 200){
                             //good
                             const getData = JSON.stringify(response)
                             window.alert(data)

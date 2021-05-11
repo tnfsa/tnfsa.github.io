@@ -62,7 +62,7 @@ class Signupblock extends React.Component{
             }).then(response => {
                 // file sent success
 
-                if(response.status <300 && response >= 200){
+                if(response.status <300 && response.status >= 200){
                     //good
                     window.alert(JSON.stringify(response))
                     // add cookies

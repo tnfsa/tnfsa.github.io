@@ -6,12 +6,10 @@ import config from '../config.json'
 
 class GoogleOauth extends React.Component{
     render(){
+        const googleCloudPlatformIdActual = config['googleCloudPlatformId']+".apps.googleusercontent.com"
         const responseGoogle = (response) => {
             console.log(response)
             // send request to backend
-            //set cookie
-
-            // push server data
             let data = {
                 'token': response['tokenId'],
             }
@@ -26,7 +24,7 @@ class GoogleOauth extends React.Component{
                     'user-agent': 'tnfsa-lunch-front-react',
                 })
             }).then(response =>{
-                if(response.status <300 && response >= 200) {
+                if(response.status <300 && response.status >= 200) {
                     //good
                     const data = JSON.stringify(response)
                     window.alert(data)
@@ -38,7 +36,7 @@ class GoogleOauth extends React.Component{
                     cookies.set('alert','登入成功',{path:'/'})
                     window.location.replace('/')
                 }else{
-                    window.alert('伺服器錯誤，請稍後再試')
+                    window.alert(response.status+': \n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員')
                     window.location.replace('#/login')
                 }
             })
@@ -46,10 +44,11 @@ class GoogleOauth extends React.Component{
         return(
             <>
                 <GoogleLogin
-                    clientId="1081268402297-stef8id8lhkhjd7lvh1de82eubmcn3re.apps.googleusercontent.com"
+                    clientId={googleCloudPlatformIdActual}
                     buttonText="使用 Google 登入"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
+                    hostedDomain={config['gmailSuffix']}
                     cookiePolicy={"single_host_origin"}
                 />
             </>
