@@ -16,13 +16,17 @@ import MenuSetting from './page/sells/menu'
 import Advanced from './page/sells/advanced'
 import Footer from "./components/footer";
 import CodeOfConduct from "./page/codeofconduct"
-import Privacy from './page/policy'
+import Privacy from './page/privacy'
 import Signup from './page/signup'
+import Navibar from "./components/navigationbar";
+import Notification from "./components/Notification";
 
 function App() {
   return (
       <HashRouter>
           <OfflineDetect />
+          <Navibar />
+          <Notification />
         <Switch>
             <Route path="/login" component={Login} />
             <Route path="/restaurant" component={Restaurant} />

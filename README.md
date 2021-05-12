@@ -5,9 +5,9 @@
 4. To run this app functionally you still need another [server](https://github.com/tnfsa/lunch-back) running backend
 
 # Specialities
-1. It is connected to the google oauth api 
+1. It is connected to the Google oauth api 
 2. You can view and order what you what to eat in the page
-
+3. It is operated in pwa, increasing lots of advantages
 # How to build
 1. install npm
 2. go to the main folder

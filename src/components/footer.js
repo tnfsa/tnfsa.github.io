@@ -6,8 +6,8 @@ class Footer extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <hr />
-                <Container className={"p-3 mb-2 bg-dark text-white"}>
+                <div className={"p-3 mb-2 bg-dark text-white"}>
+                    <Container>
                     <Row>
                         <Col>
                             <Link to={"/privacy"}>隱私權聲明</Link>、
@@ -20,7 +20,8 @@ class Footer extends React.Component{
                             <a href='https://neodoggy.github.io/' rel="noreferrer noopener" target='_blank'>Neodoggy</a>
                         </Col>
                     </Row>
-                </Container>
+                    </Container>
+                </div>
             </React.Fragment>
         )
     }

@@ -1,6 +1,4 @@
 import React from 'react'
-import Navibar from "../components/navigationbar";
-import OfflineDetect from "../components/offlineDetect";
 
 class Settings extends React.Component{
     componentDidMount() {
@@ -10,9 +8,7 @@ class Settings extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <OfflineDetect/>
                 <h1 style={{textAlign: 'center'}}>設定</h1>
-                <Navibar />
             </React.Fragment>
         )
     }

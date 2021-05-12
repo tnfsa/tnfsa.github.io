@@ -1,11 +1,9 @@
 import React from 'react'
 
-import Navibar from "../../components/navigationbar";
 import StoreBlock from '../../components/Storeblock'
 import {
     Container
 } from 'react-bootstrap'
-import OfflineDetect from "../../components/offlineDetect";
 
 class Restaurant extends React.Component{
     componentDidMount() {
@@ -15,9 +13,7 @@ class Restaurant extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <OfflineDetect/>
                 <h1 style={{textAlign: 'center'}}>餐廳</h1>
-                <Navibar />
                 <Container>
                     <StoreBlock />
                 </Container>
