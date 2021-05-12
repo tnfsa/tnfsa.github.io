@@ -46,7 +46,7 @@ class Signupblock extends React.Component{
                 'token': token.value
             }
 
-            let url = config.baseURL + '/register'
+            let url = config.baseURL + 'register'
             //send request
             fetch(url,{
                 method: 'POST',

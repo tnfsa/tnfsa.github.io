@@ -14,7 +14,7 @@ class GoogleOauth extends React.Component{
                 'token': response['tokenId'],
             }
 
-            const url = config['baseURL'] + '/google'
+            const url = config['baseURL'] + 'google'
             fetch(url,{
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -50,6 +50,8 @@ class GoogleOauth extends React.Component{
                     onFailure={responseGoogle}
                     hostedDomain={config['gmailSuffix']}
                     cookiePolicy={"single_host_origin"}
+                    uxMode={"redirect"}
+                    redirectUri={config['project']}
                 />
             </>
         )

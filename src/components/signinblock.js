@@ -25,7 +25,7 @@ class Signinblock extends React.Component{
                 'email': email.value,
                 'password': passwd.value,
             }
-            let url = config.baseURL + '/login'
+            let url = config.baseURL + 'login'
             fetch(url,{
                 method: 'POST',
                 body: JSON.stringify(data),
@@ -53,7 +53,8 @@ class Signinblock extends React.Component{
                     const cookies = new Cookies()
                     cookies.set('session',data['access_token'],{path: '/'})
                     //get user information
-                    fetch(url,{
+                    const nextUrl = config['baseURL'] + "me"
+                    fetch(nextUrl,{
                         method: 'GET',
                         headers: new Headers({
                             'Authorization': 'Bearer ' + data['access_token'],
