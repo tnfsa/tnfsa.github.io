@@ -33,9 +33,7 @@ class GoogleOauth extends React.Component {
                 console.log(error.message)
                 let response = JSON.parse(error.message)
                 window.alert(
-                    `${response.message}
-                        與伺服器連線錯誤，請再試一次
-                        如果問題無法解決，請聯絡管理員`
+                    `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
                 )
                 window.location.replace('#/login')
             }).then((response) => {

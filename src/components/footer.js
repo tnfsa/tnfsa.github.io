@@ -6,13 +6,15 @@ class Footer extends React.Component{
     render(){
         return(
             <React.Fragment>
+                <br />
                 <div className={"p-3 mb-2 bg-dark text-white"}>
                     <Container>
                         <br />
                         <Row>
                             <Col>
                                 <Link to="/privacy">隱私權聲明</Link>、
-                                <Link to="/COC">使用者使用條款</Link>
+                                <Link to="/COC">使用者使用條款</Link>、
+                                <Link to="/feedback">意見反饋</Link>
                             </Col>
                             <Col>
                                 關於我們：<br />

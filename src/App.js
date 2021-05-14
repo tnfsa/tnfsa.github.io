@@ -20,6 +20,7 @@ import Advanced from './page/sells/advanced'
 import CodeOfConduct from "./page/codeofconduct"
 import Privacy from './page/privacy'
 import Signup from './page/signup'
+import Feedback from './page/feedback';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
             <Route path="/restaurant" component={Restaurant} />
             <Route path="/settings" component={Settings} />
             <Route path="/purchase" component={Purchase} />
-            <Route path="/order" component={Order} />
+            <Route path="/order/:id" component={Order} />
             <Route path="/history" component={Histories} />
             <Route path="/config/store" component={StoreSetting} />
             <Route path="/config/menu" component={MenuSetting} />
@@ -40,6 +41,7 @@ function App() {
             <Route path="/privacy" component={Privacy}/>
             <Route path="/COC" component={CodeOfConduct} />
             <Route path="/signup" component={Signup} />
+            <Route path="/feedback" component={Feedback}/>
             <Route path="/" component={Homepage} />
         </Switch>
         <Footer />
