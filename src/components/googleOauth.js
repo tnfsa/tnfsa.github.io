@@ -4,44 +4,53 @@ import GoogleLogin from 'react-google-login'
 import Cookies from 'universal-cookie'
 import config from '../config.json'
 
-class GoogleOauth extends React.Component{
-    render(){
-        const googleCloudPlatformIdActual = config['googleCloudPlatformId']+".apps.googleusercontent.com"
-        const responseGoogle = (response) => {
-            console.log(response)
+class GoogleOauth extends React.Component {
+    render() {
+        const googleCloudPlatformIdActual = config['googleCloudPlatformId'] + ".apps.googleusercontent.com"
+        const responseGoogle = (google_response) => {
+            console.log(JSON.stringify(google_response))
             // send request to backend
             let data = {
-                'token': response['tokenId'],
+                'token': google_response['accessToken'],
             }
 
             const url = config['baseURL'] + 'google'
-            fetch(url,{
+            fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: new Headers({
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'user-agent': 'tnfsa-lunch-front-react',
+                    'Accept': 'application/json'
                 })
-            }).then(response =>{
-                if(response.status <300 && response.status >= 200) {
-                    //good
-                    const data = JSON.stringify(response)
-                    window.alert(data)
-                    // add cookies
-                    const cookies = new Cookies()
-                    cookies.set('session',data['access_token'],{path:'/'})
-                    cookies.set('isGoogle','true',{path:'/'})
-                    cookies.set('userName',response['gt']['rU'],{path:'/'})
-                    cookies.set('alert','登入成功',{path:'/'})
-                    window.location.replace('/')
-                }else{
-                    window.alert(response.status+': \n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員')
-                    window.location.replace('#/login')
+            }).then(response => {
+                if (response.ok) {
+                    return response.json()
                 }
+                return response.text().then(res => {
+                    throw new Error(res)
+                })
+            }).catch((error) => {
+                console.log(error.message)
+                let response = JSON.parse(error.message)
+                window.alert(
+                    `${response.message}
+                        與伺服器連線錯誤，請再試一次
+                        如果問題無法解決，請聯絡管理員`
+                )
+                window.location.replace('#/login')
+            }).then((response) => {
+                // add cookies
+                const cookies = new Cookies()
+                cookies.set('session', response['access_token'], {path: '/'})
+                cookies.set('isGoogle', 'true', {path: '/'})
+                cookies.set('alert', '登入成功', {path: '/'})
+                cookies.set('userName', google_response?.profileObj?.givenName, {path: '/'})
+
+
+                window.location.replace('/')
             })
         };
-        return(
+        return (
             <>
                 <GoogleLogin
                     clientId={googleCloudPlatformIdActual}
@@ -50,8 +59,8 @@ class GoogleOauth extends React.Component{
                     onFailure={responseGoogle}
                     hostedDomain={config['gmailSuffix']}
                     cookiePolicy={"single_host_origin"}
-                    uxMode={"redirect"}
-                    redirectUri={config['project']}
+                    //uxMode={"redirect"}
+                    //redirectUri={config['project']}
                 />
             </>
         )

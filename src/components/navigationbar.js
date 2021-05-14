@@ -18,7 +18,7 @@ class Navibar extends React.Component{
         let send = []
         combination['isGoogle'] ? send.push(true):send.push(false)
         combination['isSells'] ? send.push(true):send.push(false)
-        combination['sessionId'] ? send.push(true):send.push(false)
+        combination['session'] ? send.push(true):send.push(false)
         this.state = {
             isGoogle: send[0],
             isSells: send[1],
@@ -35,7 +35,7 @@ class Navibar extends React.Component{
             const cookies = new Cookies()
             cookies.remove('isGoogle')
             cookies.remove('isSells')
-            cookies.remove('sessionId')
+            cookies.remove('session')
             cookies.remove('userName')
             cookies.remove('userPhoto')
             cookies.set('alert','登出成功',{path: '/'})

@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import {HashRouter,Switch,Route} from 'react-router-dom'
 
 import OfflineDetect from "./components/offlineDetect";
+import Navibar from "./components/navigationbar";
+import Notification from "./components/Notification";
+import Footer from "./components/footer";
 
 import Homepage from './page/main'
 import Login from './page/login'
@@ -14,12 +17,9 @@ import Histories from './page/customer/history'
 import StoreSetting from './page/sells/store'
 import MenuSetting from './page/sells/menu'
 import Advanced from './page/sells/advanced'
-import Footer from "./components/footer";
 import CodeOfConduct from "./page/codeofconduct"
 import Privacy from './page/privacy'
 import Signup from './page/signup'
-import Navibar from "./components/navigationbar";
-import Notification from "./components/Notification";
 
 function App() {
   return (
