@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Cookies from "universal-cookie";
+import config from '../config.json'
 
 class Notification extends React.Component{
     constructor(props) {
@@ -22,6 +23,7 @@ class Notification extends React.Component{
     render(){
         return(
             <React.Fragment>
+                <p className="p-3 mb-2 bg-success text-white">{"version: "+config['version']}</p>
                 {this.state.alert && <p className="p-3 mb-2 bg-success text-white">
                     {this.state.alertSentence}
                 </p>}
