@@ -35,17 +35,20 @@ class GoogleOauth extends React.Component {
                 window.alert(
                     `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
                 )
-                window.location.replace('#/login')
             }).then((response) => {
                 // add cookies
+                if(google_response['profileObj']['givenName'] === undefined){
+                    return
+                }
                 const cookies = new Cookies()
                 cookies.set('session', response['access_token'], {path: '/'})
                 cookies.set('isGoogle', 'true', {path: '/'})
                 cookies.set('alert', '登入成功', {path: '/'})
                 cookies.set('userName', google_response?.profileObj?.givenName, {path: '/'})
 
-
                 window.location.replace('/')
+            }).catch(err=>{
+                console.log(`Failed: ${err}`)
             })
         };
         return (

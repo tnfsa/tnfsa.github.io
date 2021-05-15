@@ -2,6 +2,7 @@ import React from 'react'
 import {Col, Container, Row} from "react-bootstrap";
 import Cookies from 'universal-cookie'
 import config from '../config.json'
+import LoadingSpinner from '../components/loadingspinner'
 
 class Signupblock extends React.Component{
 
@@ -43,44 +44,45 @@ class Signupblock extends React.Component{
                 'email': email.value,
                 'name': username.value,
                 'password': passwd.value,
-                'token': token.value
+                'registration_code': token.value
             }
 
             let url = config.baseURL + 'register'
             //send request
-            fetch(url,{
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'user-agent': 'tnfsa-lunch-front-react',
-                })
-            }).catch(error =>{
-                    console.log('Error:',error)
-                    window.alert('與伺服器聯絡失敗')
-            }).then(response => {
-                // file sent success
 
-                if(response.status <300 && response.status >= 200){
-                    //good
-                    window.alert(JSON.stringify(response))
-                    // add cookies
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////
-                    //what if failed
-                    if(true){
-                        return
+            this.setState({loading: true},()=>{
+                fetch(url,{
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
                     }
-                    ////////////////////////////////////////////////////////////////////////////////////////////////////
+                }).then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    return response.text().then(res => {
+                        throw new Error(res)
+                    })
+                }).catch((error) => {
+                    console.log(error.message)
+                    let response = JSON.parse(error.message)
+                    window.alert(
+                        `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
+                    )
+                    this.setState({loading: false})
+                }).then(response => {
+                    // add cookies
                     const cookies = new Cookies()
-                    cookies.set('alert','註冊成功',{path: '/'})
-                    //redirect to main page
-                    document.location.replace('/')
-                }else{
-                    //bad
-                    window.alert(response.status+': \n註冊失敗，請再試一次\n如果問題無法解決，請聯絡管理員')
-                    document.location.replace('#/login')
-                }
+                    cookies.set('session', response['access_token'], {path: '/'})
+                    cookies.set('alert', '註冊成功', {path: '/'})
+                    window.location.replace('/login')
+                    this.setState({loading: false})
+                }).catch(err=>{
+                    console.log(`Failed: ${err}`)
+                    this.setState({loading: false})
+                })
             })
 
         }
@@ -114,7 +116,7 @@ class Signupblock extends React.Component{
                     <Row>
                         <Col></Col>
                         <Col></Col>
-                        <Col><button type="submit" className="btn btn-primary btn-block" onClick={Send}>Submit</button></Col>
+                        <Col><button type="submit" className="btn btn-primary btn-block" onClick={Send}>{this.state.loading?<LoadingSpinner />:<p>送出</p>}</button></Col>
                     </Row>
                 </form>
             </Container>

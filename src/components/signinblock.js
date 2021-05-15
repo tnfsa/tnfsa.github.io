@@ -32,61 +32,29 @@ class Signinblock extends React.Component{
                 headers: new Headers({
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'user-agent': 'tnfsa-lunch-front-react',
                 })
-            }).catch(error =>{
-                console.log('Error:',error)
-                window.alert('1.伺服器聯絡失敗')
             }).then(response => {
-                // file sent success
-                if(response.status <300 && response.status >= 200){
-                    //good
-                    const data = JSON.stringify(response)
-                    window.alert(data)
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    // what if failed
-                    if(true){
-                        return
-                    }
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    // add cookies
-                    const cookies = new Cookies()
-                    cookies.set('session',data['access_token'],{path: '/'})
-                    //get user information
-                    const nextUrl = config['baseURL'] + "me"
-                    fetch(nextUrl,{
-                        method: 'GET',
-                        headers: new Headers({
-                            'Authorization': 'Bearer ' + data['access_token'],
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'user-agent': 'tnfsa-lunch-front-react',
-                        })
-                    }).catch(error =>{
-                        console.log('Error:',error)
-                        window.alert('2.伺服器聯絡失敗')
-                    }).then(response => {
-                        // file sent success
-                        if(response.status <300 && response.status >= 200){
-                            //good
-                            const getData = JSON.stringify(response)
-                            window.alert(data)
-                            // add cookies
-                            cookies.set('userName',getData['name'],{path: '/'})
-                            cookies.set('alert','登入成功',{path: '/'})
-                        }else{
-                            //bad
-                            window.alert(response.status+': \n名稱取得錯誤，請再試一次\n如果問題無法解決，請聯絡管理員')
-                        }
-                    })
-
-                    //redirect to main page
-                    document.location.replace('/')
-                }else{
-                    //bad
-                    window.alert(response.status+': \n登入失敗，請再試一次\n如果問題無法解決，請聯絡管理員')
-                    document.location.replace('#/login')
+                if (response.ok) {
+                    return response.json()
                 }
+                return response.text().then(res => {
+                    throw new Error(res)
+                })
+            }).catch((error) => {
+                console.log(error.message)
+                let response = JSON.parse(error.message)
+                window.alert(
+                    `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
+                )
+            }).then(response => {
+                // add cookies
+                const cookies = new Cookies()
+                cookies.set('session', response['access_token'], {path: '/'})
+                cookies.set('alert', '登入成功', {path: '/'})
+
+                window.location.replace('/')
+            }).catch(err=>{
+                console.log(`Failed: ${err}`)
             })
 
         }
