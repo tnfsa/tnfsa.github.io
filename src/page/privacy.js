@@ -31,6 +31,9 @@ class Privacy extends React.Component{
                     document.getElementById('policy').appendChild(ptitle)
                     document.getElementById('policy').innerHTML += "<p>" + json['context'][i].replace(toBeReplace, "<br>") + "</p>"
                 }
+                let updateTime = document.createElement('H3')
+                updateTime.innerText = "最後更新日期："+json['date']
+                document.getElementById('policy').appendChild(updateTime)
             })
 
     }

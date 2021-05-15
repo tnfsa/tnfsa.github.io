@@ -27,6 +27,9 @@ class CodeofConduct extends React.Component{
                     document.getElementById('COC').appendChild(ptitle)
                     document.getElementById('COC').innerHTML += "<p>" + json['context'][i].replace(toBeReplace, "<br>") + "</p>"
                 }
+                let updateTime = document.createElement('H3')
+                updateTime.innerText = "最後更新日期："+json['date']
+                document.getElementById('COC').appendChild(updateTime)
             })
     }
 
