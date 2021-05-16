@@ -43,18 +43,42 @@ class Signinblock extends React.Component{
             }).catch((error) => {
                 console.log(error.message)
                 let response = JSON.parse(error.message)
-                window.alert(
-                    `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
-                )
+                window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
             }).then(response => {
                 // add cookies
                 const cookies = new Cookies()
                 cookies.set('session', response['access_token'], {path: '/'})
                 cookies.set('alert', '登入成功', {path: '/'})
-
-                window.location.replace('/')
+                return response
             }).catch(err=>{
                 console.log(`Failed: ${err}`)
+            }).then(loginResponse =>{
+
+                //get account information
+
+                const meUrl = config['baseURL'] + 'me'
+                fetch(meUrl,{
+                    method: 'GET',
+                    headers:{
+                        "Accept": "application/json",
+                        "Authorization": `Bearer ${loginResponse['access_token']}`
+                    }
+                }).then(response=>{
+                    if(response.ok){
+                        return response.json()
+                    }
+                    return response.text().then(err =>{
+                        throw new Error(err)
+                    })
+                }).catch(error=>{
+                    console.log(error.message)
+                    let response = JSON.parse(error.message)
+                    window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
+                }).then(response=>{
+                    const cookies = new Cookies()
+                    cookies.set('name',response['name'],{path:'/'})
+                    document.location.replace('/')
+                })
             })
 
         }

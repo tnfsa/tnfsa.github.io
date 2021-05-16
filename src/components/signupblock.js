@@ -6,8 +6,11 @@ import LoadingSpinner from '../components/loadingspinner'
 
 class Signupblock extends React.Component{
 
-    componentDidMount() {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false
+        }
     }
 
     render(){
@@ -49,41 +52,43 @@ class Signupblock extends React.Component{
 
             let url = config.baseURL + 'register'
             //send request
-
-            this.setState({loading: true},()=>{
-                fetch(url,{
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        return response.json()
-                    }
-                    return response.text().then(res => {
-                        throw new Error(res)
-                    })
-                }).catch((error) => {
-                    console.log(error.message)
-                    let response = JSON.parse(error.message)
-                    window.alert(
-                        `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
-                    )
-                    this.setState({loading: false})
-                }).then(response => {
-                    // add cookies
-                    const cookies = new Cookies()
-                    cookies.set('session', response['access_token'], {path: '/'})
-                    cookies.set('alert', '註冊成功', {path: '/'})
-                    window.location.replace('/login')
-                    this.setState({loading: false})
-                }).catch(err=>{
-                    console.log(`Failed: ${err}`)
-                    this.setState({loading: false})
-                })
+            this.setState({
+                loading: true
             })
+            fetch(url,{
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                return response.text().then(res => {
+                    throw new Error(res)
+                })
+            }).catch((error) => {
+                console.log(error.message)
+                let response = JSON.parse(error.message)
+                window.alert(
+                    `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
+                )
+                this.setState({loading: false})
+            }).then(response => {
+                // add cookies
+                const cookies = new Cookies()
+                //cookies.set('session', response['access_token'], {path: '/'})
+                cookies.set('alert', '註冊成功', {path: '/'})
+                window.location.replace('/login')
+                this.setState({loading: false})
+            }).catch(err=>{
+                console.log(`Failed: ${err}`)
+                this.setState({loading: false})
+            }).then(this.setState(
+                {loading: false
+                }))
 
         }
 
@@ -116,7 +121,7 @@ class Signupblock extends React.Component{
                     <Row>
                         <Col></Col>
                         <Col></Col>
-                        <Col><button type="submit" className="btn btn-primary btn-block" onClick={Send}>{this.state.loading?<LoadingSpinner />:<p>送出</p>}</button></Col>
+                        <Col>{this.state.loading? <button className="btn btn-primary btn-block" type="submit">請稍後</button>:<button className="btn btn-primary btn-block" type='submit' onClick={Send}>送出</button>}</Col>
                     </Row>
                 </form>
             </Container>

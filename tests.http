@@ -1,0 +1,17 @@
+POST https://lunchapi.hsuan.app/api/register
+Accept: 'application/json'
+Content-Type: 'application/json'
+
+{"name":"wei","email":"a@gm.tnfsh.tn.edu.tw","password":"A123456789","access_token":"AABBCCDD"}
+
+###
+POST https://lunchapi.hsuan.app/api/login
+Accept: 'application/json'
+Content-Type: 'application/json'
+
+{"email":"a@gm.tnfsh.tn.edu.tw","password":"A123456789"}
+
+###
+GET https://lunchapi.hsuan.app/api/me
+Accept: 'application/json'
+Authorization: Bearer 2|JD9Rrlr845y6lsmouFWvbjMyknDKXoKxe8Ceo5ZN

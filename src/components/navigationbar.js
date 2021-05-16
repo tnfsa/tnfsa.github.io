@@ -23,7 +23,7 @@ class Navibar extends React.Component{
             isGoogle: send[0],
             isSells: send[1],
             isLoggedIn: send[2],//!cookies.get('loggedin') || true
-            username: combination['userName'] || "Anonymous",
+            username: combination['name'] || "Anonymous",
         }
     }
 
@@ -36,8 +36,7 @@ class Navibar extends React.Component{
             cookies.remove('isGoogle')
             cookies.remove('isSells')
             cookies.remove('session')
-            cookies.remove('userName')
-            cookies.remove('userPhoto')
+            cookies.remove('nameame')
             cookies.set('alert','登出成功',{path: '/'})
             //reload page
             window.location.replace('/')
