@@ -12,8 +12,8 @@ class Footer extends React.Component{
                         <br />
                         <Row>
                             <Col>
-                                <Link to="/privacy">隱私權聲明</Link>、
-                                <Link to="/COC">使用者使用條款</Link>、
+                                <Link to="/privacy">隱私權聲明</Link><br />
+                                <Link to="/COC">使用者使用條款</Link><br />
                                 <Link to="/feedback">意見反饋</Link>
                             </Col>
                             <Col>

@@ -1,0 +1,209 @@
+# Register
+POST https://lunchapi.hsuan.app/api/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name"     : "admin",
+  "email"    : "a8102366@gm.tnfsh.tn.edu.tw",
+  "password" : "strong_password"
+}
+
+> {%
+    client.global.set("auth_token", response.body.json.access_token);
+%}
+###
+# Register store manager
+POST https://lunchapi.hsuan.app/api/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name"     : "Store Manager",
+  "email"    : "a8102366@gm.tnfsh.tn.edu.tw",
+  "password" : "strong_password",
+  "registration_code" : "AABBCCDD"
+}
+
+> {%
+    client.global.set("auth_token", response.body.json.access_token);
+%}
+###
+# Login
+POST https://lunchapi.hsuan.app/api/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email"    : "a8102366@gm.tnfsh.tn.edu.tw",
+  "password" : "strong_password"
+}
+
+> {%
+    client.global.set("auth_token", response.body.access_token);
+%}
+###
+# Login With Admin
+POST https://lunchapi.hsuan.app/api/login/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email"    : "admin@admin.com",
+  "password" : "adminadmin"
+}
+
+> {%
+    client.global.set("auth_token", response.body.access_token);
+%}
+###
+
+# Google
+POST https://lunchapi.hsuan.app/api/google
+Content-Type: application/json
+Accept: application/json
+
+{
+  "token": "000"
+}
+
+> {%
+    client.global.set("auth_token", response.body.json.access_token);
+%}
+###
+
+# Change password
+POST https://lunchapi.hsuan.app/api/change_password
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email"    : "a8102366@gm.tnfsh.tn.edu.tw",
+  "password" : "strong_password",
+  "new_password": "strong_password"
+}
+
+###
+
+# User
+GET https://lunchapi.hsuan.app/api/me
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+# List Stores (Not authenticated)
+GET https://lunchapi.hsuan.app/api/stores
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# List Stores
+GET https://lunchapi.hsuan.app/api/stores
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# Create Stores
+POST https://lunchapi.hsuan.app/api/stores
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+  "name"    : "Test Store"
+}
+> {%
+client.global.set("store_id", response.body.id);
+%}
+
+###
+
+# Show
+GET https://lunchapi.hsuan.app/api/stores/{{store_id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# Delete
+DELETE https://lunchapi.hsuan.app/api/stores/{{store_id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+# Show Products
+GET https://lunchapi.hsuan.app/api/stores/{{store_id}}/products
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+# New Product
+POST https://lunchapi.hsuan.app/api/stores/{{store_id}}/products
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+    "name"    : "test",
+    "description" : "test product",
+    "price" : 50,
+    "store_id" : "{{store_id}}",
+    "image" : "https://google.com/favicon.ico"
+}
+> {%
+client.global.set("product_id", response.body.id);
+%}
+
+###
+# Show Product
+GET https://lunchapi.hsuan.app/api/stores/{{store_id}}/products/{{product_id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+# List Transactions
+GET https://lunchapi.hsuan.app/api/transactions
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###
+
+# Create
+POST https://lunchapi.hsuan.app/api/transactions
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+    "name"    : "test",
+    "qty" : 2,
+    "store_id" : "{{store_id}}",
+    "product_id" : "{{product_id}}",
+    "comment" : "hi",
+    "options" : {
+        "麵體": "硬",
+        "口味": "辣"
+    }
+}
+> {%
+client.global.set("transaction_id", response.body.id);
+%}
+
+###
+
+# Show
+GET https://lunchapi.hsuan.app/api/transactions/{{transaction_id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
+
+###

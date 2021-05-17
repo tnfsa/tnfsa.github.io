@@ -15,3 +15,17 @@ Content-Type: 'application/json'
 GET https://lunchapi.hsuan.app/api/me
 Accept: 'application/json'
 Authorization: Bearer 2|JD9Rrlr845y6lsmouFWvbjMyknDKXoKxe8Ceo5ZN
+
+###
+POST https://lunchapi.hsuan.app/api/stores
+Accept: 'application/json'
+Content-Type: 'application/json'
+Authorization: Bearer 2|JD9Rrlr845y6lsmouFWvbjMyknDKXoKxe8Ceo5ZN
+
+{"name": "哈哈哈哈"}
+###
+
+GET https://lunchapi.hsuan.app/api/stores
+Accept: 'application/json'
+
+
