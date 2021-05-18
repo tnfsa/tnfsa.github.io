@@ -1,12 +1,17 @@
 import React from 'react'
 
 import config from '../config.json'
+import store from "../page/sells/store";
+import {
+    Card,
+    Button,
+    Row
+} from 'react-bootstrap'
+
 
 class Liststore extends React.Component{
-    componentDidMount() {
-        //fetch store files
-        //rerender
-        //append child
+    render(){
+        let listFile = []
         const url = config['baseURL'] + 'stores'
         fetch(url,{
             method: 'GET'
@@ -25,28 +30,23 @@ class Liststore extends React.Component{
             )
             window.location.replace('#/login')
             return
-        }).then(json =>{
-            if(json['name'] === undefined){
-                document.getElementById('Chunk').innerHTML = "查無資料"
-            }else{
-                for(let i = 0;i < json['name'].length;++i){
-                    let node = document.createElement('DIV')
-                    let blockId = 'store' + i
-                    node.setAttribute('id',blockId)
-                    document.getElementById('Chunk').appendChild(node)
-
-                    let nody = document.getElementById(blockId)
-                    nody.innerHTML += <h2>{json['name'][{i}]}</h2>
-                    const linkTo = config['project'] + "order/" + json['id'][i]
-                    nody.innerHTML += <a href={linkTo}>{json['name'][i]}</a>
-                }
-            }
+        }).then(storeData =>{
+            listFile = storeData
         })
-    }
 
-    render(){
+        const ListItem = listFile.map((item)=>
+            <Card id={item.toString()}>
+                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Body>
+                    <Card.Title>{item.title}</Card.Title>
+                    <Card.Text>{item.text}</Card.Text>
+                    <Button variant="primary" target="_blank" href={item.link}>前往察看</Button>
+                </Card.Body>
+            </Card>
+        )
+
         return(
-            <div id="Chunk" />
+            {ListItem}
         )
     }
 }

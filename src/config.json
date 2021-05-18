@@ -1,6 +1,6 @@
 {
     "baseURL": "https://lunchapi.hsuan.app/api/",
-    "project": "http://localhost:3000",
+    "project": "local.sivir.pw/",
     "gmailSuffix": "gm.tnfsh.tn.edu.tw",
     "docRoot": "https://tnfsa.github.io/document/",
     "googleCloudPlatformId": "1081268402297-stef8id8lhkhjd7lvh1de82eubmcn3re",
