@@ -9,7 +9,6 @@ import {
 
 function ListStore(){
     const [data,setData] = useState([])
-
     const getData = ()=>{
         const url = config['baseURL'] + 'stores'
         fetch(url,{
@@ -28,7 +27,6 @@ function ListStore(){
                 `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
             )
             window.location.replace('#/login')
-            return
         }).then(myJson =>{
             console.log(myJson)
             setData(myJson)
@@ -58,44 +56,5 @@ function ListStore(){
         </div>
     )
 }
-
-
-/*class Liststore extends React.Component{
-    render(){
-
-        const getData = ()=>{
-            const url = config['baseURL'] + 'stores'
-            fetch(url,{
-                method: 'GET'
-            }).then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-                return response.text().then(res => {
-                    throw new Error(res)
-                })
-            }).catch((error) => {
-                console.log(error.message)
-                let response = JSON.parse(error.message)
-                window.alert(
-                    `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
-                )
-                window.location.replace('#/login')
-                return
-            }).then(storeData =>{
-                console.log(storeData)
-                setData(storeData)
-            })
-        }
-
-        const ListItem = listFile.map((item)=>
-            <p>Hello</p>
-        )
-
-        return(
-            {ListItem}
-        )
-    }
-}*/
 
 export default ListStore
