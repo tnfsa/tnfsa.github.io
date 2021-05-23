@@ -1,5 +1,8 @@
 import React from 'react'
-import {Container, Row} from "react-bootstrap";
+import {Container, Row,Col} from "react-bootstrap";
+
+import SettingOption from '../components/settingsOption'
+import SettingConfigure from '../components/settingConfigure'
 
 class Settings extends React.Component{
     componentDidMount() {
@@ -12,10 +15,12 @@ class Settings extends React.Component{
                 <h1 style={{textAlign: 'center'}}>設定</h1>
                 <Container>
                     <Row>
-
-                    </Row>
-                    <Row>
-
+                        <Col xs={3}>
+                            <SettingOption />
+                        </Col>
+                        <Col xs={7}>
+                            <SettingConfigure/>
+                        </Col>
                     </Row>
                 </Container>
             </React.Fragment>

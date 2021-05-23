@@ -33,6 +33,7 @@ class Navibar extends React.Component{
             //window.alert('logging out')
             //remove cookie
             const cookies = new Cookies()
+            cookies.remove('id')
             cookies.remove('isGoogle')
             cookies.remove('isSells')
             cookies.remove('session')

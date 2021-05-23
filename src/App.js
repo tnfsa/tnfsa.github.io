@@ -21,6 +21,7 @@ import CodeOfConduct from "./page/codeofconduct"
 import Privacy from './page/privacy'
 import Signup from './page/signup'
 import Feedback from './page/feedback';
+import NewMenu from './page/sells/newmenu'
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/order/:id" component={Order} />
             <Route path="/history" component={Histories} />
             <Route path="/config/store" component={StoreSetting} />
+            <Route path="/config/menu/new" component={NewMenu}/>
             <Route path="/config/menu" component={MenuSetting} />
             <Route path="/config/advanced/:id" component={Advanced} />
             <Route path="/privacy" component={Privacy}/>

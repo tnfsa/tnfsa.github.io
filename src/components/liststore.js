@@ -11,6 +11,7 @@ function ListStore(){
     const [data,setData] = useState([])
     const getData = ()=>{
         const url = config['baseURL'] + 'stores'
+        console.log(url)
         fetch(url,{
             method: 'GET'
         }).then(response => {

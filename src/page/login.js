@@ -4,6 +4,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import GoogleOauth from "../components/googleOauth";
 import config from "../config.json";
 import Cookies from "universal-cookie";
+import {Link} from 'react-router-dom'
 
 class Login extends React.Component{
 	componentDidMount() {
@@ -77,6 +78,7 @@ class Login extends React.Component{
 				}).then(response=>{
 					const cookies = new Cookies()
 					cookies.set('name',response['name'],{path:'/'})
+					cookies.set('id',response['id'],{path:'/'})
 					cookies.set('isSells',true,{path:'/'})
 					document.location.replace('/')
 				})
@@ -107,7 +109,7 @@ class Login extends React.Component{
 						<Row>
 							<Col></Col>
 							<Col></Col>
-							<Col><button type="submit" className="btn btn-primary btn-block" onClick={Send}>Submit</button></Col>
+							<Col><Link type="submit" className="btn btn-primary btn-block" onClick={Send}>Submit</Link></Col>
 						</Row>
 						<hr />
 						<label>其他登入方式？</label>

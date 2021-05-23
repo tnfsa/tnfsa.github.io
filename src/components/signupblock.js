@@ -2,7 +2,8 @@ import React from 'react'
 import {Col, Container, Row} from "react-bootstrap";
 import Cookies from 'universal-cookie'
 import config from '../config.json'
-import LoadingSpinner from '../components/loadingspinner'
+//import LoadingSpinner from '../components/loadingspinner'
+import {Link} from 'react-router-dom'
 
 class Signupblock extends React.Component{
 
@@ -121,7 +122,7 @@ class Signupblock extends React.Component{
                     <Row>
                         <Col></Col>
                         <Col></Col>
-                        <Col>{this.state.loading? <button className="btn btn-primary btn-block" type="submit">請稍後</button>:<button className="btn btn-primary btn-block" type='submit' onClick={Send}>送出</button>}</Col>
+                        <Col>{this.state.loading? <Link className="btn btn-primary btn-block" type="submit">請稍後</Link>:<Link className="btn btn-primary btn-block" type='submit' onClick={Send}>送出</Link>}</Col>
                     </Row>
                 </form>
             </Container>

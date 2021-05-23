@@ -12,7 +12,7 @@ function ListFood(){
     const windowUrl = window.location.href
     const parsedUrl = windowUrl.split('/')
     const getData = ()=>{
-        const url = config['baseURL'] + parsedUrl[5] + '/products'
+        const url = config['baseURL'] + "stores/" +parsedUrl[5] + '/products'
         fetch(url,{
             method: 'GET'
         }).then(response => {
