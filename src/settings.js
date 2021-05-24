@@ -38,7 +38,7 @@ export const configuration = {
     "placeholder": "新密碼",
     "submitUri": config['baseURL'] + 'change_password',
     "method": "POST",
-    "return": ["password"]
+    "return": ["passwslword"]
   },
   "activate":{
     "title": "啟動商店",
