@@ -16,7 +16,7 @@ class ToolBar extends React.Component{
         return(
             <div className="optionBar">
                 <ul>
-                    <li><Link onClick={NewOption}>新增單選</Link></li>
+                    <li><Link onClick={NewOption}><i className="fa fa-plus" aria-hidden="true">新增選項</i></Link></li>
                 </ul>
             </div>
         )

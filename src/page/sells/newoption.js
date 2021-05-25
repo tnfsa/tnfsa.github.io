@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react'
-import {Button, Card} from "react-bootstrap";
-import config from "../../config.json";
+import {Button, Card,Container} from "react-bootstrap";
 
 function NewOption(){
-
+    const json = [
+        "good",
+        "bad"
+    ]
+    const deleteFile = (node) => {
+        window.alert(node)
+    }
     const [data,setData] = useState([])
     const getData = ()=>{
-        let json = [
-            {"picUrl": "helloworld","name":"good","description":"yammy","id":"no"},
-            {"picUrl": "helloworld","name":"good","description":"yammy","id":"no"}
-        ]
         setData(json)
     }
     useEffect(()=>{
@@ -18,26 +19,27 @@ function NewOption(){
 
     return(
         <React.Fragment>
-            <h1 style={{textAlign: 'center'}}>菜單設定</h1>
+            <h1 style={{textAlign: 'center'}}>選項設定</h1>
+            <Container>
 
-            <input />
+                <input />
 
-            {
-                data && data.length>0 && data.map((item)=>
-                    <Card>
-                        <Card.Img variant="top" src={item.picUrl} />
-                        <Card.Body style={{display:"flex"}}>
-                            <div>
-                                <Card.Title>{item.name}</Card.Title>
-                                <Card.Text>{item.description}</Card.Text>
-                            </div>
-                            <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" href={config["project"]+'#/order/'+item.id}>立即前往</Button>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                )
-            }
+                {
+                    data && data.length>0 && data.map((name,index)=>
+                        <Card>
+                            <Card.Body style={{display:"flex"}}>
+                                <div>
+                                    <Card.Title>{name}</Card.Title>
+                                </div>
+                                <div style={{marginLeft:"auto"}}>
+                                    <Button variant="primary" onClick={() => deleteFile(index)}>刪除</Button>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    )
+                }
+            </Container>
+
 
         </React.Fragment>
     )

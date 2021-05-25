@@ -36,7 +36,7 @@ class CodeofConduct extends React.Component{
     render() {
         return(
             <React.Fragment>
-                <h1 style={{textAlign: 'center'}}>使用者使用條款</h1>
+                <h1 style={{textAlign: 'center'}}>行為準則</h1>
                 <Container>
                     <br />
                     <p id="title" />
