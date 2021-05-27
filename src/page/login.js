@@ -107,9 +107,9 @@ class Login extends React.Component{
                         </div>
                     </div>*/}
 						<Row>
-							<Col></Col>
-							<Col></Col>
-							<Col><Link type="submit" className="btn btn-primary btn-block" onClick={Send}>Submit</Link></Col>
+							<Col />
+							<Col />
+							<Col><Link className="btn btn-primary btn-block" onClick={Send}>Submit</Link></Col>
 						</Row>
 						<hr />
 						<label>其他登入方式？</label>
