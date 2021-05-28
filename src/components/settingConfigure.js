@@ -20,7 +20,8 @@ class SettingConfigure extends React.Component{
                 method: configuration[urlSelected]['method'],
                 headers:{
                     "Accept": "application/json",
-                    "Authorization": `Bearer ${collection['session']}`
+                    "Authorization": `Bearer ${collection['session']}`,
+                    "Content-Type": "application/json"
                 }
             }
             if(configuration[urlSelected]['method'] === 'POST'){
