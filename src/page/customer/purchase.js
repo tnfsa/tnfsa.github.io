@@ -1,4 +1,5 @@
 import React from 'react'
+import FoodContent from '../../components/customers/foodcontent'
 
 class Purchase extends React.Component{
     componentDidMount() {
@@ -9,7 +10,8 @@ class Purchase extends React.Component{
         return(
             <React.Fragment>
                 <h1 style={{textAlign: 'center'}}>訂餐</h1>
-                
+                {/*餐點內容*/}
+                <FoodContent />
             </React.Fragment>
         )
     }
