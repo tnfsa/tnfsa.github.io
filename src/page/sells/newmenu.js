@@ -1,17 +1,15 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {Col, Container, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import GoogleOauth from "../../components/googleOauth";
 import config from "../../config.json";
-//import Cookies from "universal-cookie";
+import Cookies from "universal-cookie";
 
 class ToolBar extends React.Component{
     render(){
         const NewOption = ()=>{
             const popupUrl = config['project'] + '#/config/new/option'
-            const popupWindow = window.open(popupUrl,'popUpWindow','location=no,height=500,width=400,top=100,left=300')
-
-
+            const popupWindow = window.open(popupUrl,/*'popUpWindow',*/'','location=no,height=500,width=400,top=100,left=300')
+            popupWindow.body = "功能未開放"
         }
         return(
             <div className="optionBar">
@@ -23,39 +21,81 @@ class ToolBar extends React.Component{
     }
 }
 
-class MenuConfigurator extends React.Component{
-    render(){
-        const Send = () =>{
-            window.alert(`sending message`)
-        }
-        return(
-            <form className={"signInBlock"}>
-                <div className="form-group">
-                    <label>食物名</label>
-                    <input id="foodTitle" type="text" className="form-control" placeholder="標題" required />
-                </div>
+function MenuConfigurator(){
+    //const [storeId,setStoreId] = useState('')
+    async function Send(){
+        const name = document.getElementById('foodTitle').value
+        const subtitle = document.getElementById('foodSub').value
+        const price = document.getElementById('foodPrice').value
+        const cookies = new Cookies()
+        let allcookies = cookies.getAll()
+        const storeId = allcookies['storeId']
+        const postURL = config['baseURL'] + 'stores/' + storeId + '/products'
 
-                <div className="form-group">
-                    <label>副標題</label>
-                    <input id="foodSub" type="text" className="form-control" placeholder="副標(選填)" />
-                </div>
-                <div id="placeToAdd" />
-                <Row>
-                    <Col></Col>
-                    <Col></Col>
-                    <Col><Link type="submit" className="btn btn-primary btn-block" onClick={Send}>Submit</Link></Col>
-                </Row>
-                <hr />
-                <label>其他登入方式？</label>
-                <div className={"otherLoginMethod"} >
-                    <GoogleOauth />
-                </div>
-            </form>
-        )
+        var data = {
+            'name': name,
+            'price': price,
+            'description': subtitle,
+            'store_id': storeId,
+            "image" : "https://google.com/favicon.ico"
+        }
+        window.alert(postURL)
+        await fetch(postURL,{
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{
+                "Accept": "application/json",
+                "Authorization": `Bearer ${allcookies['session']}`
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json()
+            }
+            return response.text().then(res => {
+                throw new Error(res)
+            })
+        }).catch((error) => {
+            console.log(error.message)
+            let response = JSON.parse(error.message)
+            window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
+        }).then(response =>{
+            console.log(response)
+            document.location.replace(`${config['project']}/#/config/menu`)
+        })
     }
+
+
+    return(
+        <form
+            className={"foodBlock"}
+            onSubmit={e=>{
+                e.preventDefault()
+                Send()
+            }}
+        >
+            <div className="form-group">
+                <label>食物名</label>
+                <input id="foodTitle" type="text" className="form-control" placeholder="標題" required />
+            </div>
+            <div className="form-group">
+                <label>價錢</label>
+                <input id="foodPrice" type="number" className="form-control" placeholder="價錢" required />
+            </div>
+            <div className="form-group">
+                <label>副標題</label>
+                <input id="foodSub" type="text" className="form-control" placeholder="副標(選填)" />
+            </div>
+            <div id="placeToAdd" />
+            <Row>
+                <Col/>
+                <Col/>
+                <Col><button className="btn btn-primary btn-block">送出</button></Col>
+            </Row>
+        </form>
+    )
 }
 
-class NewNenu extends React.Component{
+class NewMenu extends React.Component{
     componentDidMount() {
         window.scrollTo({top: 0,behavior: 'smooth'})
     }
@@ -74,4 +114,4 @@ class NewNenu extends React.Component{
     }
 }
 
-export default NewNenu
+export default NewMenu

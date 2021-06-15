@@ -54,9 +54,7 @@ class Login extends React.Component{
 			}).catch(err=>{
 				console.log(`Failed: ${err}`)
 			}).then(loginResponse =>{
-
 				//get account information
-
 				const meUrl = config['baseURL'] + 'me'
 				fetch(meUrl,{
 					method: 'GET',
@@ -80,6 +78,7 @@ class Login extends React.Component{
 					cookies.set('name',response['name'],{path:'/'})
 					cookies.set('id',response['id'],{path:'/'})
 					cookies.set('isSells',true,{path:'/'})
+					cookies.set('storeId',response['stores'][0]['id'],{path:'/'})
 					document.location.replace('/')
 				})
 			})
@@ -99,13 +98,6 @@ class Login extends React.Component{
 							<label>密碼</label>
 							<input id="userInputPasswd" type="password" className="form-control" placeholder="Enter password" />
 						</div>
-
-						{/*<div className="form-group">
-                        <div className="custom-control custom-checkbox">
-                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                            <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-                        </div>
-                    </div>*/}
 						<Row>
 							<Col />
 							<Col />
