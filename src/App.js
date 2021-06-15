@@ -34,7 +34,7 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/restaurant" component={Restaurant} />
             <Route path="/settings" component={Settings} />
-            <Route path="/purchase" component={Purchase} />
+            <Route path="/purchase/:store/:product" component={Purchase} />
             <Route path="/order/:id" component={Order} />
             <Route path="/history" component={Histories} />
             <Route path='/config/new/option' component={NewOption}/>

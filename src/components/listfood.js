@@ -6,6 +6,7 @@ import {
     Card,
     Button
 } from 'react-bootstrap'
+import {parse} from "@fortawesome/fontawesome-svg-core";
 
 function ListFood(){
     const [data,setData] = useState([])
@@ -31,6 +32,9 @@ function ListFood(){
             window.location.replace('#/login')
         }).then(myJson =>{
             console.log(myJson)
+            for(let i = 0;i < myJson.length;++i){
+                myJson[i]['storeId'] = parsedUrl[5]
+            }
             setData(myJson)
         })
     }
@@ -49,7 +53,7 @@ function ListFood(){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" href={config["project"]+'#/purchase/'+item.id}>立即前往</Button>
+                                <Button variant="primary" href={config["project"]+'#/purchase/' + item.storeId +'/'+item.id}>立即前往</Button>
                             </div>
                         </Card.Body>
                     </Card>
