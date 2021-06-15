@@ -1,6 +1,7 @@
 import React from 'react'
 import MenuOption from '../../components/menuoption'
 import {Container} from "react-bootstrap";
+import ListAddedFood from '../../components/sells/listaddedfood'
 
 class MenuSetting extends React.Component{
     componentDidMount() {
@@ -13,7 +14,8 @@ class MenuSetting extends React.Component{
                 <h1 style={{textAlign: 'center'}}>菜單設定</h1>
                 <Container>
                     <MenuOption />
-                    {/*<AddedFood />*/}
+                    <br />
+                    <ListAddedFood />
                 </Container>
             </React.Fragment>
         )
