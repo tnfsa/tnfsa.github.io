@@ -146,7 +146,8 @@ Authorization: Bearer {{auth_token}}
 
 ###
 # New Product
-POST https://lunchapi.hsuan.app/api/stores/{{store_id}}/products
+#POST https://lunchapi.hsuan.app/api/stores/{{store_id}}/products
+POST https://lunchapi.hsuan.app/api/stores/70828fba-b5bb-425d-b281-f2d350433d9c/products
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{auth_token}}
