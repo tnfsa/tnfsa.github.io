@@ -9,6 +9,7 @@ class Purchase extends React.Component{
         return(
             <React.Fragment>
                 <h1 style={{textAlign: 'center'}}>訂餐</h1>
+                
             </React.Fragment>
         )
     }
