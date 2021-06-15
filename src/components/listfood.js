@@ -49,7 +49,7 @@ function ListFood(){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" href={config["project"]+'#/order/'+item.id}>立即前往</Button>
+                                <Button variant="primary" href={config["project"]+'#/purchase/'+item.id}>立即前往</Button>
                             </div>
                         </Card.Body>
                     </Card>

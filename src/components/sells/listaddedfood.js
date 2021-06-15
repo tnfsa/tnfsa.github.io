@@ -10,7 +10,10 @@ export default function (){
     const getData = ()=>{
         const url = config['baseURL'] + 'stores/'+ allcookies['storeId'] + '/products'
         fetch(url,{
-            method: 'GET'
+            method: 'GET',
+            headers:{
+                "Accept": "application/json"
+            }
         }).then(response => {
             if (response.ok) {
                 return response.json()
@@ -45,7 +48,7 @@ export default function (){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" href={config["project"]+'#/order/'+item.id}>立即前往</Button>
+                                <Button variant="primary" href={config["project"]+'#/order/'+item.id}>修正</Button>
                             </div>
                         </Card.Body>
                     </Card>
