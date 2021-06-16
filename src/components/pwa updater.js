@@ -9,7 +9,7 @@ export default function PwaUpdater(){
     const onSWUpdate = () => {
         serviceWorkerRegistration.register({
             onUpdate: registration =>{
-                window.alert('發現新版本！！！ 請立即更新')
+                window.alert('發現新版本！！！ 點此立即更新')
                 if(registration && registration.waiting){
                     registration.waiting.postMessage({type: 'SKIP_WAITING'})
                 }
