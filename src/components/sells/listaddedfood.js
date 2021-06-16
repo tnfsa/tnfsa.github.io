@@ -4,7 +4,7 @@ import config from "../../config.json";
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom";
 
-export default function (){
+export default function ListAddedFood(){
     const [data,setData] = useState([])
     const cookies = new Cookies()
     const allcookies = cookies.getAll()

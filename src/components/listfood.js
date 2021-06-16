@@ -6,14 +6,13 @@ import {
     Card,
     Button
 } from 'react-bootstrap'
-import {parse} from "@fortawesome/fontawesome-svg-core";
 import {Link} from "react-router-dom";
 
 function ListFood(){
     const [data,setData] = useState([])
     const windowUrl = window.location.href
     const parsedUrl = windowUrl.split('/')
-    const getData = ()=>{
+    async function getData(){
         const url = config['baseURL'] + "stores/" +parsedUrl[5] + '/products'
         fetch(url,{
             method: 'GET'
