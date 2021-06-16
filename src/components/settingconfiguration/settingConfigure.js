@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {configuration} from "../settings";
+import {configuration} from "../../settings";
 import Cookies from "universal-cookie";
 
 class SettingConfigure extends React.Component{
@@ -46,7 +46,8 @@ class SettingConfigure extends React.Component{
                 window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
             }).then(response=>{
                 console.log(response)
-                document.location.replace(`#/settings/${urlSelected}`)
+                window.alert('更新成功')
+                document.location.reload()
             })
         }
 
