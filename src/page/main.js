@@ -1,5 +1,7 @@
 import React from 'react'
 import Carousels from '../components/carousel'
+import PWAUpdater from '../components/pwa updater'
+
 
 import {
 	Container,
@@ -14,6 +16,7 @@ class Homepage extends React.Component{
 		return(
 			<React.Fragment>
 				<Container>
+					<PWAUpdater />
 					{/*<Picture />*/}
 					<Carousels/>
 				</Container>
