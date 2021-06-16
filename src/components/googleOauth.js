@@ -45,7 +45,7 @@ class GoogleOauth extends React.Component {
                 cookies.set('isGoogle', 'true', {path: '/'})
                 cookies.set('alert', '登入成功', {path: '/'})
                 cookies.set('userName', google_response?.profileObj?.givenName, {path: '/'})
-                
+
                 window.location.replace('/')
             }).catch(err=>{
                 console.log(`Failed: ${err}`)

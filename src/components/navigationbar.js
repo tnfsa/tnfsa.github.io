@@ -13,7 +13,6 @@ class Navibar extends React.Component{
         super(props);
         const cookies = new Cookies()
         const combination = cookies.getAll()
-        window.alert(combination['userName'])
         let send = []
         combination['isGoogle'] ? send.push(true):send.push(false)
         combination['isSells'] ? send.push(true):send.push(false)
