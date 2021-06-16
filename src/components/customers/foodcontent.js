@@ -4,12 +4,14 @@ import {Container, Row, Col, Figure, Button} from 'react-bootstrap'
 import {useHistory} from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import Swal from 'sweetalert2'
+import {TextareaAutosize} from "@material-ui/core";
 
 export default function FoodContent(props) {
     const [title, setTitle] = useState('')
     const [picture, setPicture] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
+    const [comment, setComment] = useState('')
     const history = useHistory()
     const URL = config['baseURL'] + 'stores/' + props.store + '/products/' + props.product;
 
@@ -65,7 +67,7 @@ export default function FoodContent(props) {
                     "qty": 1,
                     "store_id": props.store,
                     "product_id": props.product,
-                    "comment": "",
+                    "comment": comment,
                     "options": {}
                 }),
                 headers: {
@@ -85,8 +87,8 @@ export default function FoodContent(props) {
                 Swal.fire({
                     title: '訂購成功!',
                     html: (
-                        `感謝您利用本系統訂購產品<br>`+
-                        `請記得於選取時間取餐，謝謝<br>`+
+                        `感謝您利用本系統訂購產品<br>` +
+                        `請記得於選取時間取餐，謝謝<br>` +
                         `您的交易ID為： <b>${res.id}</b>`),
                     icon: 'success',
                     confirmButtonText: 'Ok'
@@ -109,7 +111,7 @@ export default function FoodContent(props) {
                 text: `訂單未成立`,
                 icon: 'error',
                 confirmButtonText: 'Ok'
-            }).then(() => history.push('/'))
+            }).then()
         }
     }
 
@@ -121,24 +123,43 @@ export default function FoodContent(props) {
         <React.Fragment>
             <Container>
                 <br/>
-                <h1><Row><Col>餐點名稱：</Col><Col>{title}</Col></Row></h1>
-                <Figure>
-                    <Figure.Image
-                        width={300}
-                        height={180}
-                        alt="餐點的照片"
-                        src={picture}
-                    />
-                    <Figure.Caption>
-                        {description}
-                    </Figure.Caption>
-                </Figure>
-                <h2><Row><Col>建議售價：</Col><Col>{price}</Col></Row></h2>
-                <div style={{display: "flex"}}>
-                    <div style={{marginLeft: "auto"}}>
-                        <Button variant="primary" onClick={Send}>訂購</Button>
-                    </div>
-                </div>
+                <Row>
+                    <Col>
+                        <Figure>
+                            <Figure.Caption>
+                                {title}
+                            </Figure.Caption>
+                            <Figure.Image
+                                width={300}
+                                alt="餐點的照片"
+                                src={picture}
+                                resizeMode="contain"
+                            />
+                        </Figure>
+                    </Col>
+                    <Col>{description}</Col>
+                </Row>
+
+                <Row>
+                    <Col>
+                        <h5>建議售價：{price}</h5>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col lg={9}>
+                        <TextareaAutosize className="form-control" placeholder="留言" rows="5"
+                                          onChange={event => setComment(event.target.value)}
+                                          value={comment}/>
+                    </Col>
+                    <Col lg={3}>
+                        <div style={{display: "flex"}}>
+                            <div style={{marginLeft: "auto"}}>
+                                <Button variant="primary" onClick={Send}>訂購</Button>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+
             </Container>
         </React.Fragment>
     )
