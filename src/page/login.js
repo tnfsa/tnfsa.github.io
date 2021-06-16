@@ -81,7 +81,6 @@ class Login extends React.Component{
 					if(response['stores'][0] !== undefined){
 						cookies.set('storeId',response['stores'][0]['id'],{path:'/'})
 					}
-
 					document.location.replace('/')
 				})
 			})

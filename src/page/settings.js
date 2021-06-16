@@ -2,7 +2,7 @@ import React from 'react'
 import {Container, Row,Col} from "react-bootstrap";
 
 import SettingOption from '../components/settingsOption'
-import SettingConfigure from '../components/settingConfigure'
+import SettingConfigure from '../components/settingconfiguration/settingConfigure'
 
 class Settings extends React.Component{
     componentDidMount() {
