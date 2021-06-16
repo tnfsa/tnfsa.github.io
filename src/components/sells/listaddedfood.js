@@ -49,7 +49,7 @@ export default function (){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" as={Link} to={{pathname:`/order/${item.id}`}}>修正</Button>
+                                <Button variant="primary" as={Link} to={{pathname:`/order/${item.id}`}}>修改</Button>
                             </div>
                         </Card.Body>
                     </Card>
