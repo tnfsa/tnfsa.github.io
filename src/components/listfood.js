@@ -7,6 +7,7 @@ import {
     Button
 } from 'react-bootstrap'
 import {parse} from "@fortawesome/fontawesome-svg-core";
+import {Link} from "react-router-dom";
 
 function ListFood(){
     const [data,setData] = useState([])
@@ -53,7 +54,7 @@ function ListFood(){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" href={config["project"]+'#/purchase/' + item.storeId +'/'+item.id}>立即前往</Button>
+                                <Button variant="primary" as={Link} to={{pathname:`/purchase/${item.storeId}/${item.id}`}}>立即前往</Button>
                             </div>
                         </Card.Body>
                     </Card>

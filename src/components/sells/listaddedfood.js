@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Button, Card} from "react-bootstrap";
 import config from "../../config.json";
 import Cookies from 'universal-cookie'
+import {Link} from "react-router-dom";
 
 export default function (){
     const [data,setData] = useState([])
@@ -48,7 +49,7 @@ export default function (){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" href={config["project"]+'#/order/'+item.id}>修正</Button>
+                                <Button variant="primary" as={Link} to={{pathname:`/order/${item.id}`}}>修正</Button>
                             </div>
                         </Card.Body>
                     </Card>

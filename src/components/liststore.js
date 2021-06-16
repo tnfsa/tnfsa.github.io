@@ -6,6 +6,7 @@ import {
     Card,
     Button
 } from 'react-bootstrap'
+import {Link} from "react-router-dom";
 
 function ListStore(){
     const [data,setData] = useState([])
@@ -48,7 +49,7 @@ function ListStore(){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" href={config["project"]+'#/order/'+item.id}>立即前往</Button>
+                                <Button variant="primary" as={Link} to={{pathname:`/order/${item.id}`}}>立即前往</Button>
                             </div>
                         </Card.Body>
                     </Card>
