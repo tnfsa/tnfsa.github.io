@@ -126,7 +126,7 @@ export default function FoodContent(props) {
                 <Row>
                     <Col>
                         <Figure>
-                            <Figure.Caption>
+                            <Figure.Caption className={"text-center"}>
                                 {title}
                             </Figure.Caption>
                             <Figure.Image

@@ -92,7 +92,7 @@ function MenuConfigurator() {
                 body: formData
             }).then(response => {
                 if (response.ok) {
-                    return response.text()
+                    return response.json()
                 }
                 return response.text().then(res => {
                     throw new Error(res)
@@ -102,8 +102,9 @@ function MenuConfigurator() {
                 let response = JSON.parse(error.message)
                 window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
             }).then(response => {
+                console.log(typeof response)
                 //window.alert(response)
-                setImageUrl(response)
+                setImageUrl(response.result.data)
                 setUploading(false)
             })
         };
@@ -134,7 +135,7 @@ function MenuConfigurator() {
             <Row>
                 <Col>
                     <div className="form-group">
-                        <Button as={"label"} variant={"primary"}>
+                        <Button as={"label"} variant={"primary"} hidden={imageUrl!==''}>
                             上傳圖片
                             <input type="file" name="file"
                                    className="upload-file"
@@ -147,7 +148,6 @@ function MenuConfigurator() {
                     </div>
                 </Col>
             </Row>
-            <br/>
             <Row>
                 <Col>
                     <center>
