@@ -3,16 +3,13 @@ import config from '../../config.json'
 import {Container, Row, Col, Figure, Button} from 'react-bootstrap'
 import Cookies from 'universal-cookie'
 
-export default function FoodContent(){
+export default function FoodContent(props){
     const [title,setTitle] = useState('')
     const [picture,setPicture] = useState('')
     const [price,setPrice] = useState('')
     const [description,setDescription] = useState('')
+    const URL = config['baseURL'] + 'stores/' + props.store + '/products/' + props.product;
     async function getData(){
-        // product id
-        const browserUrl = document.location.href
-        const splitURL = browserUrl.split('/')
-        const URL = config['baseURL'] + 'stores/' + splitURL[5] + '/products/' + splitURL[6]
         fetch(URL,{
             method: 'GET',
             headers:{

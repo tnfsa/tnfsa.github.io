@@ -11,7 +11,7 @@ class Purchase extends React.Component{
             <React.Fragment>
                 <h1 style={{textAlign: 'center'}}>訂餐</h1>
                 {/*餐點內容*/}
-                <FoodContent />
+                <FoodContent store={this.props.match.params.store} product={this.props.match.params.product}/>
             </React.Fragment>
         )
     }
