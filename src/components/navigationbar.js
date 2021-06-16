@@ -11,10 +11,9 @@ import Cookies from 'universal-cookie'
 class Navibar extends React.Component{
     constructor(props) {
         super(props);
-        //const {cookies} = props;
         const cookies = new Cookies()
         const combination = cookies.getAll()
-        //window.alert(combination['isGoogle'])
+        window.alert(combination['userName'])
         let send = []
         combination['isGoogle'] ? send.push(true):send.push(false)
         combination['isSells'] ? send.push(true):send.push(false)
@@ -23,7 +22,7 @@ class Navibar extends React.Component{
             isGoogle: send[0],
             isSells: send[1],
             isLoggedIn: send[2],//!cookies.get('loggedin') || true
-            username: combination['name'] || "Anonymous",
+            username: combination['userName'] || "Anonymous",
         }
     }
 
@@ -37,7 +36,7 @@ class Navibar extends React.Component{
             cookies.remove('isGoogle')
             cookies.remove('isSells')
             cookies.remove('session')
-            cookies.remove('nameame')
+            cookies.remove('userName')
             cookies.remove('storeId')
             cookies.remove('name')
             cookies.set('alert','登出成功',{path: '/'})
