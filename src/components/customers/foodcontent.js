@@ -66,7 +66,7 @@ export default function FoodContent(props) {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Authorization2": `Bearer ${allcookies['session']}`
+                    "Authorization": `Bearer ${allcookies['session']}`
                 }
             }).then(response => {
                 if (response.ok) {
