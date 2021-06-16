@@ -132,7 +132,7 @@ export default function FoodContent(props) {
                             <Figure.Image
                                 width={300}
                                 alt="餐點的照片"
-                                src={picture}
+                                src={config['baseURL'].replace(/\/api/,'') + picture}
                                 resizeMode="contain"
                             />
                         </Figure>

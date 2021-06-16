@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Col, Container, Figure, Row} from "react-bootstrap";
+import {Button, Col, Container, Figure, ProgressBar, Row, Spinner} from "react-bootstrap";
 import config from "../../config.json";
 import Cookies from "universal-cookie";
 import {useHistory} from "react-router-dom";
@@ -25,14 +25,17 @@ class ToolBar extends React.Component {
 function MenuConfigurator() {
     //const [storeId,setStoreId] = useState('')
     const [image, setImage] = useState('')
+    const [uploading, setUploading] = useState(false)
+    const [imageUrl, setImageUrl] = useState('')
     const history = useHistory();
+    const cookies = new Cookies()
+    let allcookies = cookies.getAll()
+    const storeId = allcookies['storeId']
+
     async function Send() {
         const name = document.getElementById('foodTitle').value
         const subtitle = document.getElementById('foodSub').value
         const price = document.getElementById('foodPrice').value
-        const cookies = new Cookies()
-        let allcookies = cookies.getAll()
-        const storeId = allcookies['storeId']
         const postURL = config['baseURL'] + 'stores/' + storeId + '/products'
 
         var data = {
@@ -40,7 +43,7 @@ function MenuConfigurator() {
             'price': price,
             'description': subtitle,
             'store_id': storeId,
-            "image": image
+            "image": imageUrl
         }
         //window.alert(postURL)
         await fetch(postURL, {
@@ -70,11 +73,39 @@ function MenuConfigurator() {
 
     function handleChangeImage(evt) {
         console.log("Uploading");
+        const storeId = allcookies['storeId']
         var reader = new FileReader();
         var file = evt.target.files[0];
 
         reader.onload = function (upload) {
+            console.log(file)
             setImage(upload.target.result);
+            const formData = new FormData()
+            formData.append('image', file)
+            setUploading(true)
+            fetch(config['baseURL'] + 'stores/' + storeId + '/images', {
+                method: 'POST',
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${allcookies['session']}`
+                },
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    return response.text()
+                }
+                return response.text().then(res => {
+                    throw new Error(res)
+                })
+            }).catch((error) => {
+                console.log(error.message)
+                let response = JSON.parse(error.message)
+                window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
+            }).then(response => {
+                //window.alert(response)
+                setImageUrl(response)
+                setUploading(false)
+            })
         };
         reader.readAsDataURL(file);
         console.log("Uploaded");
@@ -100,28 +131,44 @@ function MenuConfigurator() {
                 <label>副標題</label>
                 <input id="foodSub" type="text" className="form-control" placeholder="副標(選填)"/>
             </div>
-            <div className="form-group">
-                <Button as={"label"} variant={"primary"}>
-                    上傳圖片
-                    <input type="file" name="file"
-                           className="upload-file"
-                           id="file"
-                           onChange={handleChangeImage}
-                           required
-                           hidden
-                    />
-                </Button>
-                <br/>
-                <Figure.Image
-                    width={300}
-                    src={image || "https://via.placeholder.com/300x180?text=Product+Image"}
-                    resizeMode="contain"
-                />
-            </div>
-            <div id="placeToAdd"/>
             <Row>
-                <Col/>
-                <Col/>
+                <Col>
+                    <div className="form-group">
+                        <Button as={"label"} variant={"primary"}>
+                            上傳圖片
+                            <input type="file" name="file"
+                                   className="upload-file"
+                                   id="file"
+                                   onChange={handleChangeImage}
+                                   required
+                                   hidden
+                            />
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+            <br/>
+            <Row>
+                <Col>
+                    <center>
+                        <Spinner hidden={uploading===false} animation={"border"}/>
+                        <br/>
+                        <a href={config['baseURL'].replace(/\/api/,'') + imageUrl} target="_blank" hidden={!image || uploading }>{config['baseURL'].replace(/\/api/,'') + imageUrl}</a>
+                        <br/>
+                        <Figure.Image
+                            width={300}
+                            src={image && !uploading ? config['baseURL'].replace(/\/api/,'') + imageUrl : "https://via.placeholder.com/300x180?text=Product+Image"}
+                            resizeMode="contain"
+                        />
+                    </center>
+                </Col>
+            </Row>
+            <Row>
+                <div className="h-100 align-items-center">
+                    <div id="placeToAdd"/>
+                </div>
+            </Row>
+            <Row>
                 <Col>
                     <button className="btn btn-primary btn-block">送出</button>
                 </Col>
