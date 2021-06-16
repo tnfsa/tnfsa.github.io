@@ -26,16 +26,21 @@ export default function FoodContent(props) {
             return response.text().then(err => {
                 throw new Error(err)
             })
-        }).catch(error => {
-            console.log(error.message)
-            let response = JSON.parse(error.message)
-            window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
         }).then(response => {
-            console.log(response)
+            //console.log(response)
             setPrice(response['price'])
             setDescription(response['description'])
             setTitle(response['name'])
             setPicture(response['image'])
+        }).catch(error => {
+            //console.log(error.message)
+            let response = JSON.parse(error.message)
+            Swal.fire({
+                title: '錯誤!',
+                text: `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            }).then(() => history.push('/'))
         })
     }
 
@@ -75,11 +80,17 @@ export default function FoodContent(props) {
                 return response.text().then(res => {
                     throw new Error(res)
                 })
-            }).then(() => {
+            }).then((res) => {
                 // Transaction Made
-                window.alert('訂購成功!')
-                cookies.set('alert', '感謝您利用本系統訂購產品\n請記得於選取時間取餐，謝謝', {path: '/'})
-                history.push('/')
+                Swal.fire({
+                    title: '訂購成功!',
+                    html: (
+                        `感謝您利用本系統訂購產品<br>`+
+                        `請記得於選取時間取餐，謝謝<br>`+
+                        `您的交易ID為： <b>${res.id}</b>`),
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                }).then(() => history.push('/'))
             }).catch((error) => {
                 // Transaction Error
                 console.log(error)
