@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Button, Card,Container} from "react-bootstrap";
 
 function NewOption(){
+    // eslint-disable-next-line no-unused-vars
     const [array,setArray] = useState([])
     const [data,setData] = useState([])
     //const inputOption = document.getElementById('inputOption')
@@ -24,10 +25,11 @@ function NewOption(){
         }
     }*/
 
-    const getData = ()=>{
-        setData(array)
-    }
+
     useEffect(()=>{
+        const getData = ()=>{
+            setData(array)
+        }
         getData()
     },[array])
 
