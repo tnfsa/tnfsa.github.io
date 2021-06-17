@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap'
 
 import Cookies from 'universal-cookie'
+import {Link} from "react-router-dom";
 
 class Navibar extends React.Component{
     constructor(props) {
@@ -54,6 +55,7 @@ class Navibar extends React.Component{
                             {this.state.isSells && <NavDropdown title="店家管理" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#/config/store">商家設定</NavDropdown.Item>
                                 <NavDropdown.Item href="#/config/menu">菜單設定</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/service">客服服務</NavDropdown.Item>
                             </NavDropdown>}
                             <NavDropdown title="相關連結" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="https://sites.google.com/view/tnfshsu/" rel="noreferrer noopener" target="_blank">學聯會</NavDropdown.Item>
