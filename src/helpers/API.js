@@ -7,7 +7,7 @@ export class API {
     call(endpoint: string, data: Object, cb) {
         endpoint = config['baseURL'].slice(0, -1) + endpoint
         for (let str in (data.params || {})) {
-            endpoint.replace(new RegExp(`/:${str}/`, 'g'), data[str])
+            endpoint = endpoint.replaceAll(":"+str, data.params[str])
         }
         let body = (typeof data.body === 'object' ? JSON.stringify(data.body) : null)
         let headers = new Headers({
