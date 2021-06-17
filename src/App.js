@@ -23,6 +23,7 @@ import Signup from './page/signup'
 import Feedback from './page/feedback';
 import NewMenu from './page/sells/newmenu'
 import NewOption from './page/sells/newoption'
+import CustomerService from "./page/sells/service";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/purchase/:store/:product" component={Purchase} />
             <Route path="/order/:storeId" component={Order} />
             <Route path="/history" component={Histories} />
+            <Route path="/service" component={CustomerService} />
             <Route path='/config/new/option' component={NewOption}/>
             <Route path="/config/store" component={StoreSetting} />
             <Route path="/config/menu/new" component={NewMenu}/>
