@@ -10,6 +10,7 @@ import {Link, useHistory} from "react-router-dom";
 
 function ListFood(props){
     const [data,setData] = useState([])
+    const history = useHistory();
     async function getData(){
         const url = config['baseURL'] + "stores/" + props.storeId + '/products'
         fetch(url,{
