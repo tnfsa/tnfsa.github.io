@@ -6,11 +6,10 @@ import {
     Card,
     Button
 } from 'react-bootstrap'
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 function ListFood(props){
     const [data,setData] = useState([])
-
     async function getData(){
         const url = config['baseURL'] + "stores/" + props.storeId + '/products'
         fetch(url,{
@@ -28,7 +27,7 @@ function ListFood(props){
             window.alert(
                 `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
             )
-            window.location.replace('#/login')
+            history.push('/login')
         }).then(myJson =>{
             console.log(myJson)
             for(let i = 0;i < myJson.length;++i){
@@ -39,7 +38,7 @@ function ListFood(props){
     }
     useEffect(()=>{
         getData()
-    },[])
+    },)
     return(
         <div className="ListStore">
             {

@@ -36,7 +36,7 @@ export default function ListAddedFood(){
     }
     useEffect(()=>{
         getData()
-    },[])
+    })
     return(
         <div className="storeAdded">
             {

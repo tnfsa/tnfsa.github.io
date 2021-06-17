@@ -126,13 +126,13 @@ export default function FoodContent(props) {
                 <Row>
                     <Col>
                         <Figure>
-                            <Figure.Caption>
+                            <Figure.Caption className={"text-center"}>
                                 {title}
                             </Figure.Caption>
                             <Figure.Image
                                 width={300}
                                 alt="餐點的照片"
-                                src={picture}
+                                src={config['baseURL'].replace(/\/api/,'') + picture}
                                 resizeMode="contain"
                             />
                         </Figure>

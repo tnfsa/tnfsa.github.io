@@ -1,32 +1,35 @@
 import React from 'react'
 
 import Cookies from "universal-cookie";
-import config from '../config.json'
 
-class Notification extends React.Component{
+class Notification extends React.Component {
     constructor(props) {
         super(props);
         let send = []
         const cookies = new Cookies()
         const combination = cookies.getAll()
-        combination['alert'] ? send.push(true):send.push(false)
+        combination['alert'] ? send.push(true) : send.push(false)
         this.state = {
             alert: send[0],
             alertSentence: combination['alert']
         }
     }
+
+
     componentDidMount() {
         const cookies = new Cookies()
         cookies.remove('alert')
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <React.Fragment>
-                <p className="p-3 mb-2 bg-success text-white">{"version: "+config['version']}</p>
-                {this.state.alert && <p className="p-3 mb-2 bg-success text-white">
-                    {this.state.alertSentence}
-                </p>}
+                {
+                    this.state.alert &&
+                    <p className="p-3 mb-2 bg-success text-white">
+                        {this.state.alertSentence}
+                    </p>
+                }
             </React.Fragment>
         )
     }
