@@ -1,24 +1,26 @@
-import React,{useState,useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import config from '../config.json'
 
 import {
     Card,
-    Button
+    Button, Spinner
 } from 'react-bootstrap'
 import {parse} from "@fortawesome/fontawesome-svg-core";
 import {Link, useHistory} from "react-router-dom";
 
-function ListFood(){
-    const [data,setData] = useState([])
+function ListFood() {
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
     const windowUrl = window.location.href
     const parsedUrl = windowUrl.split('/')
     const history = useHistory();
-    const getData = ()=>{
-        const url = config['baseURL'] + "stores/" +parsedUrl[5] + '/products'
-        fetch(url,{
+    const getData = () => {
+        const url = config['baseURL'] + "stores/" + parsedUrl[5] + '/products'
+        fetch(url, {
             method: 'GET'
         }).then(response => {
+            setLoading(false)
             if (response.ok) {
                 return response.json()
             }
@@ -32,35 +34,39 @@ function ListFood(){
                 `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
             )
             history.push('/login')
-        }).then(myJson =>{
+        }).then(myJson => {
             console.log(myJson)
-            for(let i = 0;i < myJson.length;++i){
+            for (let i = 0; i < myJson.length; ++i) {
                 myJson[i]['storeId'] = parsedUrl[5]
             }
             setData(myJson)
         })
     }
-    useEffect(()=>{
+    useEffect(() => {
         getData()
-    },[])
-    return(
+    }, [])
+    return (
         <div className="ListStore">
             {
-                data && (data.length>0 ? data.map((item)=>
+                data && (data.length > 0 ? data.map((item) =>
                     <Card>
-                        <Card.Img variant="top" src={item.picUrl} />
-                        <Card.Body style={{display:"flex"}}>
+                        <Card.Img variant="top" src={item.picUrl}/>
+                        <Card.Body style={{display: "flex"}}>
                             <div>
                                 <Card.Title>{item.name}</Card.Title>
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
-                            <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" as={Link} to={{pathname:`/purchase/${item.storeId}/${item.id}`}}>立即前往</Button>
+                            <div style={{marginLeft: "auto"}}>
+                                <Button variant="primary" as={Link}
+                                        to={{pathname: `/purchase/${item.storeId}/${item.id}`}}>立即訂購</Button>
                             </div>
                         </Card.Body>
                     </Card>
-                ):<React.Fragment><br /><h2 style={{textAlign: 'center'}}>查無資料</h2></React.Fragment>)
+                ) : <React.Fragment><br/><h2 style={{textAlign: 'center'}}>目前無相關資料</h2></React.Fragment>)
             }
+            <center>
+                <Spinner animation={"border"} hidden={!loading}/>
+            </center>
         </div>
     )
 }

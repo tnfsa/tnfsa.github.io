@@ -4,18 +4,20 @@ import config from '../config.json'
 
 import {
     Card,
-    Button
+    Button, Spinner
 } from 'react-bootstrap'
 import {Link} from "react-router-dom";
 
 function ListStore(){
     const [data,setData] = useState([])
+    const [loading, setLoading] = useState(true)
     const getData = ()=>{
         const url = config['baseURL'] + 'stores'
         console.log(url)
         fetch(url,{
             method: 'GET'
         }).then(response => {
+            setLoading(false)
             if (response.ok) {
                 return response.json()
             }
@@ -40,7 +42,7 @@ function ListStore(){
     return(
         <div className="ListStore">
             {
-                data && data.length>0 && data.map((item)=>
+                data && (data.length > 0 ? data.map((item)=>
                     <Card>
                         <Card.Img variant="top" src={item.picUrl} />
                         <Card.Body style={{display:"flex"}}>
@@ -49,12 +51,15 @@ function ListStore(){
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft:"auto"}}>
-                                <Button variant="primary" as={Link} to={{pathname:`/order/${item.id}`}}>立即前往</Button>
+                                <Button variant="primary" as={Link} to={{pathname:`/order/${item.id}`}}>立即查看</Button>
                             </div>
                         </Card.Body>
                     </Card>
-                )
+                ) : <React.Fragment><br/><h2 style={{textAlign: 'center'}}>目前無相關資料</h2></React.Fragment>)
             }
+            <center>
+                <Spinner animation={"border"} hidden={!loading}/>
+            </center>
         </div>
     )
 }
