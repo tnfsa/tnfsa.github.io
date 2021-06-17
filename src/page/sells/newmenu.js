@@ -153,7 +153,7 @@ function MenuConfigurator() {
                     <center>
                         <Spinner hidden={uploading===false} animation={"border"}/>
                         <br/>
-                        <a href={config['baseURL'].replace(/\/api/,'') + imageUrl} target="_blank" hidden={!image || uploading }>{config['baseURL'].replace(/\/api/,'') + imageUrl}</a>
+                        <a href={config['baseURL'].replace(/\/api/,'') + imageUrl} target="_blank" hidden={!image || uploading } rel="noreferrer">{config['baseURL'].replace(/\/api/,'') + imageUrl}</a>
                         <br/>
                         <Figure.Image
                             width={300}
