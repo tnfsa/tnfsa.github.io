@@ -23,7 +23,6 @@ class ToolBar extends React.Component {
 }
 
 function MenuConfigurator() {
-    //const [storeId,setStoreId] = useState('')
     const [image, setImage] = useState('')
     const history = useHistory();
     async function Send() {
