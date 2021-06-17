@@ -75,7 +75,7 @@ class Login extends React.Component{
 					window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
 				}).then(response=>{
 					const cookies = new Cookies()
-					cookies.set('name',response['name'],{path:'/'})
+					cookies.set('userName',response['name'],{path:'/'})
 					cookies.set('id',response['id'],{path:'/'})
 					cookies.set('isSells',true,{path:'/'})
 					if(response['stores'][0] !== undefined){

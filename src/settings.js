@@ -1,11 +1,4 @@
 import config from "./config.json"
-import Cookies from 'universal-cookie'
-
-function getUserId() {
-    const cookies = new Cookies()
-    const collection = cookies.getAll()
-    return collection['id']
-}
 
 export const setting = [
     {

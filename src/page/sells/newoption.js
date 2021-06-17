@@ -1,16 +1,15 @@
 import React, {useEffect, useState} from 'react'
 import {Button, Card,Container} from "react-bootstrap";
-import {Link} from 'react-router-dom'
 
 function NewOption(){
     const [array,setArray] = useState([])
     const [data,setData] = useState([])
-    const inputOption = document.getElementById('inputOption')
+    //const inputOption = document.getElementById('inputOption')
 
     const deleteFile = (node) => {
         window.alert(node)
     }
-    const newOption = () =>{
+    /*const newOption = () =>{
         if(inputOption.value !== ''){
             if(array.length === 0){
                 setArray([inputOption.value])
@@ -23,7 +22,7 @@ function NewOption(){
         }else{
             window.alert('輸入不得為空')
         }
-    }
+    }*/
 
     const getData = ()=>{
         setData(array)
