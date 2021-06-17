@@ -31,7 +31,7 @@ function ListFood(){
             window.alert(
                 `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
             )
-            window.location.replace('#/login')
+            history.push('/login')
         }).then(myJson =>{
             console.log(myJson)
             for(let i = 0;i < myJson.length;++i){
@@ -42,7 +42,7 @@ function ListFood(){
     }
     useEffect(()=>{
         getData()
-    },[])
+    },)
     return(
         <div className="ListStore">
             {
