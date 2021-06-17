@@ -1,5 +1,5 @@
 import React from 'react'
-import {Col, Spinner, Row} from "react-bootstrap";
+import {Col, Spinner, Row, Card} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeadphones} from '@fortawesome/free-solid-svg-icons'
 import DiskQuota from "./CustomerServiceComponent/DiskQuota";
@@ -18,14 +18,19 @@ class CustomerService extends React.Component {
     componentDidMount(props) {
         window.scrollTo({top: 0, behavior: 'smooth'})
         const cookies = new Cookies()
+        let storeId = cookies.get('storeId')
+        if (!storeId) {
+            // Out
+        }
         const api = new API()
         this.setState({
-            loading: true
+            loading: true,
+            storeId
         })
         api.call('/stores/:store/disk_quota', {
             method: "GET",
             params: {
-                store: cookies.get('storeId')
+                store: storeId
             }
         }, (quota) => {
             console.log(quota.remain)
@@ -46,8 +51,12 @@ class CustomerService extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col><DiskQuota quota={this.state.quota}/></Col>
-
+                    <Col>
+                        <Card className={["m-3", "p-3"]}>
+                            您的店家ID為： <b>{this.state.storeId}</b>
+                            <DiskQuota quota={this.state.quota}/>
+                        </Card>
+                    </Col>
                 </Row>
             </React.Fragment>
         )

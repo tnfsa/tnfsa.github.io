@@ -12,7 +12,6 @@ class DiskQuota extends React.Component {
                     儲存空間剩餘 {(this.props.quota.remain / 1024000).toFixed(2)} Mb / {this.props.quota.total} Mb
                     (已用{(((this.props.quota.total-(this.props.quota.remain / 1024000))/this.props.quota.total)*100).toFixed(2)}%)
                 </div>
-
             </Card>
         )
     }
