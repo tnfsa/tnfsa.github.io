@@ -6,16 +6,13 @@ import {
     Card,
     Button
 } from 'react-bootstrap'
-import {parse} from "@fortawesome/fontawesome-svg-core";
 import {Link, useHistory} from "react-router-dom";
 
-function ListFood(){
+function ListFood(props){
     const [data,setData] = useState([])
-    const windowUrl = window.location.href
-    const parsedUrl = windowUrl.split('/')
     const history = useHistory();
     async function getData(){
-        const url = config['baseURL'] + "stores/" + parsedUrl[5] + '/products'
+        const url = config['baseURL'] + "stores/" + props.id + '/products'
         fetch(url, {
             method: 'GET'
         }).then(response => {
@@ -35,7 +32,7 @@ function ListFood(){
         }).then(myJson =>{
             console.log(myJson)
             for(let i = 0;i < myJson.length;++i){
-                myJson[i]['storeId'] = parsedUrl[5]
+                myJson[i]['storeId'] = props.id
             }
             setData(myJson)
         })

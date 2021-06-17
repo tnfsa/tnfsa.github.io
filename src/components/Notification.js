@@ -17,7 +17,6 @@ class Notification extends React.Component {
     }
 
 
-
     componentDidMount() {
         const cookies = new Cookies()
         cookies.remove('alert')
