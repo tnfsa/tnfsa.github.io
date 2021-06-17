@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Cookies from "universal-cookie";
-import config from '../config.json'
 
 class Notification extends React.Component {
     constructor(props) {

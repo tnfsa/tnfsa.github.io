@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Col, Container, Figure, ProgressBar, Row, Spinner} from "react-bootstrap";
+import {Button, Col, Container, Figure, Row, Spinner} from "react-bootstrap";
 import config from "../../config.json";
 import Cookies from "universal-cookie";
 import {useHistory} from "react-router-dom";
