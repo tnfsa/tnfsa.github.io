@@ -1,5 +1,5 @@
 import React from 'react'
-import {Col, Spinner, Row, Card} from "react-bootstrap";
+import {Col, Spinner, Row, Card, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeadphones} from '@fortawesome/free-solid-svg-icons'
 import DiskQuota from "./CustomerServiceComponent/DiskQuota";
@@ -88,7 +88,21 @@ class CustomerService extends React.Component {
                         <Card className={["m-3", "p-3"]}>
                             <h5>您的店家ID為： <b>{this.state.storeId}</b></h5>
                             <DiskQuota quota={this.state.quota}/>
-                            {subscriptionsElems}
+                            <Card className={["m-3", "p-3"]}>
+                                <Table>
+                                    <thead>
+                                    <tr>
+                                        <th>方案名稱</th>
+                                        <th>說明</th>
+                                        <th>儲存容量</th>
+                                        <th>到期時間</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {subscriptionsElems}
+                                    </tbody>
+                                </Table>
+                            </Card>
                         </Card>
                     </Col>
                 </Row>
