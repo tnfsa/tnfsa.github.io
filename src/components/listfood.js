@@ -10,10 +10,9 @@ import {Link, useHistory} from "react-router-dom";
 
 function ListFood(props){
     const [data,setData] = useState([])
-    const history = useHistory();
     async function getData(){
-        const url = config['baseURL'] + "stores/" + props.id + '/products'
-        fetch(url, {
+        const url = config['baseURL'] + "stores/" + props.storeId + '/products'
+        fetch(url,{
             method: 'GET'
         }).then(response => {
             if (response.ok) {
@@ -32,7 +31,7 @@ function ListFood(props){
         }).then(myJson =>{
             console.log(myJson)
             for(let i = 0;i < myJson.length;++i){
-                myJson[i]['storeId'] = props.id
+                myJson[i]['storeId'] = props.storeId
             }
             setData(myJson)
         })

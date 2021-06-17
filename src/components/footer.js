@@ -18,8 +18,8 @@ class Footer extends React.Component {
                                 <Link to="/feedback">意見反饋</Link>
                             </Col>
                             <Col>
-                                關於我們：<br/>
-                                <a href='https://sivir.pw' rel="noreferrer noopener" target='_blank'>Alias722</a>、
+                                關於我們：<br />
+                                <a href='https://sivir.pw' rel="noreferrer noopener" target='_blank'>Milliax</a>、
                                 <a href='https://hsuan.app/' rel="noreferrer noopener" target='_blank'>Hsuan1117</a>、
                                 <a href='https://neodoggy.github.io/' rel="noreferrer noopener"
                                    target='_blank'>Neodoggy</a>

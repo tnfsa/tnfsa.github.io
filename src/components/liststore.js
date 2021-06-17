@@ -30,7 +30,7 @@ function ListStore(){
             window.alert(
                 `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`
             )
-            window.location.replace('#/login')
+            window.location.replace('/')
         }).then(myJson =>{
             console.log(myJson)
             setData(myJson)
