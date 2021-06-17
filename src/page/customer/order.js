@@ -9,7 +9,7 @@ class Order extends React.Component{
         return(
             <React.Fragment>
                 <h1 style={{textAlign: 'center'}}>吃什麼</h1>
-                <ListFood id={this.props.match.params.id}/>
+                <ListFood id={this.props.match.params.storeId}/>
             </React.Fragment>
         )
     }
