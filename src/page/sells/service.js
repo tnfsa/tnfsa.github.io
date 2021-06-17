@@ -53,7 +53,7 @@ class CustomerService extends React.Component {
                 <Row>
                     <Col>
                         <Card className={["m-3", "p-3"]}>
-                            您的店家ID為： <b>{this.state.storeId}</b>
+                            <h5>您的店家ID為： <b>{this.state.storeId}</b></h5>
                             <DiskQuota quota={this.state.quota}/>
                         </Card>
                     </Col>
