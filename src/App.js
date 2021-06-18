@@ -24,6 +24,7 @@ import Feedback from './page/feedback';
 import NewMenu from './page/sells/newmenu'
 import NewOption from './page/sells/newoption'
 import CustomerService from "./page/sells/service";
+import SellsTest from "./page/sells/test";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/order/:storeId" component={Order} />
             <Route path="/history" component={Histories} />
             <Route path="/service" component={CustomerService} />
+            <Route path="/sells/test" component={SellsTest} />
             <Route path='/config/new/option' component={NewOption}/>
             <Route path="/config/store" component={StoreSetting} />
             <Route path="/config/menu/new" component={NewMenu}/>
