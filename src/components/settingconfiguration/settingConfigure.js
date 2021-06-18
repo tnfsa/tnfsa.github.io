@@ -43,10 +43,6 @@ class SettingConfigure extends React.Component {
                 return response.text().then(err => {
                     throw new Error(err)
                 })
-            }).catch(error => {
-                console.log(error.message)
-                let response = JSON.parse(error.message)
-                window.alert(`${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`)
             }).then(response => {
                 console.log(response)
                 Swal.fire({
@@ -57,6 +53,18 @@ class SettingConfigure extends React.Component {
                 }).then(() => {
                     configuration[urlSelected]?.afterFetch?.(response)
                     this.props.history.go(0);
+                })
+            }).catch(error => {
+                let response = JSON.parse(error.message).error
+                Swal.fire({
+                    title: '錯誤!',
+                    html: (
+                        `錯誤： ${response?.localizedMessage ?? ''}! <br>
+                        錯誤代碼： ${response?.code}(${response?.status})<br>
+                        如問題持續發生，請提供這些資訊給工程師!
+                        `),
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
                 })
             })
         }
