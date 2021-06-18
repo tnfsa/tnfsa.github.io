@@ -2,8 +2,10 @@ import React from 'react'
 
 import {configuration} from "../../settings";
 import Cookies from "universal-cookie";
+import {withRouter} from "react-router-dom"
 
 class SettingConfigure extends React.Component{
+
     render(){
         const browserUrl = document.location.href
         const splitUrl = browserUrl.split('/')
@@ -47,7 +49,8 @@ class SettingConfigure extends React.Component{
             }).then(response=>{
                 console.log(response)
                 window.alert('更新成功')
-                document.location.reload()
+                configuration[urlSelected]?.afterFetch?.(response)
+                this.props.history.go(0);
             })
         }
 
@@ -68,4 +71,4 @@ class SettingConfigure extends React.Component{
     }
 }
 
-export default SettingConfigure
+export default withRouter(SettingConfigure)

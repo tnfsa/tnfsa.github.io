@@ -1,4 +1,8 @@
 import config from "./config.json"
+import Cookies from "universal-cookie/lib";
+import {GreatLog} from "./helpers/Log";
+
+const cookies = new Cookies();
 
 export const setting = [
     {
@@ -24,6 +28,10 @@ export const configuration = {
         "placeholder": "新商店名",
         "submitUri": config['baseURL'] + 'stores',
         "method": "PUT",
+        afterFetch(res) {
+            GreatLog('debug', res.id)
+            cookies.set('storeId', res.id)
+        }
     },
     "change_password": {
         "title": "變更密碼",
@@ -39,6 +47,10 @@ export const configuration = {
         "placeholder": "商店名",
         "submitUri": config['baseURL'] + 'stores',
         "method": "POST",
-        "return": ["name"]
+        "return": ["name"],
+        afterFetch(res) {
+            GreatLog('debug', res.id)
+            cookies.set('storeId', res.id)
+        }
     }
 }
