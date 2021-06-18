@@ -3,11 +3,20 @@ import {Button, Card} from "react-bootstrap";
 import config from "../../config.json";
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function ListAddedFood(){
     const [data,setData] = useState([])
     const cookies = new Cookies()
     const allcookies = cookies.getAll()
+    if(!allcookies['storeId']){
+        Swal.fire({
+            title: '錯誤!',
+            text: '404 (STORE_NOT_FOUND)',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+        })
+    }
     const getData = ()=>{
         const url = config['baseURL'] + 'stores/'+ allcookies['storeId'] + '/products'
         fetch(url,{
