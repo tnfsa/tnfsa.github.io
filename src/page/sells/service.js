@@ -7,8 +7,11 @@ import Cookies from "universal-cookie/lib";
 import {API} from "../../helpers/API";
 import Subscription from "./CustomerServiceComponent/Subscription";
 import Plan from "./CustomerServiceComponent/Plan";
+import Swal from "sweetalert2";
+import {withRouter} from "react-router-dom";
 
 const api = new API()
+const cookies = new Cookies()
 
 class CustomerService extends React.Component {
     constructor(props) {
@@ -77,17 +80,22 @@ class CustomerService extends React.Component {
 
     componentDidMount(props) {
         window.scrollTo({top: 0, behavior: 'smooth'})
-        const cookies = new Cookies()
         let storeId = cookies.get('storeId')
         if (!storeId) {
-            // Out
+            Swal.fire({
+                title: '錯誤!',
+                text: '404 (STORE_NOT_FOUND)',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            }).then(()=>this.props.history.push('/settings/activate'))
+        }else{
+            this.setState({
+                storeId
+            })
+            this.getDiskQuota(storeId)
+            this.getSubscriptions(storeId)
+            this.getPlans(storeId)
         }
-        this.setState({
-            storeId
-        })
-        this.getDiskQuota(storeId)
-        this.getSubscriptions(storeId)
-        this.getPlans(storeId)
     }
 
     render() {
@@ -155,4 +163,4 @@ class CustomerService extends React.Component {
     }
 }
 
-export default CustomerService
+export default withRouter(CustomerService)
