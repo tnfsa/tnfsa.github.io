@@ -3,11 +3,11 @@ import {Col, Spinner, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeadphones} from '@fortawesome/free-solid-svg-icons'
 import Cookies from "universal-cookie/lib";
-import {API} from "../../helpers/API";
+//import {API} from "../../helpers/API";
 import Echo from 'laravel-echo';
 import axios from "axios";
 // TODO: Production
-const api = new API()
+//const api = new API()
 const cookies = new Cookies();
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
@@ -24,7 +24,7 @@ window.Echo = new Echo({
                     method: "POST",
                     url: 'http://local.sivir.pw:8000/api/broadcasting/auth',
                     headers: {
-                        Authorization: `Bearer ${cookies.get('session')}`,
+                        Authorization: `Bearer ${'2|7U1wAV74Ov2hglgCZ4lYbMnETGvWrg5qlxeX6tel' || cookies.get('session')}`,
                     },
                     data: {
                         socket_id: socketId,
