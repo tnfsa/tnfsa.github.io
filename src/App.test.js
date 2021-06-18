@@ -2,8 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('Footer Render Test', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  [
+      '隱私權聲明',
+      '行為準則',
+      '意見反饋'
+  ].forEach(str=>{
+    expect(screen.getByText(str)).toBeInTheDocument();
+  })
 });
