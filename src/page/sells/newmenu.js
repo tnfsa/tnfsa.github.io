@@ -134,7 +134,7 @@ function MenuConfigurator() {
             <Row>
                 <Col>
                     <div className="form-group">
-                        <Button as={"label"} variant={"primary"} hidden={imageUrl!==''}>
+                        <Button as={"label"} variant={"primary"} hidden={imageUrl !== ''}>
                             上傳圖片
                             <input type="file" name="file"
                                    className="upload-file"
@@ -150,13 +150,15 @@ function MenuConfigurator() {
             <Row>
                 <Col>
                     <center>
-                        <Spinner hidden={uploading===false} animation={"border"}/>
+                        <Spinner hidden={uploading === false} animation={"border"}/>
                         <br/>
-                        <a href={config['baseURL'].replace(/\/api/,'') + imageUrl} target="_blank" hidden={!image || uploading } rel="noreferrer">{config['baseURL'].replace(/\/api/,'') + imageUrl}</a>
+                        <a href={config['baseURL'].replace(/\/api/, '') + imageUrl} target="_blank"
+                           hidden={!image || uploading}
+                           rel="noreferrer">{config['baseURL'].replace(/\/api/, '') + imageUrl}</a>
                         <br/>
                         <Figure.Image
                             width={300}
-                            src={image && !uploading ? config['baseURL'].replace(/\/api/,'') + imageUrl : "https://via.placeholder.com/300x180?text=Product+Image"}
+                            src={image && !uploading ? config['baseURL'].replace(/\/api/, '') + imageUrl : "https://via.placeholder.com/300x180?text=Product+Image"}
                             resizeMode="contain"
                         />
                     </center>
