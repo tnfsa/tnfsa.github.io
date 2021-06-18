@@ -6,7 +6,6 @@ import DiskQuota from "./CustomerServiceComponent/DiskQuota";
 import Cookies from "universal-cookie/lib";
 import {API} from "../../helpers/API";
 import Subscription from "./CustomerServiceComponent/Subscription";
-import config from '../../config.json';
 import Plan from "./CustomerServiceComponent/Plan";
 
 const api = new API()

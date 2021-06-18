@@ -1,8 +1,5 @@
 import React from "react";
 import config from '../../../config.json';
-import {Link} from "react-router-dom";
-import {Button} from "react-bootstrap";
-
 class Plan extends React.Component {
     constructor(props) {
         super(props);
@@ -23,7 +20,7 @@ class Plan extends React.Component {
                 <td>{this.props.plan.description}</td>
                 <td>{this.props.plan.disk_quota} Mb</td>
                 <td>
-                    <a href={this.generateECPay()} className="btn btn-primary" target={"_blank"}>購買</a>
+                    <a href={this.generateECPay()} rel="noreferrer" className="btn btn-primary" target={"_blank"}>購買</a>
                 </td>
             </tr>
         )
