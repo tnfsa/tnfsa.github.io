@@ -6,6 +6,8 @@ import DiskQuota from "./CustomerServiceComponent/DiskQuota";
 import Cookies from "universal-cookie/lib";
 import {API} from "../../helpers/API";
 import Subscription from "./CustomerServiceComponent/Subscription";
+import config from '../../config.json';
+import Plan from "./CustomerServiceComponent/Plan";
 
 const api = new API()
 
@@ -15,7 +17,8 @@ class CustomerService extends React.Component {
         this.state = {
             quota: {},
             loading: false,
-            subscriptions: []
+            subscriptions: [],
+            plans: []
         }
     }
 
@@ -55,6 +58,24 @@ class CustomerService extends React.Component {
         })
     }
 
+    getPlans(storeId) {
+        this.setState({
+            loading: true
+        })
+        api.call('/plans', {
+            method: "GET",
+            params: {
+                store: storeId
+            }
+        }, (plans) => {
+            console.log(plans)
+            this.setState({
+                plans,
+                loading: false
+            });
+        })
+    }
+
     componentDidMount(props) {
         window.scrollTo({top: 0, behavior: 'smooth'})
         const cookies = new Cookies()
@@ -67,6 +88,7 @@ class CustomerService extends React.Component {
         })
         this.getDiskQuota(storeId)
         this.getSubscriptions(storeId)
+        this.getPlans(storeId)
     }
 
     render() {
@@ -74,6 +96,10 @@ class CustomerService extends React.Component {
             return (
                 <Subscription key={subscription.id} subscription={subscription}/>
             )
+        })
+
+        let plansElems = this.state.plans.map((plan, index) => {
+            return (<Plan key={plan.id} plan={plan} storeId={this.state.storeId}/>)
         })
         return (
             <React.Fragment>
@@ -89,6 +115,7 @@ class CustomerService extends React.Component {
                             <h5>您的店家ID為： <b>{this.state.storeId}</b></h5>
                             <DiskQuota quota={this.state.quota}/>
                             <Card className={["m-3", "p-3"]}>
+                                您擁有的方案列表
                                 <Table>
                                     <thead>
                                     <tr>
@@ -99,7 +126,25 @@ class CustomerService extends React.Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        {subscriptionsElems}
+                                    {subscriptionsElems}
+                                    </tbody>
+                                </Table>
+                            </Card>
+
+                            <Card className={["m-3", "p-3"]}>
+                                可購買的方案列表
+                                <div className="alert alert-danger">目前為測試階段請勿付款</div>
+                                <Table>
+                                    <thead>
+                                    <tr>
+                                        <th>方案名稱</th>
+                                        <th>說明</th>
+                                        <th>儲存容量</th>
+                                        <th>購買</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {plansElems}
                                     </tbody>
                                 </Table>
                             </Card>
