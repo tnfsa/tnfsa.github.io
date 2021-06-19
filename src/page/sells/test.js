@@ -3,17 +3,19 @@ import {Col, Spinner, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeadphones} from '@fortawesome/free-solid-svg-icons'
 import Cookies from "universal-cookie/lib";
-//import {API} from "../../helpers/API";
+import {API} from "../../helpers/API";
 import Echo from 'laravel-echo';
 import axios from "axios";
+import config from '../../config.json';
 // TODO: Production
-//const api = new API()
+const api = new API()
 const cookies = new Cookies();
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    wsHost: window.location.hostname,
-    wsPort: 6001,
+    wsHost: 'lunchapi.hsuan.app',
+    wsPath: '/websockets',
+    path: '/websockets/',
     disableStats: true,
     key: 'test',
     forceTLS: false,
@@ -22,9 +24,9 @@ window.Echo = new Echo({
             authorize: (socketId, callback) => {
                 axios({
                     method: "POST",
-                    url: 'http://local.sivir.pw:8000/api/broadcasting/auth',
+                    url: config['baseURL'] + 'broadcasting/auth',
                     headers: {
-                        Authorization: `Bearer ${'2|7U1wAV74Ov2hglgCZ4lYbMnETGvWrg5qlxeX6tel' || cookies.get('session')}`,
+                        Authorization: `Bearer ${cookies.get('session')}`,
                     },
                     data: {
                         socket_id: socketId,
@@ -39,10 +41,16 @@ window.Echo = new Echo({
         };
     },
 });
-window.Echo.private(`App.Models.User.${"a017a273-16d4-4cfb-80b3-cb03e94e4cb9"}`)
-    .notification((notification) => {
-        console.log(notification.type);
-    });
+
+//`${"a017a273-16d4-4cfb-80b3-cb03e94e4cb9"}`
+api.call('/me', {
+    method: "GET"
+}, (r) => {
+    window.Echo.private(`user.${r.id}`)
+        .listen('.transaction.created', function (e) {
+            console.log(e)
+        });
+})
 
 class SellsTest extends React.Component {
     constructor(props) {
