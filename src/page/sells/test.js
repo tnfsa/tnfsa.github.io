@@ -7,7 +7,7 @@ import {API} from "../../helpers/API";
 import Echo from 'laravel-echo';
 import axios from "axios";
 import config from '../../config.json';
-// TODO: Production
+
 const api = new API()
 const cookies = new Cookies();
 window.Pusher = require('pusher-js');
@@ -42,20 +42,12 @@ window.Echo = new Echo({
     },
 });
 
-//`${"a017a273-16d4-4cfb-80b3-cb03e94e4cb9"}`
-api.call('/me', {
-    method: "GET"
-}, (r) => {
-    window.Echo.private(`user.${r.id}`)
-        .listen('.transaction.created', function (e) {
-            console.log(e)
-        });
-})
-
 class SellsTest extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            transactions: []
+        }
     }
 
     componentDidMount(props) {
@@ -63,6 +55,22 @@ class SellsTest extends React.Component {
         let storeId = cookies.get('storeId')
         if (!storeId) {
             // Out
+        } else {
+            let that = this
+            api.call('/me', {
+                method: "GET"
+            }, (r) => {
+                window.Echo.private(`user.${r.id}`)
+                    .listen('.transaction.created', function (e) {
+                        console.log(e)
+                        that.setState(prev => ({
+                            transactions: [
+                                e.transaction,
+                                ...prev.transactions
+                            ]
+                        }))
+                    });
+            })
         }
     }
 
@@ -77,7 +85,7 @@ class SellsTest extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-
+                        {this.state.transactions.length}{JSON.stringify(this.state.transactions)}
                     </Col>
                 </Row>
             </React.Fragment>
