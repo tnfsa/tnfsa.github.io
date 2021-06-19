@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Button, Card} from "react-bootstrap";
 import config from "../../config.json";
 import Cookies from 'universal-cookie'
@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 export default function ListAddedFood(){
     const [data,setData] = useState([])
+    const isInitialMount = useRef(true);
     const cookies = new Cookies()
     const allcookies = cookies.getAll()
     if(!allcookies['storeId']){
@@ -44,7 +45,10 @@ export default function ListAddedFood(){
         })
     }
     useEffect(()=>{
-        getData()
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            getData()
+        }
     })
     return(
         <div className="storeAdded">
