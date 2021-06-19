@@ -43,7 +43,7 @@ function ListStore(){
         <div className="ListStore">
             {
                 data && (data.length > 0 ? data.map((item)=>
-                    <Card>
+                    <Card key={item.id}>
                         <Card.Img variant="top" src={item.picUrl} />
                         <Card.Body style={{display:"flex"}}>
                             <div>
