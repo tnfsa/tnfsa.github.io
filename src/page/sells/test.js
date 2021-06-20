@@ -6,7 +6,6 @@ import Cookies from "universal-cookie/lib";
 import {API} from "../../helpers/API";
 import Echo from 'laravel-echo';
 import axios from "axios";
-import config from '../../config.json';
 import IntroJs from 'intro.js'
 import 'intro.js/introjs.css';
 
@@ -15,9 +14,8 @@ const cookies = new Cookies();
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    wsHost: 'lunchapi.hsuan.app',
-    wsPath: '/websockets',
-    path: '/websockets/',
+    wsHost: process.env.WS_HOST,
+    wsPath: process.env.WS_PATH,
     disableStats: true,
     key: 'test',
     forceTLS: false,
@@ -26,7 +24,7 @@ window.Echo = new Echo({
             authorize: (socketId, callback) => {
                 axios({
                     method: "POST",
-                    url: config['baseURL'] + 'broadcasting/auth',
+                    url: process.env.API_ENDPOINT + '/broadcasting/auth',
                     headers: {
                         Authorization: `Bearer ${cookies.get('session')}`,
                     },
@@ -57,7 +55,7 @@ class SellsTest extends React.Component {
         window.scrollTo({top: 0, behavior: 'smooth'})
         setTimeout(() => {
             x.start()
-        },5000)
+        }, 5000)
         let storeId = cookies.get('storeId')
         if (!storeId) {
             // Out
@@ -126,7 +124,7 @@ class SellsTest extends React.Component {
                         <center><Spinner animation={"border"} hidden={!this.state.loading}/></center>
                     </Col>
                 </Row>
-                <Button data-intro='Hello step one!' onClick={this.requestNotification} >傳送通知</Button>
+                <Button data-intro='Hello step one!' onClick={this.requestNotification}>傳送通知</Button>
                 <Row>
                     <Col>
                         {this.transactionsToast()}
