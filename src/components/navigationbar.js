@@ -1,10 +1,10 @@
 import React from 'react'
 
-import {Nav, Navbar, NavDropdown,} from 'react-bootstrap'
+import {Nav, Navbar, NavDropdown} from 'react-bootstrap'
 
 import Cookies from 'universal-cookie'
-import {Link} from "react-router-dom";
-import {Button, TextField} from "@material-ui/core";
+import {Link, withRouter} from "react-router-dom";
+import {IconButton, TextField} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 
 class Navibar extends React.Component {
@@ -28,7 +28,13 @@ class Navibar extends React.Component {
     }
 
     searchProduct() {
-        alert(this.state.searchTerm)
+        if (this.props.location.pathname.indexOf('query') > -1) {
+            this.props.history.replace('/query?q=' + this.state.searchTerm)
+            this.props.history.go(0)
+        } else {
+            this.props.history.push('/query?q=' + this.state.searchTerm)
+        }
+
     }
 
     handleSearchTermChange(e) {
@@ -75,10 +81,13 @@ class Navibar extends React.Component {
                                                   target="_blank">選委會</NavDropdown.Item>
                             </NavDropdown>
                             <TextField value={this.state.searchTerm} onChange={this.handleSearchTermChange} id="term"
-                                       label="搜尋想吃的" variant="outlined" size="small"/>
-                            <Button aria-label="search" size="small" className="pr-1" onClick={this.searchProduct}>
-                                搜尋<SearchIcon/>
-                            </Button>
+                                       label="搜尋想吃的" variant="outlined" size="small"
+                                       InputProps={{
+                                           endAdornment:
+                                               (<IconButton onClick={this.searchProduct}>
+                                                   <SearchIcon/>
+                                               </IconButton>)
+                                       }}/>
                         </Nav>
                         {this.state.isLoggedIn ? <NavDropdown title={toHello} id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#/history">歷史紀錄</NavDropdown.Item>
@@ -97,4 +106,4 @@ class Navibar extends React.Component {
     }
 }
 
-export default Navibar
+export default withRouter(Navibar)
