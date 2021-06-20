@@ -16,6 +16,7 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     wsHost: process.env.REACT_APP_WS_HOST,
     wsPath: process.env.REACT_APP_WS_PATH,
+    wsPort: process.env.REACT_APP_WS_PORT,
     disableStats: true,
     key: 'test',
     forceTLS: false,
