@@ -101,10 +101,16 @@ export default function Query() {
     let location = useLocation();
     const getProductQueryResult = React.useCallback((q) => {
         setLoading(true)
+        let _term;
+        if (typeof q === 'string') {
+            _term = q
+        } else {
+            _term = term
+        }
         api.call('/products/query', {
             method: "POST",
             body: {
-                term: (q ?? term)
+                term: _term
             }
         }, r => {
             setProducts(r)
@@ -159,6 +165,7 @@ export default function Query() {
                             </IconButton>)
                     }}
                 />
+                <h5 style={{textAlign: 'center'}} hidden={loading || products.length !== 0}>目前無相關資料</h5>
                 {resultElems}
             </Container>
         </React.Fragment>
