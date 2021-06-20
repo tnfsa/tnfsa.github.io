@@ -1,18 +1,13 @@
-import React,{useState,useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
-import config from '../config.json'
-
-import {
-    Card,
-    Button
-} from 'react-bootstrap'
+import {Button, Card} from 'react-bootstrap'
 import {Link, useHistory} from "react-router-dom";
 
 function ListFood(props){
     const [data,setData] = useState([])
     const history = useHistory();
     async function getData(){
-        const url = config['baseURL'] + "stores/" + props.storeId + '/products'
+        const url = process.env.REACT_APP_API_ENDPOINT + "/stores/" + props.storeId + '/products'
         fetch(url,{
             method: 'GET'
         }).then(response => {

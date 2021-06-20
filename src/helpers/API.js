@@ -4,7 +4,7 @@ export class API {
     cookies = new Cookies();
 
     call(endpoint: string, data: Object, cb) {
-        endpoint = process.env.API_ENDPOINT + endpoint
+        endpoint = process.env.REACT_APP_API_ENDPOINT + endpoint
         for (let str in (data.params || {})) {
             endpoint = endpoint.replaceAll(":"+str, data.params[str])
         }

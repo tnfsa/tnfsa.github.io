@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import config from '../../config.json'
-import {Container, Row, Col, Figure, Button} from 'react-bootstrap'
+import {Button, Col, Container, Figure, Row} from 'react-bootstrap'
 import {useHistory} from 'react-router-dom'
 import Cookies from 'universal-cookie'
 import Swal from 'sweetalert2'
@@ -13,7 +12,7 @@ export default function FoodContent(props) {
     const [description, setDescription] = useState('')
     const [comment, setComment] = useState('')
     const history = useHistory()
-    const URL = config['baseURL'] + 'stores/' + props.store + '/products/' + props.product;
+    const URL = process.env.REACT_APP_API_ENDPOINT + '/stores/' + props.store + '/products/' + props.product;
 
     async function getData() {
         fetch(URL, {
@@ -59,7 +58,7 @@ export default function FoodContent(props) {
         if (window.confirm(confirmText)) {
             //window.alert('Ok')
             // send transaction
-            const url = config['baseURL'] + 'transactions'
+            const url = process.env.REACT_APP_API_ENDPOINT + '/transactions'
             fetch(url, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -132,7 +131,7 @@ export default function FoodContent(props) {
                             <Figure.Image
                                 width={300}
                                 alt="餐點的照片"
-                                src={config['baseURL'].replace(/\/api/,'') + picture}
+                                src={process.env.REACT_APP_API_HOST + '/' + picture}
                                 resizeMode="contain"
                             />
                         </Figure>

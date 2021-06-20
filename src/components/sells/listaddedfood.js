@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {Button, Card} from "react-bootstrap";
-import config from "../../config.json";
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom";
 import Swal from "sweetalert2";
@@ -19,7 +18,7 @@ export default function ListAddedFood(){
         })
     }
     const getData = ()=>{
-        const url = config['baseURL'] + 'stores/'+ allcookies['storeId'] + '/products'
+        const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/products'
         fetch(url,{
             method: 'GET',
             headers:{
