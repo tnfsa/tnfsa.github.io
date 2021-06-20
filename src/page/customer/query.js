@@ -58,7 +58,7 @@ function Result(props) {
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
-                                <Box fontSize={1} color={green}>
+                                <Box fontSize={1} color={green} hidden={parseFloat(props.product.weight) <= 1.0}>
                                     <InfoOutlined style={{fontSize: 12}}/>
                                     &nbsp;廣告
                                 </Box>
