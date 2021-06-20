@@ -55,7 +55,12 @@ class SellsTest extends React.Component {
         let x = new IntroJs()
         window.scrollTo({top: 0, behavior: 'smooth'})
         setTimeout(() => {
-            //x.start()
+            if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+                // nope
+            } else {
+                x.start()
+            }
+
         }, 5000)
         let storeId = cookies.get('storeId')
         if (!storeId) {
