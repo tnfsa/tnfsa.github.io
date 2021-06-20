@@ -41,7 +41,7 @@ class Navibar extends React.Component{
             cookies.remove('name')
             cookies.set('alert','登出成功',{path: '/'})
             //reload page
-            window.location.replace('/')
+            window.location.href = '/'
         }
         const toHello = "嗨! "+this.state.username
         return(
@@ -52,10 +52,10 @@ class Navibar extends React.Component{
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="#/restaurant">餐廳</Nav.Link>
-                            {this.state.isSells && <NavDropdown title="店家管理" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#/config/store">商家設定</NavDropdown.Item>
+                            {this.state.isSells && <NavDropdown title="商家管理" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#/config/menu">菜單設定</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to="/service">客服服務</NavDropdown.Item>
+                                <NavDropdown.Item as={Link} to="/booked">出餐</NavDropdown.Item>
                             </NavDropdown>}
                             <NavDropdown title="相關連結" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="https://sites.google.com/view/tnfshsu/" rel="noreferrer noopener" target="_blank">學聯會</NavDropdown.Item>
