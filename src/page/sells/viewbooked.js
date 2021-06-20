@@ -1,7 +1,6 @@
-import React,{useEffect,useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Spinner} from "react-bootstrap";
 import Cookies from 'universal-cookie'
-import config from '../../config.json'
 
 export default function ViewBooked(){
     const [loading,setLoading] = useState(true)
@@ -13,10 +12,10 @@ export default function ViewBooked(){
 
     async function getData(){
         try{
-            const url = config['baseURL'] + 'stores/ ' + storeId + '/transactions'
-            let result =  await fetch(url,{
+            const url = process.env.REACT_APP_API_HOST + '/stores/ ' + storeId + '/transactions'
+            let result = await fetch(url, {
                 method: 'GET',
-                'headers':{
+                'headers': {
                     'Accept': 'application/json',
                     "Authorization": `Bearer ${allcookies['session']}`
                 }
