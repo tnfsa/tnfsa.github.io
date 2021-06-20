@@ -35,7 +35,7 @@ function MenuConfigurator() {
         const name = document.getElementById('foodTitle').value
         const subtitle = document.getElementById('foodSub').value
         const price = document.getElementById('foodPrice').value
-        const postURL = config['baseURL'] + 'stores/' + storeId + '/products'
+        const postURL = process.env.REACT_APP_API_ENDPOINT + '/stores/' + storeId + '/products'
 
         var data = {
             'name': name,
@@ -82,7 +82,7 @@ function MenuConfigurator() {
             const formData = new FormData()
             formData.append('image', file)
             setUploading(true)
-            fetch(config['baseURL'] + 'stores/' + storeId + '/images', {
+            fetch(process.env.REACT_APP_API_ENDPOINT + '/stores/' + storeId + '/images', {
                 method: 'POST',
                 headers: {
                     "Accept": "application/json",
@@ -152,13 +152,13 @@ function MenuConfigurator() {
                     <center>
                         <Spinner hidden={uploading === false} animation={"border"}/>
                         <br/>
-                        <a href={config['baseURL'].replace(/\/api/, '') + imageUrl} target="_blank"
+                        <a href={process.env.REACT_APP_API_HOST + '/' + imageUrl} target="_blank"
                            hidden={!image || uploading}
-                           rel="noreferrer">{config['baseURL'].replace(/\/api/, '') + imageUrl}</a>
+                           rel="noreferrer">{process.env.REACT_APP_API_HOST + '/' + imageUrl}</a>
                         <br/>
                         <Figure.Image
                             width={300}
-                            src={image && !uploading ? config['baseURL'].replace(/\/api/, '') + imageUrl : "https://via.placeholder.com/300x180?text=Product+Image"}
+                            src={image && !uploading ? process.env.REACT_APP_API_HOST + '/' + imageUrl : "https://via.placeholder.com/300x180?text=Product+Image"}
                             resizeMode="contain"
                         />
                     </center>

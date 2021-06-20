@@ -2,7 +2,6 @@ import React from 'react'
 //import Signinblock from "../components/signinblock";
 import {Col, Container, Row, Spinner} from "react-bootstrap";
 import GoogleOauth from "../components/googleOauth";
-import config from "../config.json";
 import Cookies from "universal-cookie";
 import {Link} from 'react-router-dom'
 
@@ -34,7 +33,7 @@ class Login extends React.Component {
                 'email': email.value,
                 'password': passwd.value,
             }
-            let url = config.baseURL + 'login'
+            let url = process.env.REACT_APP_API_ENDPOINT + '/login'
             this.setState({
                 loading: true
             })
@@ -66,7 +65,7 @@ class Login extends React.Component {
                 console.log(`Failed: ${err}`)
             }).then(loginResponse => {
                 //get account information
-                const meUrl = config['baseURL'] + 'me'
+                const meUrl = process.env.REACT_APP_API_ENDPOINT + '/me'
                 fetch(meUrl, {
                     method: 'GET',
                     headers: {

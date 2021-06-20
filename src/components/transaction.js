@@ -1,5 +1,4 @@
-import React,{useState,useEffect} from 'react'
-import config from '../config.json'
+import React, {useEffect, useState} from 'react'
 import Cookies from 'universal-cookie'
 import {Button, Card, Container} from 'react-bootstrap'
 import {Link} from "react-router-dom";
@@ -11,7 +10,7 @@ export default function Transaction(){
     async function Update(){
         const cookies = new Cookies()
         const allcookies = cookies.getAll()
-        const fetchURL = config['baseURL'] + 'transactions'
+        const fetchURL = process.env.REACT_APP_API_ENDPOINT + '/transactions'
         fetch(fetchURL,{
             method: 'GET',
             headers:{

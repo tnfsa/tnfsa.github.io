@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Button, Card} from "react-bootstrap";
-import config from "../../config.json";
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function ListAddedFood(){
     const [data,setData] = useState([])
+    const isInitialMount = useRef(true);
     const cookies = new Cookies()
     const allcookies = cookies.getAll()
     if(!allcookies['storeId']){
@@ -18,7 +18,7 @@ export default function ListAddedFood(){
         })
     }
     const getData = ()=>{
-        const url = config['baseURL'] + 'stores/'+ allcookies['storeId'] + '/products'
+        const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/products'
         fetch(url,{
             method: 'GET',
             headers:{
@@ -44,13 +44,16 @@ export default function ListAddedFood(){
         })
     }
     useEffect(()=>{
-        getData()
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            getData()
+        }
     })
     return(
         <div className="storeAdded">
             {
                 data && data.length>0 && data.map((item)=>
-                    <Card>
+                    <Card key={item.id}>
                         <Card.Img variant="top" src={item.picUrl} />
                         <Card.Body style={{display:"flex"}}>
                             <div>

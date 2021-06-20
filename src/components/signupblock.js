@@ -1,7 +1,6 @@
 import React from 'react'
 import {Col, Container, Row} from "react-bootstrap";
 import Cookies from 'universal-cookie'
-import config from '../config.json'
 //import LoadingSpinner from '../components/loadingspinner'
 import {Link} from 'react-router-dom'
 
@@ -51,7 +50,7 @@ class Signupblock extends React.Component{
                 'registration_code': token.value
             }
 
-            let url = config.baseURL + 'register'
+            let url = process.env.REACT_APP_API_ENDPOINT + '/register'
             //send request
             this.setState({
                 loading: true

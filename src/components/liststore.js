@@ -1,18 +1,13 @@
-import React,{useState,useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
-import config from '../config.json'
-
-import {
-    Card,
-    Button, Spinner
-} from 'react-bootstrap'
+import {Button, Card, Spinner} from 'react-bootstrap'
 import {Link} from "react-router-dom";
 
 function ListStore(){
     const [data,setData] = useState([])
     const [loading, setLoading] = useState(true)
     const getData = ()=>{
-        const url = config['baseURL'] + 'stores'
+        const url = process.env.REACT_APP_API_ENDPOINT + '/stores'
         console.log(url)
         fetch(url,{
             method: 'GET'
@@ -43,7 +38,7 @@ function ListStore(){
         <div className="ListStore">
             {
                 data && (data.length > 0 ? data.map((item)=>
-                    <Card>
+                    <Card key={item.id}>
                         <Card.Img variant="top" src={item.picUrl} />
                         <Card.Body style={{display:"flex"}}>
                             <div>

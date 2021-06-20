@@ -1,5 +1,5 @@
 import React from "react";
-import config from '../../../config.json';
+
 class Plan extends React.Component {
     constructor(props) {
         super(props);
@@ -8,7 +8,7 @@ class Plan extends React.Component {
 
     generateECPay(){
         return (
-            config['baseURL'].replace('api/', '') +
+            process.env.REACT_APP_API_HOST + '/' +
             this.props.storeId + '/' + this.props.plan.id + '/sendOrder'
         )
     }
