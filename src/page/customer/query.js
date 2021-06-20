@@ -16,6 +16,7 @@ import {Rating} from "@material-ui/lab";
 import SearchIcon from "@material-ui/icons/Search";
 import {API} from "../../helpers/API";
 import {InfoOutlined} from "@material-ui/icons";
+import {green} from "@material-ui/core/colors";
 
 const api = new API();
 const useStyles = makeStyles((theme) => ({
@@ -37,23 +38,30 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: '100%',
         maxHeight: '100%',
     },
+    miniIcon: {
+        width: 60,
+        height: 60,
+    }
 }));
 
 function Result(props) {
     // props.product
-    const style = {
+    /*const style = {
         height: 32,
-    };
+    };*/
     const classes = useStyles();
 
     return (
-        <div className={classes.root} key={props.product.id}>
-            <Paper className={classes.paper} elevation={3} borderColor="secondary.main">
+        <div className={classes.root}>
+            <Paper className={classes.paper} elevation={3}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
-                                <InfoOutlined/>
+                                <Box fontSize={1} color={green}>
+                                    <InfoOutlined style={{fontSize: 12}}/>
+                                    &nbsp;廣告
+                                </Box>
                                 <Typography gutterBottom variant="h6">
                                     {props.product.name}
                                 </Typography>
@@ -76,7 +84,7 @@ function Result(props) {
                     </Grid>
                     <Grid item>
                         <ButtonBase className={classes.image}>
-                            <img className={classes.img} alt="Product Image" src={props.product.image}/>
+                            <img className={classes.img} alt={props.product.name} src={props.product.image}/>
                         </ButtonBase>
                     </Grid>
                 </Grid>
@@ -91,22 +99,7 @@ export default function Query() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false)
     let location = useLocation();
-
-    useEffect(() => {
-        if (isInitState.current) {
-            isInitState.current = false
-            window.scrollTo({top: 0, behavior: 'smooth'})
-            let searchTerm = (new URLSearchParams(location.search)).get('q');
-            setTerm(searchTerm)
-            getProductQueryResult(searchTerm);
-        }
-    }, [location])
-
-    function handleTermChange(e) {
-        setTerm(e.target.value)
-    }
-
-    function getProductQueryResult(q) {
+    const getProductQueryResult = React.useCallback((q) => {
         setLoading(true)
         api.call('/products/query', {
             method: "POST",
@@ -117,12 +110,25 @@ export default function Query() {
             setProducts(r)
             setLoading(false)
         })
+    }, [term])
+    useEffect(() => {
+        if (isInitState.current) {
+            isInitState.current = false
+            window.scrollTo({top: 0, behavior: 'smooth'})
+            let searchTerm = (new URLSearchParams(location.search)).get('q');
+            setTerm(searchTerm)
+            getProductQueryResult(searchTerm);
+        }
+    }, [location.search, getProductQueryResult])
+
+    function handleTermChange(e) {
+        setTerm(e.target.value)
     }
 
     let resultElems = products.map((product, index) => {
         return (
-            <div>
-                <Result key={product.id} product={product}/>
+            <div key={product.id}>
+                <Result product={product}/>
                 <br/>
             </div>
         )
