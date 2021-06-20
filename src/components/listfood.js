@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 
 import {Button, Card} from 'react-bootstrap'
 import {Link, useHistory} from "react-router-dom";
@@ -6,6 +6,7 @@ import {Link, useHistory} from "react-router-dom";
 function ListFood(props){
     const [data,setData] = useState([])
     const history = useHistory();
+    const isInitialMount = useRef(true);
     async function getData(){
         const url = process.env.REACT_APP_API_ENDPOINT + "/stores/" + props.storeId + '/products'
         fetch(url,{
@@ -32,9 +33,12 @@ function ListFood(props){
             setData(myJson)
         })
     }
-    useEffect(()=>{
-        getData()
-    },)
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            getData()
+        }
+    })
     return(
         <div className="ListStore">
             {
