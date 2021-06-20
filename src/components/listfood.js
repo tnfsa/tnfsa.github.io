@@ -10,6 +10,7 @@ function ListFood(props) {
     const isInitialMount = useRef(true);
 
     async function getData() {
+        setLoading(true)
         const url = process.env.REACT_APP_API_ENDPOINT + "/stores/" + props.storeId + '/products'
         fetch(url, {
             method: 'GET'
@@ -40,7 +41,6 @@ function ListFood(props) {
     useEffect(() => {
         if (isInitialMount.current) {
             isInitialMount.current = false;
-            setLoading(true)
             getData()
         }
     })
