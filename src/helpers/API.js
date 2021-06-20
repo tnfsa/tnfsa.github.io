@@ -1,11 +1,10 @@
 import Cookies from "universal-cookie";
-import config from '../config.json'
 
 export class API {
     cookies = new Cookies();
 
     call(endpoint: string, data: Object, cb) {
-        endpoint = config['baseURL'].slice(0, -1) + endpoint
+        endpoint = process.env.API_ENDPOINT + endpoint
         for (let str in (data.params || {})) {
             endpoint = endpoint.replaceAll(":"+str, data.params[str])
         }
