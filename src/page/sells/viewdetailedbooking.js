@@ -19,7 +19,16 @@ export default function ViewDetailedBooking(props){
                 "Authorization": `Bearer ${allcookies['session']}`
             }
         })
-        return await result.json()
+        const json = await result.json()
+        let toReturn = []
+
+        // eslint-disable-next-line
+        json.map(item =>{
+            if(item['product_id'] === props.match.params.itemId){
+                toReturn.push(item)
+            }
+        })
+        return toReturn
     }
     const getName = async()=>{
         const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/products'
@@ -31,34 +40,27 @@ export default function ViewDetailedBooking(props){
             }
         })
         const json = await result.json()
-        //console.log(json)
+        let foodName = 'temp'
         // eslint-disable-next-line
-
         json.map((item)=>{
             if(item['id'] === props.match.params.itemId){
-                window.alert(item['name'])
-                return item['name']
+                foodName = item['name']
             }
         })
-
+        return foodName
     }
     const getInfo = async ()=>{
         try{
-            const [json,name] = await Promise.all([transactions(),getName(props.match.params.itemId)])
+            const result = await Promise.all([transactions(),getName(props.match.params.itemId)])
 
-            let toReturn = []
-            // eslint-disable-next-line
-            json.map(item =>{
-                if(item['id'] === props.match.params.itemId){
-                    toReturn.push(item)
-                    console.log(item)
-                }
-            })
-            console.log(toReturn)
-            setProductName(name)
+            //console.log(jsonData)
+            //console.log(name)
             setLoading(false)
-            setData(toReturn)
-        }catch{
+            setProductName(result[1])
+            setData(result[0])
+            console.log(result[0])
+        }catch(err){
+            window.alert(err)
             cookies.set('alert','讀取錯誤，正在返回首頁',{path: '/'})
             document.location.href = '/'
         }
@@ -81,8 +83,8 @@ export default function ViewDetailedBooking(props){
                         <Card key={item.id}>
                             <Card.Body style={{display: "flex"}}>
                                 <div>
-                                    <Card.Title>{item.name}</Card.Title>
-
+                                    <Card.Title>交易編號：{item.id}</Card.Title>
+                                    <Card.Text>備註：{item.comment}</Card.Text>
                                 </div>
                             </Card.Body>
                         </Card>
