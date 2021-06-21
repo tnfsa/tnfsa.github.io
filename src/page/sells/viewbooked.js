@@ -14,10 +14,8 @@ export default function ViewBooked(){
 
     const getData = async ()=>{
         try{
-
-            const url = process.env.REACT_APP_API_HOST + '/stores/ ' + storeId + '/transactions'
+            const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/transactions'
             let result = await fetch(url, {
-
                 method: 'GET',
                 'headers': {
                     'Accept': 'application/json',
@@ -26,15 +24,19 @@ export default function ViewBooked(){
             })
             let json = await result.json()
             //console.log(json)
+            console.log(json)
+
             let name = {}
-            // eslint-disable-next-line
+            console.log(json)
             json.map(item =>{
                 if(name[item.product_id] === undefined){
                     name[item.product_id] = 1
                 }else{
                     name[item.product_id] ++
                 }
+                return null
             })
+
             let toReturn = []
             for(let element in name){
                 console.log(name[element])
