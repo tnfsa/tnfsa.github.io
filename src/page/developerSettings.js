@@ -56,9 +56,9 @@ export default function DeveloperSettings() {
         setValue(newValue);
     };
 
-    function handleApiTokenChange(e) {
+    /*function handleApiTokenChange(e) {
         setApiToken(e.target.value)
-    }
+    }*/
 
     return (
         <React.Fragment>
