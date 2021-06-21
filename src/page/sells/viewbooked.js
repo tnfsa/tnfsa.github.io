@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Button, Card, Spinner, Container} from "react-bootstrap";
 import Cookies from 'universal-cookie'
-import config from '../../config.json'
 import {Link} from "react-router-dom";
 
 export default function ViewBooked(){
@@ -13,7 +12,7 @@ export default function ViewBooked(){
 
     const getData = async ()=>{
         try{
-            const url = config['baseURL'] + 'transactions'
+            const url = process.env.REACT_APP_API_ENDPOINT + '/transactions'
             let result =  await fetch(url,{
                 method: 'GET',
                 'headers':{

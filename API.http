@@ -214,4 +214,4 @@ Authorization: Bearer {{auth_token}}
 GET https://lunchapi.hsuan.app/api/transactions
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer {{}}
+Authorization: Bearer {{auth_token}}

@@ -1,17 +1,17 @@
 import React,{useEffect,useState} from 'react'
 import {Card, Container, Spinner} from "react-bootstrap";
 import Cookies from 'universal-cookie'
-import config from "../../config.json";
+
 
 export default function ViewDetailedBooking(props){
     const [loading,setLoading] = useState(true)
     const [data, setData] = useState([])
     const [productName,setProductName] = useState('')
-    const cookies = new Cookies
+    const cookies = new Cookies()
     const allcookies = cookies.getAll()
 
     const transactions = async ()=>{
-        const url = config['baseURL'] + 'transactions'
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions'
         let result =  await fetch(url,{
             method: 'GET',
             headers:{
@@ -22,7 +22,7 @@ export default function ViewDetailedBooking(props){
         return await result.json()
     }
     const getName = async()=>{
-        const url = config['baseURL'] + 'stores/' + cookies['storeId'] + '/products'
+        const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + cookies['storeId'] + '/products'
         let result = await fetch(url,{
             method: 'GET',
             headers:{
@@ -39,6 +39,7 @@ export default function ViewDetailedBooking(props){
             const [json,name] = await Promise.all([transactions(),getName(props.match.params.itemId)])
             console.log(json)
             let toReturn = []
+            // eslint-disable-next-line
             json.map(item =>{
                 if(item['id'] === props.match.params.itemId){
                     toReturn.push(item)
