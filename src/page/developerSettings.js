@@ -83,7 +83,7 @@ export default function DeveloperSettings() {
                 <TabPanel value={value} index={0}>
                     設定設定
                     <br/>
-                    <TextField onChange={handleSearchTermChange} id="term" value={apiToken}
+                    <TextField id="term" value={apiToken}
                                label="API Token" variant="outlined" size="small"
                                InputProps={{
                                    endAdornment:
