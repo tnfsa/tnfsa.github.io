@@ -26,7 +26,9 @@ import NewOption from './page/sells/newoption'
 import CustomerService from "./page/sells/service";
 import SellsTest from "./page/sells/test";
 import ViewBooked from './page/sells/viewbooked'
+import ViewDetailedBooking from './page/sells/viewdetailedbooking'
 import Query from "./page/customer/query";
+
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
           <Notification />
         <Switch>
             <Route path="/login" component={Login} />
+            <Route path="/booked/detailed/:itemId" component={ViewDetailedBooking}/>
             <Route path="/booked" component={ViewBooked}/>
             <Route path="/query" component={Query}/>
             <Route path="/restaurant" component={Restaurant}/>

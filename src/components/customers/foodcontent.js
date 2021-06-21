@@ -53,7 +53,7 @@ export default function FoodContent(props) {
             `請確認您的訂購資訊
 名稱：${title}
 售價：${price}
-其他建議：(功能未開放)
+其他建議：${comment}
 按 OK 送出；cancel 取消`
         if (window.confirm(confirmText)) {
             //window.alert('Ok')
@@ -126,7 +126,7 @@ export default function FoodContent(props) {
                     <Col>
                         <Figure>
                             <Figure.Caption className={"text-center"}>
-                                {title}
+                                <h1>{title}</h1>
                             </Figure.Caption>
                             <Figure.Image
                                 width={300}

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import Cookies from 'universal-cookie'
-import {Button, Card, Container} from 'react-bootstrap'
-import {Link} from "react-router-dom";
+import {Card, Container} from 'react-bootstrap'
 
 
 export default function Transaction(){
@@ -51,11 +50,10 @@ export default function Transaction(){
                             <Card.Img variant="top" src={item.picUrl} />
                             <Card.Body style={{display:"flex"}}>
                                 <div>
-                                    <Card.Title>{item.product_id}</Card.Title>
-                                    <Card.Text>{item.comment}</Card.Text>
-                                </div>
-                                <div style={{marginLeft:"auto"}}>
-                                    <Button variant="primary" as={Link} to={{pathname:`/order/${item.id}`}}>查看</Button>
+                                    <Card.Title>商品名稱：{item.product_id}</Card.Title>
+                                    <Card.Title>金額：{item.total}</Card.Title>
+                                    <Card.Text>留言：{item.comment}</Card.Text>
+                                    <Card.Text>購買日期：{item.updated_at}</Card.Text>
                                 </div>
                             </Card.Body>
                         </Card>

@@ -123,7 +123,8 @@ client.global.set("store_id", response.body.id);
 ###
 
 # Show
-GET https://lunchapi.hsuan.app/api/stores/{{store_id}}
+GET https://lunchapi.hsuan.app/api/stores/34e4e411-4e6c-40e5-8094-1f2ab6439ed0/products
+#GET https://lunchapi.hsuan.app/api/stores/{{store_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{auth_token}}
@@ -209,3 +210,8 @@ Accept: application/json
 Authorization: Bearer {{auth_token}}
 
 ###
+#List Transactions
+GET https://lunchapi.hsuan.app/api/transactions
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{auth_token}}
