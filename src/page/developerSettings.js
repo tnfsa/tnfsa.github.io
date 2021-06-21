@@ -51,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
 export default function DeveloperSettings() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-    const [apiToken, setApiToken] = React.useState('')
+    //const [apiToken, setApiToken] = React.useState('')
+    const apiToken = ''
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
