@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {HashRouter,Switch,Route} from 'react-router-dom'
+import {HashRouter, Route, Switch} from 'react-router-dom'
 
 import OfflineDetect from "./components/offlineDetect";
 import Navibar from "./components/navigationbar";
@@ -27,6 +27,8 @@ import CustomerService from "./page/sells/service";
 import SellsTest from "./page/sells/test";
 import ViewBooked from './page/sells/viewbooked'
 import ViewDetailedBooking from './page/sells/viewdetailedbooking'
+import Query from "./page/customer/query";
+
 
 function App() {
   return (
@@ -38,7 +40,8 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/booked/detailed/:itemId" component={ViewDetailedBooking}/>
             <Route path="/booked" component={ViewBooked}/>
-            <Route path="/restaurant" component={Restaurant} />
+            <Route path="/query" component={Query}/>
+            <Route path="/restaurant" component={Restaurant}/>
             <Route path="/settings" component={Settings} />
             <Route path="/purchase/:store/:product" component={Purchase} />
             <Route path="/order/:storeId" component={Order} />

@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react'
+
 import {Button, Card, Spinner, Container} from "react-bootstrap";
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom";
+
 
 export default function ViewBooked(){
     const [loading,setLoading] = useState(true)
@@ -12,10 +14,12 @@ export default function ViewBooked(){
 
     const getData = async ()=>{
         try{
-            const url = process.env.REACT_APP_API_ENDPOINT + '/transactions'
-            let result =  await fetch(url,{
+
+            const url = process.env.REACT_APP_API_HOST + '/stores/ ' + storeId + '/transactions'
+            let result = await fetch(url, {
+
                 method: 'GET',
-                'headers':{
+                'headers': {
                     'Accept': 'application/json',
                     "Authorization": `Bearer ${allcookies['session']}`
                 }
