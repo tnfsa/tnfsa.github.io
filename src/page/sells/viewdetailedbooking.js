@@ -11,7 +11,7 @@ export default function ViewDetailedBooking(props){
     const allcookies = cookies.getAll()
 
     const transactions = async ()=>{
-        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions'
+        const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/transactions'
         let result =  await fetch(url,{
             method: 'GET',
             headers:{
@@ -22,7 +22,7 @@ export default function ViewDetailedBooking(props){
         return await result.json()
     }
     const getName = async()=>{
-        const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + cookies['storeId'] + '/products'
+        const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/products'
         let result = await fetch(url,{
             method: 'GET',
             headers:{
@@ -31,24 +31,33 @@ export default function ViewDetailedBooking(props){
             }
         })
         const json = await result.json()
-        console.log(json)
-        return 'empty'
+        //console.log(json)
+        // eslint-disable-next-line
+
+        json.map((item)=>{
+            if(item['id'] === props.match.params.itemId){
+                window.alert(item['name'])
+                return item['name']
+            }
+        })
+
     }
     const getInfo = async ()=>{
         try{
             const [json,name] = await Promise.all([transactions(),getName(props.match.params.itemId)])
-            console.log(json)
+
             let toReturn = []
             // eslint-disable-next-line
             json.map(item =>{
                 if(item['id'] === props.match.params.itemId){
                     toReturn.push(item)
+                    console.log(item)
                 }
             })
-            setLoading(false)
+            console.log(toReturn)
             setProductName(name)
+            setLoading(false)
             setData(toReturn)
-
         }catch{
             cookies.set('alert','讀取錯誤，正在返回首頁',{path: '/'})
             document.location.href = '/'
