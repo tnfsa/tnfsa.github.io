@@ -27,6 +27,7 @@ import CustomerService from "./page/sells/service";
 import SellsTest from "./page/sells/test";
 import ViewBooked from './page/sells/viewbooked'
 import Query from "./page/customer/query";
+import DeveloperSettings from "./page/developerSettings";
 
 function App() {
   return (
@@ -54,7 +55,8 @@ function App() {
             <Route path="/COC" component={CodeOfConduct} />
             <Route path="/signup" component={Signup} />
             <Route path="/feedback" component={Feedback}/>
-            <Route path="/" component={Homepage} />
+            <Route path="/dev" component={DeveloperSettings}/>
+            <Route path="/" component={Homepage}/>
         </Switch>
         <Footer />
       </HashRouter>
