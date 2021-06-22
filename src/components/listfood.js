@@ -17,7 +17,10 @@ function ListFood(props) {
         setLoading(true)
         const url = process.env.REACT_APP_API_ENDPOINT + "/stores/" + props.storeId + '/products'
         fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            headers:{
+                'Accept': 'application/json'
+            }
         }).then(response => {
             if (response.ok) {
                 return response.json()
