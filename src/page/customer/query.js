@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Redirect, useLocation} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import {Container} from 'react-bootstrap'
 import {
     Box,
@@ -44,21 +44,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function purchaseRedirect(store_id, product_id) {
-    return <Redirect to={`/purchase/${store_id}/${product_id}`} push/>
-}
-
 function Result(props) {
     // props.product
     /*const style = {
         height: 32,
     };*/
     const classes = useStyles();
-
+    const history = useHistory();
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper} elevation={3}
-                   onClick={() => purchaseRedirect(props.product.store_id, props.product.product_id)}>
+            <Paper className={classes.paper} elevation={3}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
@@ -67,7 +62,10 @@ function Result(props) {
                                     <InfoOutlined style={{fontSize: 12}}/>
                                     &nbsp;廣告
                                 </Box>
-                                <Typography gutterBottom variant="h6">
+                                <Typography style={{cursor: "pointer", color: "green"}} gutterBottom
+                                            variant="h6"
+                                            as={Link}
+                                            onClick={() => history.push(`/purchase/${props.product.store_id}/${props.product.id}`)}>
                                     {props?.product?.name}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
