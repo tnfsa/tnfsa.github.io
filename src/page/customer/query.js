@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {useLocation} from 'react-router-dom';
+import {Redirect, useLocation} from 'react-router-dom';
 import {Container} from 'react-bootstrap'
 import {
     Box,
@@ -44,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+function purchaseRedirect(store_id, product_id) {
+    return <Redirect to={`/purchase/${store_id}/${product_id}`} push/>
+}
+
 function Result(props) {
     // props.product
     /*const style = {
@@ -53,7 +57,8 @@ function Result(props) {
 
     return (
         <div className={classes.root}>
-            <Paper className={classes.paper} elevation={3}>
+            <Paper className={classes.paper} elevation={3}
+                   onClick={() => purchaseRedirect(props.product.store_id, props.product.product_id)}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
@@ -84,7 +89,8 @@ function Result(props) {
                     </Grid>
                     <Grid item>
                         <ButtonBase className={classes.image}>
-                            <img className={classes.img} alt={props.product.name} src={props.product.image}/>
+                            <img className={classes.img} alt={props.product.name}
+                                 src={process.env.REACT_APP_API_HOST + '/' + props.product.image}/>
                         </ButtonBase>
                     </Grid>
                 </Grid>
