@@ -58,7 +58,7 @@ function ListFood(props) {
                             </div>
                             <div style={{marginLeft: "auto"}}>
                                 <Button variant="primary" as={Link}
-                                        to={{pathname: `/purchase/${item.storeId}/${item.id}`}}>立即前往</Button>
+                                        to={{pathname: `/purchase/${item.storeId}/${item.id}`}}>立即訂購</Button>
                             </div>
                         </Card.Body>
                     </Card>
