@@ -63,13 +63,13 @@ function Result(props) {
                                     &nbsp;廣告
                                 </Box>
                                 <Typography gutterBottom variant="h6">
-                                    {props.product.name}
+                                    {props?.product?.name}
                                 </Typography>
                                 <Typography variant="body2" gutterBottom>
-                                    {props.product.description}
+                                    {props?.product?.description}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    ID: {props.product.id}
+                                    {props?.product?.store_name}
                                 </Typography>
                             </Grid>
                             <Grid item>
