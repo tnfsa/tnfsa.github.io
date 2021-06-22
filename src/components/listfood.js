@@ -2,12 +2,16 @@ import React, {useEffect, useRef, useState} from 'react'
 
 import {Button, Card, Spinner} from 'react-bootstrap'
 import {Link, useHistory} from "react-router-dom";
+import Cookies from 'universal-cookie'
 
 function ListFood(props) {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const history = useHistory();
     const isInitialMount = useRef(true);
+    const [showButton,setShowButton] = useState(false)
+    const cookies = new Cookies()
+    const allcookies = cookies.getAll()
 
     async function getData() {
         setLoading(true)
@@ -35,6 +39,9 @@ function ListFood(props) {
             }
             setData(myJson)
             setLoading(false)
+            if(allcookies['session'] !== undefined){
+                setShowButton(true)
+            }
         })
     }
 
@@ -57,8 +64,8 @@ function ListFood(props) {
                                 <Card.Text>{item.description}</Card.Text>
                             </div>
                             <div style={{marginLeft: "auto"}}>
-                                <Button variant="primary" as={Link}
-                                        to={{pathname: `/purchase/${item.storeId}/${item.id}`}}>立即前往</Button>
+                                <Button variant="primary" as={Link} hidden={!showButton}
+                                        to={{pathname: `/purchase/${item.storeId}/${item.id}`}}>立即訂購</Button>
                             </div>
                         </Card.Body>
                     </Card>

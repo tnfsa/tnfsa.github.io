@@ -57,10 +57,6 @@ export default function DeveloperSettings() {
         setValue(newValue);
     };
 
-    /*function handleApiTokenChange(e) {
-        setApiToken(e.target.value)
-    }*/
-
     return (
         <React.Fragment>
             <h1 style={{textAlign: "center"}}>開發者設定</h1>

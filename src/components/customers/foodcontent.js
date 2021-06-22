@@ -126,7 +126,7 @@ export default function FoodContent(props) {
                     <Col>
                         <Figure>
                             <Figure.Caption className={"text-center"}>
-                                <h1>{title}</h1>
+                                <h1>餐點：{title}</h1>
                             </Figure.Caption>
                             <Figure.Image
                                 width={300}
@@ -136,7 +136,7 @@ export default function FoodContent(props) {
                             />
                         </Figure>
                     </Col>
-                    <Col>{description}</Col>
+                    <Col>描述：{description}</Col>
                 </Row>
 
                 <Row>
@@ -145,12 +145,13 @@ export default function FoodContent(props) {
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg={9}>
+                    <Col lg={10}>
                         <TextareaAutosize className="form-control" placeholder="留言" rows="5"
                                           onChange={event => setComment(event.target.value)}
                                           value={comment}/>
                     </Col>
                     <Col lg={3}>
+                        <br />
                         <div style={{display: "flex"}}>
                             <div style={{marginLeft: "auto"}}>
                                 <Button variant="primary" onClick={Send}>訂購</Button>
