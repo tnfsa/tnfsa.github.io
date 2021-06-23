@@ -92,6 +92,8 @@ class Navibar extends React.Component {
                         {this.state.isLoggedIn ? <NavDropdown title={toHello} id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#/history">歷史紀錄</NavDropdown.Item>
                                 <NavDropdown.Item href="#/settings">設定</NavDropdown.Item>
+                                <NavDropdown.Item href="#/profile">個人檔案</NavDropdown.Item>
+
                                 <NavDropdown.Item onClick={signOut}>登出</NavDropdown.Item>
                             </NavDropdown>
                             :

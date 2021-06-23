@@ -31,6 +31,7 @@ import Query from "./page/customer/query";
 import DeveloperSettings from "./page/developerSettings";
 import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {API} from "./helpers/API";
+import Profile from "./page/customer/profile";
 
 const api = new API()
 
@@ -69,6 +70,7 @@ function App() {
                 <Route path="/booked/detailed/:itemId" component={ViewDetailedBooking}/>
                 <Route path="/booked" component={ViewBooked}/>
                 <Route path="/query" component={Query}/>
+                <Route path='/profile' component={Profile}/>
                 <Route path="/restaurant" component={Restaurant}/>
                 <Route path="/settings" component={Settings}/>
                 <Route path="/purchase/:store/:product" component={Purchase}/>
