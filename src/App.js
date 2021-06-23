@@ -80,7 +80,7 @@ function App() {
                 <Route path="/config/store" component={StoreSetting}/>
                 <Route path="/config/menu/new" component={NewMenu}/>
                 <Route path="/config/menu" component={MenuSetting}/>
-                <Route path="/config/advanced/:id" component={Advanced}/>
+                <Route path="/config/advanced/:product" component={Advanced}/>
                 <Route path="/privacy" component={Privacy}/>
                 <Route path="/COC" component={CodeOfConduct}/>
                 <Route path="/signup" component={Signup}/>
@@ -91,7 +91,7 @@ function App() {
             <Footer/>
         </HashRouter>
 
-    )
+  )
 }
 
 export default App;

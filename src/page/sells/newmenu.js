@@ -12,10 +12,9 @@ class ToolBar extends React.Component {
             popupWindow.body = "功能未開放"
         }
         return (
-            <div className="optionBar">
+            <div className="optionBar" hidden={true}>
                 <ul>
-                    <li><Button variant="dark" onClick={NewOption}><i className="fa fa-plus"
-                                                                      aria-hidden="true"/>新增選項</Button></li>
+                    <li><Button variant="dark" onClick={NewOption}><i className="fa fa-plus" aria-hidden="true"/>新增選項</Button></li>
                 </ul>
             </div>
         )
@@ -129,7 +128,7 @@ function MenuConfigurator() {
             </div>
             <div className="form-group">
                 <label>副標題</label>
-                <input id="foodSub" type="text" className="form-control" placeholder="副標(選填)"/>
+                <input id="foodSub" type="text" className="form-control" placeholder="副標" required/>
             </div>
             <Row>
                 <Col>
