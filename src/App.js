@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {HashRouter, Route, Switch} from 'react-router-dom'
 
@@ -29,42 +29,69 @@ import ViewBooked from './page/sells/viewbooked'
 import ViewDetailedBooking from './page/sells/viewdetailedbooking'
 import Query from "./page/customer/query";
 import DeveloperSettings from "./page/developerSettings";
+import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
+import {API} from "./helpers/API";
 
+const api = new API()
 
 function App() {
-  return (
-      <HashRouter>
-          <OfflineDetect />
-          <Navibar />
-          <Notification />
-        <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/booked/detailed/:itemId" component={ViewDetailedBooking}/>
-            <Route path="/booked" component={ViewBooked}/>
-            <Route path="/query" component={Query}/>
-            <Route path="/restaurant" component={Restaurant}/>
-            <Route path="/settings" component={Settings} />
-            <Route path="/purchase/:store/:product" component={Purchase} />
-            <Route path="/order/:storeId" component={Order} />
-            <Route path="/history" component={Histories} />
-            <Route path="/service" component={CustomerService} />
-            <Route path="/sells/test" component={SellsTest} />
-            <Route path='/config/new/option' component={NewOption}/>
-            <Route path="/config/store" component={StoreSetting} />
-            <Route path="/config/menu/new" component={NewMenu}/>
-            <Route path="/config/menu" component={MenuSetting} />
-            <Route path="/config/advanced/:id" component={Advanced} />
-            <Route path="/privacy" component={Privacy}/>
-            <Route path="/COC" component={CodeOfConduct} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/feedback" component={Feedback}/>
-            <Route path="/dev" component={DeveloperSettings}/>
-            <Route path="/" component={Homepage}/>
-        </Switch>
-        <Footer />
-      </HashRouter>
+    const initState = useRef(true);
+    useEffect(() => {
+        if (initState.current) {
+            const fpPromise = FingerprintJS.load()
 
-  )
+            ;(async () => {
+                // Get the visitor identifier when you need it.
+                const fp = await fpPromise
+                const result = await fp.get()
+
+                // This is the visitor identifier:
+                const fingerprint = result.visitorId
+                api.call('/log', {
+                    method: "POST",
+                    body: {
+                        fingerprint
+                    }
+                })
+            })()
+
+            initState.current = false;
+        }
+    })
+
+    return (
+        <HashRouter>
+            <OfflineDetect/>
+            <Navibar/>
+            <Notification/>
+            <Switch>
+                <Route path="/login" component={Login}/>
+                <Route path="/booked/detailed/:itemId" component={ViewDetailedBooking}/>
+                <Route path="/booked" component={ViewBooked}/>
+                <Route path="/query" component={Query}/>
+                <Route path="/restaurant" component={Restaurant}/>
+                <Route path="/settings" component={Settings}/>
+                <Route path="/purchase/:store/:product" component={Purchase}/>
+                <Route path="/order/:storeId" component={Order}/>
+                <Route path="/history" component={Histories}/>
+                <Route path="/service" component={CustomerService}/>
+                <Route path="/sells/test" component={SellsTest}/>
+                <Route path='/config/new/option' component={NewOption}/>
+                <Route path="/config/store" component={StoreSetting}/>
+                <Route path="/config/menu/new" component={NewMenu}/>
+                <Route path="/config/menu" component={MenuSetting}/>
+                <Route path="/config/advanced/:id" component={Advanced}/>
+                <Route path="/privacy" component={Privacy}/>
+                <Route path="/COC" component={CodeOfConduct}/>
+                <Route path="/signup" component={Signup}/>
+                <Route path="/feedback" component={Feedback}/>
+                <Route path="/dev" component={DeveloperSettings}/>
+                <Route path="/" component={Homepage}/>
+            </Switch>
+            <Footer/>
+        </HashRouter>
+
+    )
 }
 
 export default App;
