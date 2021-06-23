@@ -7,7 +7,7 @@ export default function Notification(props){
 
     const [alert,setAlert] = useState(false)
     const [alertSentence,setAlertSentence] = useState('')
-    
+
     // eslint-disable-next-line
     useEffect(()=>{
         const alert1 = cookies.get('alert')
