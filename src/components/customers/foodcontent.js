@@ -116,7 +116,29 @@ export default function FoodContent(props) {
 
     useEffect(() => {
         getData()
-    })
+        const isSells = cookies.get('isSells')
+        const session = cookies.get('session')
+
+        if(session === undefined){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '請先登入',
+            }).then(() =>{
+                document.location.href = '/'
+            })
+        }
+        if(isSells === 'true'){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '此功能商家無法使用',
+            }).then(() =>{
+                document.location.href = '/'
+            })
+        }
+        // eslint-disable-next-line
+    },[])
 
     return (
         <React.Fragment>

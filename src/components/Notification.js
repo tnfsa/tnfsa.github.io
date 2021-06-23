@@ -10,14 +10,16 @@ export default function Notification(props){
 
     // eslint-disable-next-line
     useEffect(()=>{
-        let allcookies = cookies.getAll()
-        if(allcookies['alert'] !== undefined){
+        const alert1 = cookies.get('alert')
+        if(alert1 !== undefined){
             setAlert(true)
-            setAlertSentence(allcookies['alert'])
+            setAlertSentence(alert1)
+            setTimeout(() => {
+                cookies.remove('alert')
+                setAlert(false)
+            },3000)
         }
     })
-
-
 
     return(
         <React.Fragment>
