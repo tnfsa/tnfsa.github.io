@@ -17,7 +17,11 @@ import SearchIcon from "@material-ui/icons/Search";
 import {API} from "../../helpers/API";
 import {InfoOutlined} from "@material-ui/icons";
 import {green} from "@material-ui/core/colors";
+import Cookies from "universal-cookie/lib";
+import {AskGEO} from "./QueryComponent/AskGEO";
+import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 
+const cookies = new Cookies();
 const api = new API();
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,8 +105,11 @@ export default function Query() {
     const isInitState = useRef(true);
     const [term, setTerm] = useState('');
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false)
-    let location = useLocation();
+    const [loading, setLoading] = useState(false);
+    const [askOpen, setAskOpen] = useState(false);
+    const [showResult, setShowResult] = useState(true);
+    const location = useLocation();
+
     const getProductQueryResult = React.useCallback((q) => {
         setLoading(true)
         let _term;
@@ -121,13 +128,59 @@ export default function Query() {
             setLoading(false)
         })
     }, [term])
+
     useEffect(() => {
         if (isInitState.current) {
             isInitState.current = false
             window.scrollTo({top: 0, behavior: 'smooth'})
             let searchTerm = (new URLSearchParams(location.search)).get('q');
-            setTerm(searchTerm)
+            setTerm(searchTerm);
             getProductQueryResult(searchTerm);
+            navigator.permissions.query({name: 'geolocation'}).then(permission => {
+                if (typeof cookies.get('lastGEO') === 'undefined' || (cookies.get('lastGEO') && cookies.get('lastGEO') - Date.now() >= 2 * 60 * 60 * 1000)) {
+                    if (permission.state === 'granted') {
+                        navigator.geolocation.getCurrentPosition((pos) => {
+                            if (typeof cookies.get('fingerprint') === 'undefined') {
+                                const fpPromise = FingerprintJS.load()
+                                ;(async () => {
+                                    // Get the visitor identifier when you need it.
+                                    const fp = await fpPromise
+                                    const result = await fp.get()
+
+                                    // This is the visitor identifier:
+                                    const fingerprint = result.visitorId
+                                    cookies.set('fingerprint', fingerprint)
+                                    api.call('/log/geo', {
+                                        method: "POST",
+                                        body: {
+                                            lat: pos.coords.latitude,
+                                            lng: pos.coords.longitude,
+                                            fingerprint: fingerprint
+                                        }
+                                    })
+                                })()
+                            } else {
+                                api.call('/log/geo', {
+                                    method: "POST",
+                                    body: {
+                                        lat: pos.coords.latitude,
+                                        lng: pos.coords.longitude,
+                                        fingerprint: cookies.get('fingerprint')
+                                    }
+                                })
+                            }
+                        }, (err) => {
+                            alert('位置錯誤!')
+                        }, {
+                            enableHighAccuracy: true
+                        });
+                    } else {
+                        setAskOpen(true)
+                    }
+                    cookies.set('lastGEO', Date.now())
+                }
+            })
+
         }
     }, [location.search, getProductQueryResult])
 
@@ -171,6 +224,7 @@ export default function Query() {
                 />
                 <h5 style={{textAlign: 'center'}} hidden={loading || products.length !== 0}>目前無相關資料</h5>
                 {resultElems}
+                <AskGEO open={askOpen}/>
             </Container>
         </React.Fragment>
     )

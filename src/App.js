@@ -32,9 +32,10 @@ import DeveloperSettings from "./page/developerSettings";
 import * as FingerprintJS from "@fingerprintjs/fingerprintjs";
 import {API} from "./helpers/API";
 import Profile from "./page/customer/profile";
+import Cookies from "universal-cookie/lib";
 
 const api = new API()
-
+const cookies = new Cookies()
 function App() {
     const initState = useRef(true);
     //const location = useLocation();
@@ -49,6 +50,7 @@ function App() {
 
                 // This is the visitor identifier:
                 const fingerprint = result.visitorId
+                cookies.set('fingerprint', fingerprint)
                 api.call('/log', {
                     method: "POST",
                     body: {
