@@ -137,46 +137,41 @@ export default function Query() {
             setTerm(searchTerm);
             getProductQueryResult(searchTerm);
             navigator.permissions.query({name: 'geolocation'}).then(permission => {
-                if (typeof cookies.get('lastGEO') === 'undefined' || (cookies.get('lastGEO') && cookies.get('lastGEO') - Date.now() >= 2 * 60 * 60 * 1000)) {
-                    if (permission.state === 'granted') {
-                        navigator.geolocation.getCurrentPosition((pos) => {
-                            if (typeof cookies.get('fingerprint') === 'undefined') {
-                                const fpPromise = FingerprintJS.load()
-                                ;(async () => {
-                                    // Get the visitor identifier when you need it.
-                                    const fp = await fpPromise
-                                    const result = await fp.get()
-
-                                    // This is the visitor identifier:
-                                    const fingerprint = result.visitorId
-                                    cookies.set('fingerprint', fingerprint)
-                                    api.call('/log/geo', {
-                                        method: "POST",
-                                        body: {
-                                            lat: pos.coords.latitude,
-                                            lng: pos.coords.longitude,
-                                            fingerprint: fingerprint
-                                        }
-                                    })
-                                })()
-                            } else {
+                if (permission.state === 'granted') {
+                    navigator.geolocation.getCurrentPosition((pos) => {
+                        if (typeof cookies.get('fingerprint') === 'undefined') {
+                            const fpPromise = FingerprintJS.load()
+                            ;(async () => {
+                                const fp = await fpPromise
+                                const result = await fp.get()
+                                const fingerprint = result.visitorId
+                                cookies.set('fingerprint', fingerprint)
                                 api.call('/log/geo', {
                                     method: "POST",
                                     body: {
                                         lat: pos.coords.latitude,
                                         lng: pos.coords.longitude,
-                                        fingerprint: cookies.get('fingerprint')
+                                        fingerprint: fingerprint
                                     }
                                 })
-                            }
-                        }, (err) => {
-                            alert('位置錯誤!')
-                        }, {
-                            enableHighAccuracy: true
-                        });
-                    } else {
-                        setAskOpen(true)
-                    }
+                            })()
+                        } else {
+                            api.call('/log/geo', {
+                                method: "POST",
+                                body: {
+                                    lat: pos.coords.latitude,
+                                    lng: pos.coords.longitude,
+                                    fingerprint: cookies.get('fingerprint')
+                                }
+                            })
+                        }
+                    }, (err) => {
+                        alert('位置錯誤!')
+                    }, {
+                        enableHighAccuracy: true
+                    });
+                } else if (typeof cookies.get('lastGEO') === 'undefined' || (cookies.get('lastGEO') && cookies.get('lastGEO') - Date.now() >= 2 * 60 * 60 * 1000)) {
+                    setAskOpen(true)
                     cookies.set('lastGEO', Date.now())
                 }
             })
