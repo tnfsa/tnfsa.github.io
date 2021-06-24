@@ -63,7 +63,7 @@ class Navibar extends React.Component {
         const toHello = "嗨! "+this.state.username
         return(
             <React.Fragment>
-                <Navbar bg="light" expand="lg">
+                <Navbar bg="light" expand="lg" collapseOnSelect={true}>
                     <Navbar.Brand href="/">美廣訂餐系統</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">

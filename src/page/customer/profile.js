@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {useLocation} from 'react-router-dom';
+import React, {useEffect, useState} from 'react'
+//import {useLocation} from 'react-router-dom';
 import {Box, CircularProgress, Grid, LinearProgress, Paper, Typography} from "@material-ui/core";
 import {API} from "../../helpers/API";
 
@@ -52,19 +52,19 @@ const LEVEL = [
     }
 ]
 export default function Profile() {
-    const initState = useRef(true)
     const [loading, setLoading] = useState(false)
     const [userLevel, setUserLevel] = useState(0)
-    let location = useLocation();
-    useEffect(async () => {
-        if (initState.current) {
-            setLoading(true)
-            await api.call('/user/level', {}, (r) => setUserLevel(r.level))
-            setLoading(false)
+    //let location = useLocation();
 
-            initState.current = false
-        }
-    })
+    const callFunction = async ()=>{
+        setLoading(true)
+        await api.call('/user/level', {}, (r) => setUserLevel(r.level))
+        setLoading(false)
+    }
+
+    useEffect(() => {
+        callFunction()
+    },[])
 
     function CircularProgressWithLabel(props) {
         return (

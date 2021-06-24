@@ -1,21 +1,23 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 
 import Cookies from "universal-cookie";
 
 export default function Notification(props){
     const cookies = new Cookies()
-    const allcookies = cookies.getAll()
 
     const [alert,setAlert] = useState(false)
-    const [alertSentence,setAlertSentence] = useState()
+    const [alertSentence,setAlertSentence] = useState('')
 
-    window.addEventListener('hashchange',()=>{
-        if(allcookies['alert'] !== undefined){
-            setAlertSentence(allcookies['alert'])
+    // eslint-disable-next-line
+    useEffect(()=>{
+        const alert1 = cookies.get('alert')
+        if(alert1 !== undefined){
             setAlert(true)
-            cookies.remove('alert')
-        }else{
-            setAlert(false)
+            setAlertSentence(alert1)
+            setTimeout(() => {
+                cookies.remove('alert')
+                setAlert(false)
+            },3000)
         }
     })
 
@@ -27,30 +29,3 @@ export default function Notification(props){
         </React.Fragment>
     )
 }
-/*
-class Notification extends React.Component {
-    constructor(props) {
-        super(props);
-        let send = []
-        const cookies = new Cookies()
-        const combination = cookies.getAll()
-        combination['alert'] ? send.push(true) : send.push(false)
-        this.state = {
-            alert: send[0],
-            alertSentence: combination['alert']
-        }
-    }
-
-    componentDidMount() {
-        const cookies = new Cookies()
-        cookies.remove('alert')
-    }
-
-    render() {
-        return (
-
-        )
-    }
-}
-
-export default Notification*/

@@ -2,7 +2,7 @@
     "baseURL": "https://lunchapi.hsuan.app/api/",
     "project": "https://tnfsa.github.io",
     "gmailSuffix": "gm.tnfsh.tn.edu.tw",
-    "docRoot": "https://tnfsa.github.io/document/",
+    "docRoot": "https://lunchdoc.tnfsa.org/",
     "googleCloudPlatformId": "1081268402297-stef8id8lhkhjd7lvh1de82eubmcn3re",
     "version": "0.3.0 Alpha 內測版"
 }
