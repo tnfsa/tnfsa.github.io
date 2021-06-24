@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {HashRouter, Route, Switch, useLocation} from 'react-router-dom'
+import {HashRouter, Route, Switch} from 'react-router-dom'
 
 import OfflineDetect from "./components/offlineDetect";
 import Navibar from "./components/navigationbar";
@@ -37,7 +37,7 @@ const api = new API()
 
 function App() {
     const initState = useRef(true);
-    const location = useLocation();
+    //const location = useLocation();
     useEffect(() => {
         if (initState.current) {
             const fpPromise = FingerprintJS.load()
@@ -53,7 +53,7 @@ function App() {
                     method: "POST",
                     body: {
                         fingerprint,
-                        location: location.pathname
+                        location: window.location.href
                     }
                 })
             })()
