@@ -56,15 +56,16 @@ export default function Profile() {
     const [userLevel, setUserLevel] = useState(0)
     //let location = useLocation();
 
-    const callFunction = async ()=>{
+    const callFunction = async () => {
         setLoading(true)
         await api.call('/user/level', {}, (r) => setUserLevel(r.level))
         setLoading(false)
     }
 
     useEffect(() => {
-        callFunction()
-    },[])
+        callFunction().then(r => {
+        })
+    }, [])
 
     function CircularProgressWithLabel(props) {
         return (

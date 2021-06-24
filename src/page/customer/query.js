@@ -107,7 +107,7 @@ export default function Query() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [askOpen, setAskOpen] = useState(false);
-    const [showResult, setShowResult] = useState(true);
+    //const [showResult, setShowResult] = useState(true);
     const location = useLocation();
 
     const getProductQueryResult = React.useCallback((q) => {
