@@ -48,9 +48,9 @@ export default function FoodContent(props) {
     const cookies = new Cookies()
     const allcookies = cookies.getAll()
 
-    function Send() {
+    async function Send() {
         const confirmText =
-            `請確認您的訂購資訊
+`請確認您的訂購資訊
 名稱：${title}
 售價：${price}
 其他建議：${comment}
@@ -58,59 +58,51 @@ export default function FoodContent(props) {
         if (window.confirm(confirmText)) {
             //window.alert('Ok')
             // send transaction
-            const url = process.env.REACT_APP_API_ENDPOINT + '/transactions'
-            fetch(url, {
-                method: 'POST',
-                body: JSON.stringify({
-                    "name": title,
-                    "qty": 1,
-                    "store_id": props.store,
-                    "product_id": props.product,
-                    "comment": comment,
-                    "options": {}
-                }),
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${allcookies['session']}`
-                }
-            }).then(response => {
-                if (response.ok) {
-                    return response.json()
-                }
-                return response.text().then(res => {
-                    throw new Error(res)
+            try {
+                const url = process.env.REACT_APP_API_ENDPOINT + '/transactions'
+                const fetchedData = await fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        "name": title,
+                        "qty": 1,
+                        "store_id": props.store,
+                        "product_id": props.product,
+                        "comment": comment,
+                        "options": {}
+                    }),
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${allcookies['session']}`
+                    }
                 })
-            }).then((res) => {
-                // Transaction Made
-                Swal.fire({
-                    title: '訂購成功!',
-                    html: (
-                        `感謝您利用本系統訂購產品<br>` +
-                        `請記得於選取時間取餐，謝謝<br>` +
-                        `您的交易ID為： <b>${res.id}</b>`),
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                }).then(() => history.push('/'))
-            }).catch((error) => {
-                // Transaction Error
-                console.log(error)
-                let response = JSON.parse(error.message)
+                const parsed = await fetchedData.json()
+                console.log(parsed)
+                if (fetchedData.ok) {
+                    Swal.fire({
+                        title: '訂購成功!',
+                        html: (
+                            `感謝您利用本系統訂購產品<br>` +
+                            `請記得於選取時間取餐，謝謝<br>` +
+                            `您的交易ID為： <b>${parsed.id}</b>`),
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    }).then(() => {
+                        document.location.href = '/'
+                    })
+                } else {
+                    throw await fetchedData.text()
+                }
+            } catch (err) {
                 Swal.fire({
                     title: '錯誤!',
-                    text: `${response.message}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員`,
+                    text: `${err}\n與伺服器連線錯誤，請再試一次\n如果問題無法解決，請聯絡管理員\n訂單未成立`,
                     icon: 'error',
                     confirmButtonText: 'Ok'
-                }).then(() => history.push('/'))
-            })
-        } else {
-            // fallback to center
-            Swal.fire({
-                title: '錯誤!',
-                text: `訂單未成立`,
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            }).then()
+                }).then(() => {
+                    document.location.href = '/'
+                })
+            }
         }
     }
 
