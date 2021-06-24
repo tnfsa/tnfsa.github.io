@@ -77,7 +77,7 @@ export default function Transaction() {
                                     <Card.Body style={{display: "flex", flexDirection: "column",}}>
                                         <Card.Title>商品名稱：{item.product.name}</Card.Title>
                                         <Card.Title>金額：{item.total}</Card.Title>
-                                        <Card.Text>留言：{item.comment}</Card.Text>
+                                        <Card.Text>留言：{item.comment === null ? '': item.comment.length > 50 ? item.comment.slice(0,50)+' ...': item.comment}</Card.Text>
                                         <Card.Text>購買日期：{new Date(item.updated_at).toLocaleTimeString('zh-TW')}</Card.Text>
                                         <Card.Text>訂單編號：<b>{item.id.substring(0, 8)}</b>{item.id.substr(8)}</Card.Text>
                                         <Grid container spacing={1} justify="center" direction="row"
