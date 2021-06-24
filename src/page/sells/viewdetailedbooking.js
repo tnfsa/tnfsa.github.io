@@ -1,6 +1,9 @@
 import React,{useEffect,useState} from 'react'
 import {Card, Container, Spinner} from "react-bootstrap";
 import Cookies from 'universal-cookie'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faTimes, faCheck, faUserCheck} from '@fortawesome/free-solid-svg-icons'
+import {Button} from '@material-ui/core'
 
 
 export default function ViewDetailedBooking(props){
@@ -53,8 +56,6 @@ export default function ViewDetailedBooking(props){
         try{
             const result = await Promise.all([transactions(),getName(props.match.params.itemId)])
 
-            //console.log(jsonData)
-            //console.log(name)
             setLoading(false)
             setProductName(result[1])
             setData(result[0])
@@ -65,11 +66,50 @@ export default function ViewDetailedBooking(props){
             document.location.href = '/'
         }
     }
+    function finished(transaction_id){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/'+ transaction_id
+        sendStatus(url,'OK')
+    }
+    function preparing(transaction_id){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/'+ transaction_id
+        sendStatus(url,'PREPARE')
+    }
+    function taken(transaction_id){
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/'+ transaction_id
+        sendStatus(url,'DONE')
+    }
+
+    const sendStatus = async (url,status)=>{
+        let flag = null
+        try{
+            const rawData = await fetch(url,{
+                method: 'PUT',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${allcookies['session']}`
+                },
+                body: JSON.stringify({
+                    'status': status
+                })
+            })
+            const parsed = await rawData.json()
+            console.log(parsed)
+            if(rawData.ok){
+                flag=true
+            }else{
+                flag=false
+            }
+        }catch(err){
+            window.alert(`狀態更新失敗：${err}`)
+            flag = false
+        }
+        return flag
+    }
 
     useEffect(()=>{
         return getInfo()
-        // eslint-disable-next-line
-    },[])
+    })
 
     return(
         <React.Fragment>
@@ -85,6 +125,27 @@ export default function ViewDetailedBooking(props){
                                 <div>
                                     <Card.Title>交易編號：{item.id}</Card.Title>
                                     <Card.Text>備註：{item.comment}</Card.Text>
+                                </div>
+                                <div style={{marginLeft: "auto"}}>
+                                    <Button
+                                        variant="contained"
+                                        color={item.status === 'PREPARE'? 'primary':''}
+                                        onClick={()=>{preparing(item.id)}}
+                                    >
+                                        <FontAwesomeIcon icon={faTimes}/>
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color={item.status === 'OK'? 'primary':''}
+                                        onClick={()=>{finished(item.id)}}>
+                                        <FontAwesomeIcon icon={faCheck}/>
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color={item.status === 'DONE'? 'primary':''}
+                                        onClick={()=>{taken(item.id)}}>
+                                        <FontAwesomeIcon icon={faUserCheck}/>
+                                    </Button>
                                 </div>
                             </Card.Body>
                         </Card>
