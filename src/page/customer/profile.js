@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 //import {useLocation} from 'react-router-dom';
-import {Box, CircularProgress, Grid, LinearProgress, Paper, Typography} from "@material-ui/core";
+import {Box, Button, CircularProgress, Grid, LinearProgress, Paper, TextField, Typography} from "@material-ui/core";
 import {API} from "../../helpers/API";
 
 const api = new API();
@@ -54,11 +54,18 @@ const LEVEL = [
 export default function Profile() {
     const [loading, setLoading] = useState(false)
     const [userLevel, setUserLevel] = useState(0)
+    const [phoneErrorText, setPhoneErrorText] = useState('');
+    const phoneInputRef = useRef(HTMLInputElement);
+    const TWphoneRegex = /^09\d{2}-?\d{3}-?\d{3}$/;
     //let location = useLocation();
 
     const callFunction = async () => {
         setLoading(true)
         await api.call('/user/level', {}, (r) => setUserLevel(r.level))
+        await api.call('/user/data', {}, (r) => {
+            phoneInputRef.current.value = r.phone
+            console.log(r)
+        })
         setLoading(false)
     }
 
@@ -102,7 +109,6 @@ export default function Profile() {
         LEVEL.every(function (LEV, index) {
             if (LEV.min <= level && level <= LEV.max) {
                 elem = (
-                    //<CircularProgressWithLabel credit={level} levelMax={LEV.max}/>
                     <CircularProgressWithLabel credit={level} levelMin={LEV.min} levelMax={LEV.max} levelName={LEV.name}
                                                color={LEV.color}/>
                 );
@@ -114,14 +120,35 @@ export default function Profile() {
         return elem;
     }
 
+    function updateUserData() {
+        if (!phoneInputRef.current.value.match(TWphoneRegex)) {
+            return setPhoneErrorText('請輸入正確的手機號碼')
+        }
+
+        api.call('/user/data', {
+            method: "POST",
+            body: {
+                phone: phoneInputRef.current.value
+            }
+        }, () => {
+            callFunction().then(r => {
+            })
+        })
+    }
+
     return (
         <React.Fragment>
             <LinearProgress hidden={!loading}/>
             <h1 style={{textAlign: 'center'}}>個人檔案</h1>
             <Grid container xs={12}>
                 <Grid item xs={12}>
-                    <Paper elevation={3} className={['m-3', 'p-3']}>
+                    <Paper elevation={3} className={'m-3'}>
                         {makeLevel(userLevel)}
+                    </Paper>
+                    <Paper elevation={3} className={'m-3 p-3'}>
+                        <TextField inputRef={phoneInputRef} error={phoneErrorText !== ''} helperText={phoneErrorText}/>
+                        <br/>
+                        <Button onClick={updateUserData}>更新</Button>
                     </Paper>
                 </Grid>
             </Grid>
