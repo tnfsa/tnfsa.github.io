@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from 'react'
 //import {useLocation} from 'react-router-dom';
 import {Box, Button, CircularProgress, Grid, LinearProgress, Paper, TextField, Typography} from "@material-ui/core";
 import {API} from "../../helpers/API";
+import Swal from "sweetalert2";
+import {Alert} from "@material-ui/lab";
 
 const api = new API();
 const LEVEL = [
@@ -52,7 +54,7 @@ const LEVEL = [
     }
 ]
 export default function Profile() {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [userLevel, setUserLevel] = useState(0)
     const [phoneErrorText, setPhoneErrorText] = useState('');
     const phoneInputRef = useRef(HTMLInputElement);
@@ -63,20 +65,22 @@ export default function Profile() {
         setLoading(true)
         await api.call('/user/level', {}, (r) => setUserLevel(r.level))
         await api.call('/user/data', {}, (r) => {
-            phoneInputRef.current.value = r.phone
-            console.log(r)
+            phoneInputRef.current.value = r.phone;
+            phoneInputRef.current.value += 1;
+
+            setLoading(false)
         })
-        setLoading(false)
+
     }
 
     useEffect(() => {
-        callFunction().then(r => {
-        })
+        callFunction().then()
     }, [])
 
     function CircularProgressWithLabel(props) {
         return (
-            <Box position="relative" display="inline-flex">
+            <Box position="relative" display="inline-flex"
+                 border={1} className={"m-3 pt-2"} borderRadius={5}>
                 <CircularProgress variant="determinate"
                                   style={{color: props.color}}
                                   value={((props.credit - props.levelMin) / (props.levelMax - props.levelMin)) * 100}
@@ -130,25 +134,41 @@ export default function Profile() {
             body: {
                 phone: phoneInputRef.current.value
             }
-        }, () => {
-            callFunction().then(r => {
-            })
+        }, (r) => {
+            if (r.levelUp) {
+                Swal.fire({
+                    title: '成功!',
+                    text: '填寫完畢，已贈送會員積分',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
+            }
+            if (r.status === 'success') {
+                setPhoneErrorText('')
+            }
+            callFunction().then()
         })
     }
 
     return (
         <React.Fragment>
             <LinearProgress hidden={!loading}/>
+
             <h1 style={{textAlign: 'center'}}>個人檔案</h1>
-            <Grid container xs={12}>
+
+            <Grid container>
                 <Grid item xs={12}>
-                    <Paper elevation={3} className={'m-3'}>
+                    <Paper elevation={3} className={'m-3 p-3'}>
                         {makeLevel(userLevel)}
                     </Paper>
                     <Paper elevation={3} className={'m-3 p-3'}>
-                        <TextField inputRef={phoneInputRef} error={phoneErrorText !== ''} helperText={phoneErrorText}/>
+                        <Alert severity="info">補齊會員資料就可以獲得會員積分獎勵喔~</Alert>
+                        <TextField className={'m-3'} label={'您的手機'} inputRef={phoneInputRef}
+                                   error={phoneErrorText !== ''} helperText={phoneErrorText}
+                                   variant={'standard'} InputLabelProps={{shrink: true}}/>
                         <br/>
-                        <Button onClick={updateUserData}>更新</Button>
+                        <Button className={"m-3"} onClick={updateUserData} variant="contained"
+                                color="primary">更新</Button>
                     </Paper>
                 </Grid>
             </Grid>
