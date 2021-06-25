@@ -62,7 +62,7 @@ function Result(props) {
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
-                                <Box fontSize={1} color={green} hidden={parseFloat(props.product.weight) <= 1.0}>
+                                <Box fontSize={1} color={green} hidden={!props.product.weight}>
                                     <InfoOutlined style={{fontSize: 12}}/>
                                     &nbsp;廣告
                                 </Box>
@@ -81,7 +81,13 @@ function Result(props) {
                             </Grid>
                             <Grid item>
                                 <Box component="fieldset" mb={3} borderColor="transparent">
-                                    <Rating name="read-only" value={parseFloat(props.product.ratings_avg)} readOnly/>
+                                    {
+                                        props.product.weighted_ratings ?
+                                            (<Rating name="read-only" value={parseFloat(props.product.weighted_ratings)}
+                                                     readOnly/>) :
+                                            (<Rating name="read-only" value={parseFloat(props.product.ratings_avg)}
+                                                     readOnly/>)
+                                    }
                                 </Box>
                             </Grid>
                         </Grid>
