@@ -18,7 +18,8 @@ class Plan extends React.Component {
             <tr>
                 <td>{this.props.plan.name}</td>
                 <td>{this.props.plan.description}</td>
-                <td>{this.props.plan.disk_quota} Mb</td>
+                <td>{this.props.plan.disk_quota ?? 0} Mb</td>
+                <td>{this.props.plan.promotion_quota ?? 0} 點</td>
                 <td>
                     <a href={this.generateECPay()} rel="noreferrer" className="btn btn-primary" target={"_blank"}>購買</a>
                 </td>

@@ -66,7 +66,6 @@ export default function Profile() {
         await api.call('/user/level', {}, (r) => setUserLevel(r.level))
         await api.call('/user/data', {}, (r) => {
             phoneInputRef.current.value = r.phone;
-            phoneInputRef.current.value += 1;
 
             setLoading(false)
         })

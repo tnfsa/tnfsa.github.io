@@ -1,5 +1,5 @@
 import React from 'react'
-import {Col, Spinner, Row, Card, Table} from "react-bootstrap";
+import {Card, Col, Row, Spinner, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeadphones} from '@fortawesome/free-solid-svg-icons'
 import DiskQuota from "./CustomerServiceComponent/DiskQuota";
@@ -129,6 +129,7 @@ class CustomerService extends React.Component {
                                         <th>方案名稱</th>
                                         <th>說明</th>
                                         <th>儲存容量</th>
+                                        <th>宣傳點數</th>
                                         <th>到期時間</th>
                                     </tr>
                                     </thead>
@@ -147,6 +148,7 @@ class CustomerService extends React.Component {
                                         <th>方案名稱</th>
                                         <th>說明</th>
                                         <th>儲存容量</th>
+                                        <th>宣傳點數</th>
                                         <th>購買</th>
                                     </tr>
                                     </thead>
