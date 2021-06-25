@@ -88,7 +88,7 @@ export default function Transaction() {
                                             </Grid>
                                             <Grid item>
                                                 <IconButton
-                                                    onClick={() => setNewRate(0, item.id)}
+                                                    onClick={() => setNewRate(-1, item.id)}
                                                 ><Delete size="small"/></IconButton>
                                             </Grid>
                                         </Grid>
