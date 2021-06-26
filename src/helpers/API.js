@@ -13,6 +13,7 @@ export class API {
             'Content-Type': 'application/json',
             'Accept': "application/json",
             'Authorization': `Bearer ${this.cookies.get('session')}`,
+            'X-Fingerprint': `${this.cookies.get('fingerprint') ?? ''}`,
             ...data.headers
         })
         fetch(endpoint, {
