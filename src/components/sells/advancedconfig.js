@@ -1,7 +1,7 @@
-import React, {useState,useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useHistory} from "react-router-dom";
 import Cookies from "universal-cookie";
-import {Button, Col, Figure, Row, Spinner, Container} from "react-bootstrap";
+import {Button, Col, Container, Figure, Row, Spinner} from "react-bootstrap";
 
 export default function AdvancedConfig(props){
     const [image, setImage] = useState('')
@@ -159,7 +159,6 @@ error: ${err}
                                        className="upload-file"
                                        id="file"
                                        onChange={handleChangeImage}
-                                       required
                                        hidden
                                 />
                             </Button>
