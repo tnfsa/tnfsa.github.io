@@ -2,14 +2,14 @@ import React, {useEffect, useRef, useState} from 'react'
 
 import {Button, Card, Container, Spinner} from "react-bootstrap";
 import Cookies from 'universal-cookie'
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import Echo from "laravel-echo";
 import axios from "axios";
 import {API} from "../../helpers/API";
+import {SnackbarProvider, useSnackbar} from 'notistack';
 
 const cookies = new Cookies()
 const api = new API()
-
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
@@ -41,14 +41,13 @@ window.Echo = new Echo({
         };
     },
 });
-export default function ViewBooked() {
+
+function ViewBookedComponent() {
     const [loading, setLoading] = useState(true)
-    const [data, setData] = useState()
-    const [productTransaction, setProductTransaction] = useState([])
-
+    const [data, setData] = useState({})
+    //const [newTrans, setNewTrans] = useState([])
     const initState = useRef(true)
-
-    const allcookies = cookies.getAll()
+    const {enqueueSnackbar} = useSnackbar();
 
     const getData = async () => {
         try {
@@ -58,6 +57,7 @@ export default function ViewBooked() {
                 }
             }, (res) => {
                 console.log(res)
+                window.data = res
                 setData(res)
             })
             setLoading(false)
@@ -69,27 +69,41 @@ export default function ViewBooked() {
         }
     }
 
-    function parseData() {
-
+    function requestNotification() {
+        if (Notification && Notification.permission === "granted") {
+            new Notification("測試通知");
+        } else if (Notification && Notification.permission !== "denied") {
+            Notification.requestPermission(function (status) {
+                if (Notification.permission !== status) {
+                    Notification.permission = status;
+                }
+                if (status === "granted") {
+                    new Notification("測試通知");
+                } else {
+                    alert("你不開通知我也不能提醒你");
+                }
+            });
+        } else {
+            alert("你不開通知我也不能提醒你");
+        }
     }
 
     useEffect(() => {
+        function handleWebsockets(e) {
+            console.log(e)
+            new Notification(`${e.transaction.id} ${e.transaction?.product?.name}`);
+            enqueueSnackbar(`新增: (${e.transaction?.product?.id.substring(0, 5)}) ${e.transaction?.product?.name} ${e.transaction?.qty}份`, 'success');
+        }
+
         if (initState.current) {
             api.call('/me', {
                 method: "GET"
             }, (r) => {
-                window.Echo.private(`user.${r.id}`)
-                    .listen('.transaction.created', function (e) {
-                        console.log(e)
-                        new Notification(`${e.transaction.id} ${e.transaction?.product?.name}`);
-                        setData([
-                            e.transaction,
-                            ...data
-                        ])
-                    });
+                window.Echo.private(`user.${r.id}`).listen('.transaction.created', handleWebsockets);
             })
             getData()
             initState.current = false
+            window.newMessage = false
         }
         // eslint-disable-next-line
     }, [])
@@ -115,8 +129,28 @@ export default function ViewBooked() {
                         </Card>
                     ) : <React.Fragment><br/><h2 style={{textAlign: 'center'}}>查無資料</h2></React.Fragment>
                 }
+                <hr/>
+                <Button onClick={requestNotification}>提醒我</Button>
             </Container>
             <br/>
+
         </React.Fragment>
     )
+}
+
+export default function Viewbooked() {
+    const history = useHistory()
+    return (
+        <SnackbarProvider maxSnack={3}
+                          action={(key) => (
+                              <Button onClick={() => {
+                                  history.go(0)
+                              }} variant={"dark"}>
+                                  重新載入
+                              </Button>
+                          )}
+        >
+            <ViewBookedComponent/>
+        </SnackbarProvider>
+    );
 }
