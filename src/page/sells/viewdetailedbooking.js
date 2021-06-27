@@ -11,13 +11,13 @@ export default function ViewDetailedBooking(props) {
     const [productName, setProductName] = useState('')
     const cookies = new Cookies()
     const allcookies = cookies.getAll()
-    const [changes,setChanges] = useState(0)
+    const [changes, setChanges] = useState(0)
 
-    const transactions = async ()=>{
+    const transactions = async () => {
         const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/transactions'
-        let result =  await fetch(url,{
+        let result = await fetch(url, {
             method: 'GET',
-            headers:{
+            headers: {
                 'Accept': 'application/json',
                 "Authorization": `Bearer ${allcookies['session']}`
             }
@@ -26,18 +26,18 @@ export default function ViewDetailedBooking(props) {
         let toReturn = []
 
         // eslint-disable-next-line
-        json.map(item =>{
-            if(item['product_id'] === props.match.params.itemId){
+        json.map(item => {
+            if (item['product_id'] === props.match.params.itemId) {
                 toReturn.push(item)
             }
         })
         return toReturn
     }
-    const getName = async()=>{
+    const getName = async () => {
         const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/products'
-        let result = await fetch(url,{
+        let result = await fetch(url, {
             method: 'GET',
-            headers:{
+            headers: {
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${allcookies['session']}`
             }
@@ -45,36 +45,38 @@ export default function ViewDetailedBooking(props) {
         const json = await result.json()
         let foodName = 'temp'
         // eslint-disable-next-line
-        json.map((item)=>{
-            if(item['id'] === props.match.params.itemId){
+        json.map((item) => {
+            if (item['id'] === props.match.params.itemId) {
                 foodName = item['name']
             }
         })
         return foodName
     }
-    const getInfo = async ()=>{
-        try{
-            const result = await Promise.all([transactions(),getName(props.match.params.itemId)])
+    const getInfo = async () => {
+        try {
+            const result = await Promise.all([transactions(), getName(props.match.params.itemId)])
 
             setLoading(false)
             setProductName(result[1])
             setData(result[0])
             setChanges(0)
             console.log(result[0])
-        }catch(err){
+        } catch (err) {
             window.alert(err)
-            cookies.set('alert','讀取錯誤，正在返回首頁',{path: '/'})
+            cookies.set('alert', '讀取錯誤，正在返回首頁', {path: '/'})
             document.location.href = '/'
         }
     }
-    function finished(transaction_id){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/'+ transaction_id
-        sendStatus(url,'OK').then(()=>{
-            setChanges(changes+1)
+
+    function finished(transaction_id) {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/' + transaction_id
+        sendStatus(url, 'OK').then(() => {
+            setChanges(changes + 1)
         })
     }
-    function preparing(transaction_id){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/'+ transaction_id
+
+    function preparing(transaction_id) {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/' + transaction_id
         sendStatus(url, 'PREPARE').then(() => {
             setChanges(changes + 1)
         })
@@ -110,24 +112,24 @@ export default function ViewDetailedBooking(props) {
             })
             const parsed = await rawData.json()
             console.log(parsed)
-            if(rawData.ok){
-                flag=true
-            }else{
-                flag=false
+            if (rawData.ok) {
+                flag = true
+            } else {
+                flag = false
             }
-        }catch(err){
+        } catch (err) {
             window.alert(`狀態更新失敗：${err}`)
             flag = false
         }
         return flag
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getInfo()
         // eslint-disable-next-line
-    },[changes])
+    }, [changes])
 
-    return(
+    return (
         <React.Fragment>
             <center>
                 <h1>詳細資料</h1>
@@ -137,9 +139,9 @@ export default function ViewDetailedBooking(props) {
                 {
                     data ? data.map((item) =>
                         <Card key={item.id}>
-                            <Card.Body style={{display: "flex"}}>
+                            <Card.Body>
                                 <Row>
-                                    <Col xs={10}>
+                                    <Col xs={10} md={10} lg={10}>
                                         <Card.Title>交易編號：{item.id}</Card.Title>
                                         <Card.Text>備註：{item.comment}</Card.Text>
                                     </Col>
@@ -158,8 +160,10 @@ export default function ViewDetailedBooking(props) {
                                         <Row>
                                             <Button
                                                 variant="contained"
-                                                color={item.status === 'OK'? 'primary':''}
-                                                onClick={()=>{finished(item.id)}}>
+                                                color={item.status === 'OK' ? 'primary' : ''}
+                                                onClick={() => {
+                                                    finished(item.id)
+                                                }}>
                                                 <FontAwesomeIcon icon={faCheck}/>
                                             </Button>
                                         </Row>
