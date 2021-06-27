@@ -46,6 +46,7 @@ class SettingConfigure extends React.Component {
                     let _data = data.split(':')
                     switch (_data[0]) {
                         case "cookies":
+                        default:
                             toSet = cookies.get(_data[1])
                             if (typeof toSet === 'undefined' || toSet === '' || toSet === 'undefined') {
                                 this.props.history.push('/login');
