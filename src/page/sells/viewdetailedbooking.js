@@ -1,14 +1,14 @@
-import React,{useEffect, useState} from 'react'
-import {Card, Container, Spinner, Row, Col} from "react-bootstrap";
+import React, {useEffect, useState} from 'react'
+import {Card, Col, Container, Row, Spinner} from "react-bootstrap";
 import Cookies from 'universal-cookie'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTimes, faCheck, faUserCheck} from '@fortawesome/free-solid-svg-icons'
+import {faCheck, faTimes, faUserCheck} from '@fortawesome/free-solid-svg-icons'
 import {Button} from '@material-ui/core'
 
-export default function ViewDetailedBooking(props){
-    const [loading,setLoading] = useState(true)
+export default function ViewDetailedBooking(props) {
+    const [loading, setLoading] = useState(true)
     const [data, setData] = useState([])
-    const [productName,setProductName] = useState('')
+    const [productName, setProductName] = useState('')
     const cookies = new Cookies()
     const allcookies = cookies.getAll()
     const [changes,setChanges] = useState(0)
@@ -59,6 +59,7 @@ export default function ViewDetailedBooking(props){
             setLoading(false)
             setProductName(result[1])
             setData(result[0])
+            setChanges(0)
             console.log(result[0])
         }catch(err){
             window.alert(err)
