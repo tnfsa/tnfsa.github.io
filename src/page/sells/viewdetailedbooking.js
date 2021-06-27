@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Card, Col, Container, Row, Spinner} from "react-bootstrap";
 import Cookies from 'universal-cookie'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCheck, faTimes, faUserCheck} from '@fortawesome/free-solid-svg-icons'
+import {faCheck, faTimes, faUserCheck, faUserSlash} from '@fortawesome/free-solid-svg-icons'
 import {Button} from '@material-ui/core'
 
 export default function ViewDetailedBooking(props) {
@@ -75,23 +75,31 @@ export default function ViewDetailedBooking(props) {
     }
     function preparing(transaction_id){
         const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/'+ transaction_id
-        sendStatus(url,'PREPARE').then(()=>{
-            setChanges(changes+1)
-        })
-    }
-    function taken(transaction_id){
-        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/'+ transaction_id
-        sendStatus(url,'DONE').then(()=>{
-            setChanges(changes+1)
+        sendStatus(url, 'PREPARE').then(() => {
+            setChanges(changes + 1)
         })
     }
 
-    const sendStatus = async (url,status)=>{
+    function taken(transaction_id) {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/' + transaction_id
+        sendStatus(url, 'DONE').then(() => {
+            setChanges(changes + 1)
+        })
+    }
+
+    function notaken(transaction_id) {
+        const url = process.env.REACT_APP_API_ENDPOINT + '/transactions/' + transaction_id
+        sendStatus(url, 'NOTAKEN').then(() => {
+            setChanges(changes + 1)
+        })
+    }
+
+    const sendStatus = async (url, status) => {
         let flag = null
-        try{
-            const rawData = await fetch(url,{
+        try {
+            const rawData = await fetch(url, {
                 method: 'PUT',
-                headers:{
+                headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${allcookies['session']}`
@@ -139,8 +147,10 @@ export default function ViewDetailedBooking(props) {
                                         <Row>
                                             <Button
                                                 variant="contained"
-                                                color={item.status === 'PREPARE'? 'primary':''}
-                                                onClick={()=>{preparing(item.id)}}
+                                                color={item.status === 'PREPARE' ? 'secondary' : ''}
+                                                onClick={() => {
+                                                    preparing(item.id)
+                                                }}
                                             >
                                                 <FontAwesomeIcon icon={faTimes}/>
                                             </Button>
@@ -156,9 +166,21 @@ export default function ViewDetailedBooking(props) {
                                         <Row>
                                             <Button
                                                 variant="contained"
-                                                color={item.status === 'DONE'? 'primary':''}
-                                                onClick={()=>{taken(item.id)}}>
+                                                color={item.status === 'DONE' ? 'primary' : ''}
+                                                onClick={() => {
+                                                    taken(item.id)
+                                                }}>
                                                 <FontAwesomeIcon icon={faUserCheck}/>
+                                            </Button>
+                                        </Row>
+                                        <Row>
+                                            <Button
+                                                variant="contained"
+                                                color={item.status === 'NOTAKEN' ? 'secondary' : ''}
+                                                onClick={() => {
+                                                    notaken(item.id)
+                                                }}>
+                                                <FontAwesomeIcon icon={faUserSlash}/>
                                             </Button>
                                         </Row>
                                     </Col>
