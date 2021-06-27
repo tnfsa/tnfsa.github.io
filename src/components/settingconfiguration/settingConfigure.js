@@ -27,7 +27,7 @@ class SettingConfigure extends React.Component {
                     "Content-Type": "application/json"
                 }
             }
-            if (configuration[urlSelected]['method'] === 'POST') {
+            if (configuration[urlSelected]['method'] === 'POST' || configuration[urlSelected]['method'] === 'PUT') {
                 let data = {}
                 for (let i = 0; i < configuration[urlSelected]['return'].length; ++i) {
                     let selected = document.getElementById('userInput')
@@ -36,7 +36,29 @@ class SettingConfigure extends React.Component {
                 init['body'] = JSON.stringify(data)
             }
 
-            fetch(configuration[urlSelected]['submitUri'], init).then(response => {
+            let SubmitURL = configuration[urlSelected]['submitUri']
+
+            for (let str in (configuration[urlSelected]['params'] || {})) {
+                let toSet = ''
+                const data = configuration[urlSelected]['params'][str]
+                if (data.split(':').length > 1) {
+                    // 特殊parse
+                    let _data = data.split(':')
+                    switch (_data[0]) {
+                        case "cookies":
+                            toSet = cookies.get(_data[1])
+                            if (typeof toSet === 'undefined' || toSet === '' || toSet === 'undefined') {
+                                this.props.history.push('/login');
+                                return;
+                            }
+                    }
+                } else {
+                    toSet = data
+                }
+                SubmitURL = SubmitURL.replaceAll(":" + str, toSet)
+            }
+
+            fetch(SubmitURL, init).then(response => {
                 if (response.ok) {
                     return response.json()
                 }
@@ -55,12 +77,12 @@ class SettingConfigure extends React.Component {
                     this.props.history.go(0);
                 })
             }).catch(error => {
-                let response = JSON.parse(error.message).error
+                let response = JSON.parse(error.message)
                 Swal.fire({
                     title: '錯誤!',
                     html: (
-                        `錯誤： ${response?.localizedMessage ?? ''}! <br>
-                        錯誤代碼： ${response?.code}(${response?.status})<br>
+                        `錯誤： ${response?.error?.localizedMessage ?? response?.error ?? response?.message ?? ''}! <br>
+                        錯誤代碼： ${response?.error?.code}(${response?.error?.status})<br>
                         如問題持續發生，請提供這些資訊給工程師!
                         `),
                     icon: 'error',

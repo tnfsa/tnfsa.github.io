@@ -25,8 +25,12 @@ export const configuration = {
         "title": "變更商店名",
         "hint": "請輸入商店名",
         "placeholder": "新商店名",
-        "submitUri": process.env.REACT_APP_API_ENDPOINT + '/stores',
+        "submitUri": process.env.REACT_APP_API_ENDPOINT + '/stores/:id',
         "method": "PUT",
+        "return": ["name"],
+        "params": {
+            id: 'cookies:storeId'
+        },
         afterFetch(res) {
             GreatLog('debug', res.id)
             cookies.set('storeId', res.id)
