@@ -1,19 +1,52 @@
 import React, {useEffect, useState} from 'react'
 
-import {Button, Card, Spinner, Container} from "react-bootstrap";
+import {Button, Card, Container, Spinner} from "react-bootstrap";
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom";
+import Echo from "laravel-echo";
+import axios from "axios";
 
+const cookies = new Cookies()
 
-export default function ViewBooked(){
-    const [loading,setLoading] = useState(true)
-    const [data,setData] = useState()
+window.Pusher = require('pusher-js');
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    wsHost: process.env.REACT_APP_WS_HOST,
+    wsPath: process.env.REACT_APP_WS_PATH,
+    wsPort: process.env.REACT_APP_WS_PORT,
+    disableStats: true,
+    key: 'test',
+    forceTLS: false,
+    authorizer: (channel, options) => {
+        return {
+            authorize: (socketId, callback) => {
+                axios({
+                    method: "POST",
+                    url: process.env.REACT_APP_API_ENDPOINT + '/broadcasting/auth',
+                    headers: {
+                        Authorization: `Bearer ${cookies.get('session')}`,
+                    },
+                    data: {
+                        socket_id: socketId,
+                        channel_name: channel.name,
+                    },
+                }).then(response => {
+                    callback(false, response.data);
+                }).catch(error => {
+                    callback(true, error);
+                });
+            }
+        };
+    },
+});
+export default function ViewBooked() {
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState()
 
-    const cookies = new Cookies()
     const allcookies = cookies.getAll()
 
-    const getData = async ()=>{
-        try{
+    const getData = async () => {
+        try {
             const url = process.env.REACT_APP_API_ENDPOINT + '/stores/' + allcookies['storeId'] + '/transactions'
             let result = await fetch(url, {
                 method: 'GET',
