@@ -79,6 +79,27 @@ export default function FoodContent(props) {
                 const parsed = await fetchedData.json()
                 console.log(parsed)
                 if (fetchedData.ok) {
+                    window.dataLayer.push({ecommerce: null});
+                    window.dataLayer.push({
+                        event: "purchase",
+                        ecommerce: {
+                            transaction_id: parsed.id,
+                            affiliation: "Lunch Web",
+                            value: "59.89",
+                            tax: "0",
+                            shipping: "0",
+                            currency: "TWD",
+                            items: [{
+                                item_name: parsed.product.name,
+                                item_id: parsed.product_id,
+                                price: parsed.product.price,
+                                item_brand: parsed.product.store.name,
+                                item_category: "None",
+                                item_variant: "",
+                                quantity: parsed.qty
+                            }]
+                        }
+                    });
                     Swal.fire({
                         title: '訂購成功!',
                         html: (
