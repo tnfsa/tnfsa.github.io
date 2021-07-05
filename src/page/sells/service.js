@@ -160,6 +160,7 @@ class CustomerService extends React.Component {
                         </Card>
                     </Col>
                 </Row>
+                <span style={{fontSize: '10px'}}>Contact: ryanchang1117@gmail.com</span>
             </React.Fragment>
         )
     }
