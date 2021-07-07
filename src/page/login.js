@@ -98,7 +98,9 @@ export default function Login(){
                     </center>
                     
 	    <br />
-	    <div style={{"width": "65%","float":"left"}}>
+	    {/*<div style={{"width": "65%","float":"left"}}>*/}
+	    <Row>
+	    <Col>
 	    <Container>
                 <form className={"signInBlock"}>
 	    	
@@ -130,14 +132,16 @@ export default function Login(){
                     </Row>
                 </form>
 	    </Container>
-	    </div>
-		<div className="vl" style={{"border-left": "6px solid green", "height": "100px","display":"flex","align-items":"center","vertical-align":"middle"}}/>
-	    <div style={{"width":"25%","float":"right"}}>	
+	    </Col>
+	    {/*<div className="vl" style={{"border-left": "6px solid green", "height": "100px","display":"flex","align-items":"center","vertical-align":"middle"}}/>*/}
+	    {/*<div style={{"width":"25%","float":"right"}}>*/}	
+	    <Col>
 	    <h2><center>學生登入</center></h2>
                     <div className={"otherLoginMethod"}>
                         <center><GoogleOauth/></center>
                     </div>
-	    </div>
+	    </Col>
+	    </Row>
         </React.Fragment>
     )
 }
