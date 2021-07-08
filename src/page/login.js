@@ -91,13 +91,21 @@ export default function Login(){
 
     return(
         <React.Fragment>
-            <Container>
-                <form className={"signInBlock"}>
+            
                     <h3 style={{textAlign: 'center'}} className={"p-2"}>登入</h3>
                     <center hidden={!loading}>
                         <Spinner animation={"border"} />
                     </center>
-
+                    
+	    <br />
+	    {/*<div style={{"width": "65%","float":"left"}}>*/}
+	    <Row>
+	    <Col>
+	    <Container>
+                <form className={"signInBlock"}>
+	    	
+	    <h2><center>商家登入</center></h2>
+		
                     <div className="form-group">
                         <label>電子郵件</label>
                         <input type="email"
@@ -122,13 +130,18 @@ export default function Login(){
                         <Col/>
                         <Col><Link className="btn btn-primary btn-block" onClick={Send}>Submit</Link></Col>
                     </Row>
-                    <hr/>
-                    <label>其他登入方式？</label>
-                    <div className={"otherLoginMethod"}>
-                        <GoogleOauth/>
-                    </div>
                 </form>
-            </Container>
+	    </Container>
+	    </Col>
+	    {/*<div className="vl" style={{"border-left": "6px solid green", "height": "100px","display":"flex","align-items":"center","vertical-align":"middle"}}/>*/}
+	    {/*<div style={{"width":"25%","float":"right"}}>*/}	
+	    <Col>
+	    <h2><center>學生登入</center></h2>
+                    <div className={"otherLoginMethod"}>
+                        <center><GoogleOauth/></center>
+                    </div>
+	    </Col>
+	    </Row>
         </React.Fragment>
     )
 }
